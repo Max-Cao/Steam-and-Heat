@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SDS",
+    "DCD",
+    "SDS"
+  ],
+  "key": {
+    "S": {
+      "tag": "c:ingots/iron"
+    },
+    "C": {
+      "item": "create:andesite_alloy"
+    },
+    "D": {
+      "tag": "c:plates/iron"
+    }
+  },
+  "result": {
+    "id": "steam_and_heat:cast_iron_large_cogwheel",
+    "count": 8
+  }
+}

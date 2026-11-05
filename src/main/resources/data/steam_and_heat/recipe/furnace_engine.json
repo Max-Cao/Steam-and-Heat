@@ -1,0 +1,31 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": true,
+  "pattern": [
+    "PPB",
+    "PCI",
+    "PPB"
+  ],
+  "key": {
+    "P": {
+      "tag": "c:plates/brass"
+    },
+    "B": {
+      "tag": "c:ingots/brass"
+    },
+    "I": [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      }
+    ],
+    "C": {
+      "item": "create:brass_casing"
+    }
+  },
+  "result": {
+    "id": "steam_and_heat:furnace_engine"
+  }
+}

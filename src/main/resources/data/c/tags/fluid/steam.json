@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "steampowered:steam",
-    "steampowered:flowing_steam"
+    "steam_and_heat:steam",
+    "steam_and_heat:flowing_steam"
   ]
 }

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "steam_and_heat:block/bronze_boiler"
+    }
+  }
+}

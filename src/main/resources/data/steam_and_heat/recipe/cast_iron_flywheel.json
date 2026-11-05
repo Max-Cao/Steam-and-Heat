@@ -1,0 +1,29 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "pattern": [
+    " AAA ",
+    "ACPCA",
+    "APSPA",
+    "ACPCA",
+    " AAA "
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "create:shaft"
+    },
+    "A": {
+      "tag": "c:ingots/iron"
+    },
+    "C": {
+      "item": "steam_and_heat:cast_iron_cogwheel"
+    }
+  },
+  "result": {
+    "id": "steam_and_heat:cast_iron_flywheel",
+    "count": 1
+  }
+}

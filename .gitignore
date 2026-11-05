@@ -122,3 +122,9 @@ run/
 
 # changelog test
 /changelog.html
+
+# eclipse custom settings
+.eclipse/ 
+
+# vscode custom settings
+.vscode/

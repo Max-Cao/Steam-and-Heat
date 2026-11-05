@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "tag": "steam_and_heat:bronzeplate"
+    },
+    "C": {
+      "item": "create:fluid_pipe"
+    }
+  },
+  "result": {
+    "id": "steam_and_heat:bronze_boiler",
+    "count": 1
+  }
+}

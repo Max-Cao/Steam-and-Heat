@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "steampowered:bronze_flywheel",
-    "steampowered:cast_iron_flywheel",
-    "steampowered:steel_flywheel",
-    "steampowered:brass_flywheel"
+    "steam_and_heat:bronze_flywheel",
+    "steam_and_heat:cast_iron_flywheel",
+    "steam_and_heat:steel_flywheel",
+    "steam_and_heat:brass_flywheel"
   ]
 }

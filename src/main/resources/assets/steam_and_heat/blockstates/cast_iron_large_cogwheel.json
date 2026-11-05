@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "steam_and_heat:block/cast_iron_large_cogwheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "steam_and_heat:block/cast_iron_large_cogwheel"
+    },
+    "axis=z": {
+      "model": "steam_and_heat:block/cast_iron_large_cogwheel",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

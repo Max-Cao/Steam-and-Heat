@@ -7,13 +7,13 @@ issueTrackerURL = "https://git.tilera.org/Anvilcraft/SteamPowered/issues"
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-authors="[Anvilcraft] tilera, [TeamMoeg] YueSha, khjxiaogu, goumo_g"
+authors="[Meteorite] NinaIseri [Anvilcraft] tilera, [TeamMoeg] YueSha, khjxiaogu, goumo_g"
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Expanding Create mod to the Steam Age.
 
-Developers: YueSha, khjxiaogu, tilera
+Developers: YueSha, khjxiaogu, tilera, NinaIseri
 Artists: goumo_g
 
 Contributors (in no particular order):

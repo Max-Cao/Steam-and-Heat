@@ -1,0 +1,84 @@
+{
+  "itemGroup.steam_and_heat.base": "Create: Steam Powered",
+  "item.steam_and_heat.pressurized_gas_container": "加圧式ガスコンテナ",
+  "item.steam_and_heat.pressurized_steam_container": "加圧式蒸気コンテナ",
+  "item.steam_and_heat.bronze_sheet": "青銅の板",
+
+  "block.steam_and_heat.bronze_steam_engine": "青銅の蒸気エンジン",
+  "block.steam_and_heat.cast_iron_steam_engine": "鋳鉄の蒸気エンジン",
+  "block.steam_and_heat.steel_steam_engine": "鋼鉄の蒸気エンジン",
+  "block.steam_and_heat.bronze_flywheel": "青銅の勢車",
+  "block.steam_and_heat.cast_iron_flywheel": "鋳鉄の勢車",
+  "block.steam_and_heat.steel_flywheel": "鋼鉄の勢車",
+  "block.steam_and_heat.bronze_cogwheel": "青銅の歯車",
+  "block.steam_and_heat.cast_iron_cogwheel": "鋳鉄の歯車",
+  "block.steam_and_heat.steel_cogwheel": "鋼鉄の歯車",
+  "block.steam_and_heat.bronze_large_cogwheel": "青銅の大きな歯車",
+  "block.steam_and_heat.cast_iron_large_cogwheel": "鋳鉄の大きな歯車",
+  "block.steam_and_heat.steel_large_cogwheel": "鋼鉄の大きな歯車",
+  "block.steam_and_heat.bronze_boiler": "Bronze Boiler",
+  "block.steam_and_heat.cast_iron_boiler": "Cast Iron Boiler",
+  "block.steam_and_heat.steel_boiler": "Steel Boiler",
+  "block.steam_and_heat.bronze_burner": "Bronze Burning Chamber",
+  "block.steam_and_heat.cast_iron_burner": "Cast Iron Burning Chamber",
+  "block.steam_and_heat.steel_burner": "Steel Burning Chamber",
+
+  "fluid.steam_and_heat.steam": "蒸気",
+  "fluid.steam_and_heat.steam_flowing": "蒸気",
+
+  "steam_and_heat.ponder.steam_engine.header": "蒸気エンジンによる回転力の生成",
+  "steam_and_heat.ponder.steam_engine.text_1": "蒸気エンジンは蒸気を供給すると回転力を生成します",
+  "steam_and_heat.ponder.steam_engine.text_2": "生成される回転力は非常に大きな応力容量を持っています",
+  "steam_and_heat.ponder.steam_engine.text_3": "鋼鉄や鋳鉄の蒸気エンジンを使うと、勢車の効率や生成される応力容量が向上します",
+
+  "steam_and_heat.ponder.flywheel.header": "勢車による回転力の発生",
+  "steam_and_heat.ponder.flywheel.text_1": "蒸気エンジンで回転力を生成するには勢車が必要です",
+  "steam_and_heat.ponder.flywheel.text_2": "生成される回転力は非常に大きな応力容量を持っています",
+  "steam_and_heat.ponder.flywheel.text_3": "鋼鉄や鋳鉄の勢車を使うと、勢車の効率や生成される応力容量が向上します",
+
+  "tooltip.steam_and_heat.energy.production": "エネルギー生成量:",
+  "tooltip.steam_and_heat.steam_engine.not_enough_steam": "状態: 蒸気不足",
+  "tooltip.steam_and_heat.steam_engine.heating": "Status: Heating Up",
+  "tooltip.steam_and_heat.steam_engine.running": "状態: 稼働中",
+  "tooltip.steam_and_heat.dynamo.locked": "Status: Redstone Locked",
+
+  "block.steam_and_heat.alternator": "オルタネーター Dynamo",
+  "tooltip.steam_and_heat.alternator":"Not same as CC&A!",
+  "tooltip.steam_and_heat.alternator.thanks": "Thanks to MRH0 For his wonderful works!",
+
+  "steam_and_heat.ponder.dynamo.header": "オルタネーターによる発電",
+  "steam_and_heat.ponder.dynamo.text_1": "回転力で電気(FE)を発電します",
+  "steam_and_heat.ponder.dynamo.text_2": "オルタネーターの動作には最低でも32RPMが必要です",
+  "steam_and_heat.ponder.dynamo.text_3": "発電量は供給される_RPM_(回転速度)で決まります",
+  "steam_and_heat.ponder.dynamo.text_4": "It has conversion efficiency of 75 Percent",
+  "steam_and_heat.ponder.dynamo.text_5": "You can lock the Dynamo with redstone signal so it will not apply stress to the network",
+
+  "steam_and_heat.ponder.tag.steam": "蒸気",
+  "steam_and_heat.ponder.tag.steam.description": "蒸気を生成・利用する機械",
+
+  "tooltip.steam_and_heat.burner.hu": "Heat Remaining: %s HU",
+  "tooltip.steam_and_heat.burner.item": "Fuel Remaining: %s x %s",
+  "tooltip.steam_and_heat.burner.huproduce": "Generates %s HU/t",
+  "tooltip.steam_and_heat.burner.danger": "Caution! Standing on when burning causes damage!",
+  "tooltip.steam_and_heat.burner.brief": "Generate heat by burning fuel.",
+  
+
+  "tooltip.steam_and_heat.boiler.huconsume": "Maximum Heat Intake %s HU/t",
+  "tooltip.steam_and_heat.boiler.waterconsume": "Requires Water %s mb/t",
+  "tooltip.steam_and_heat.boiler.steamproduce": "Maximum Steam Output %s mb/t",
+  "tooltip.steam_and_heat.burner.efficiency": "Burning Efficiency: %s",
+  "tooltip.steam_and_heat.boiler.danger": "Caution! Standing on when working causes damage!",
+  "tooltip.steam_and_heat.boiler.brief": "Generate steam by heating water.",
+  "tooltip.steam_and_heat.boiler.redstone": "Use a Redstone Comparator to get steam amount.",
+  
+  "tooltip.steam_and_heat.engine.steamconsume": "Requires %s mb/t of Steam",
+  "tooltip.steam_and_heat.engine.brief": "Generate kinetic force with steam.",
+
+  "steam_and_heat.ponder.boiler.header": "Generating Steam through Boilers and Burning Chambers",
+  "steam_and_heat.ponder.boiler.text_1": "The Boiler needs water to produce Steam",
+  "steam_and_heat.ponder.boiler.text_2": "The Burning Chamber needs furnace fuel to heat the Boiler",
+  "steam_and_heat.ponder.boiler.text_3": "Right click with fuel item such as Coal or Planks to provide it with fuel",
+  "steam_and_heat.ponder.boiler.text_4": "Right click with empty hand to take out the remaining fuel",
+  "steam_and_heat.ponder.boiler.text_5": "Pump the steam out of the boiler to power the Steam Engines",
+  "tooltip.steam_and_heat.dynamo.redstone_locked": "状態: Redstone Locked"
+}
