@@ -11,6 +11,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -22,7 +23,6 @@ import java.util.function.Supplier;
 import static org.nina_iseri.steam_and_heat.SteamAndHeat.REGISTRATE;
 
 public class ModFluids {
-    
     public static final FluidEntry<BaseFlowingFluid.Flowing> STEAM = REGISTRATE
             .standardFluid("steam", ModFluids.SolidRenderedPlaceableFluidType.create(0xDEDEDE, () -> 1f / 8f))
             .lang("Steam")
@@ -35,6 +35,7 @@ public class ModFluids {
             .tag(TagKey.create(BuiltInRegistries.ITEM.key(), AllTags.NameSpace.COMMON.id("buckets/steam")))
             .build()
             .register();
+
 
     // From Create's AllFluids.java
     private static class SolidRenderedPlaceableFluidType extends AllFluids.TintedFluidType {

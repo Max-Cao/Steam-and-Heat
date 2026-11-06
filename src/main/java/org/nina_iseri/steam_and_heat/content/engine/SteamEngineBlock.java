@@ -44,22 +44,25 @@ public class SteamEngineBlock extends OldEngineBlock {
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getClickedFace();
-        return this.defaultBlockState().setValue(FACING, facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing).setValue(LIT, false);
+        return this.defaultBlockState()
+                .setValue(FACING,
+                        facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing)
+                .setValue(LIT, false);
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT));
     }
 
-//    @Override
-//    public Class<SteamEngineTileEntity> getTileEntityClass() {
-//        return SteamEngineTileEntity.class;
-//    }
-//
-//    @Override
-//    public BlockEntityType<? extends SteamEngineTileEntity> getTileEntityType() {
-//        return SPTiles.BRONZE_STEAM_ENGINE.get();
-//    }
+    // @Override
+    // public Class<SteamEngineTileEntity> getTileEntityClass() {
+    // return SteamEngineTileEntity.class;
+    // }
+    //
+    // @Override
+    // public BlockEntityType<? extends SteamEngineTileEntity> getTileEntityType() {
+    // return SPTiles.BRONZE_STEAM_ENGINE.get();
+    // }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -89,18 +92,18 @@ public class SteamEngineBlock extends OldEngineBlock {
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof SteamEngineTileEntity) {
                 SteamEngineTileEntity steamEngine = (SteamEngineTileEntity) te;
-                IFluidHandler cap = world.getCapability(Capabilities.FluidHandler.BLOCK, steamEngine.getBlockPos(), null);
+                IFluidHandler cap = world.getCapability(Capabilities.FluidHandler.BLOCK, steamEngine.getBlockPos(),
+                        null);
                 cap.fill(new FluidStack(ModFluids.STEAM.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
                 player.getItemInHand(hand).shrink(1);
-                ItemStack ret=new ItemStack(ModItems.PRESSURIZED_GAS_CONTAINER.get());
-                if(!player.addItem(ret))
-                	world.addFreshEntity(new ItemEntity(world, pos.getX(),pos.getY(),pos.getZ(),ret));
+                ItemStack ret = new ItemStack(ModItems.PRESSURIZED_GAS_CONTAINER.get());
+                if (!player.addItem(ret))
+                    world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ret));
                 return ItemInteractionResult.SUCCESS;
             }
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         return super.useItemOn(stack, state, world, pos, player, hand, hitResult);
     }
 
-    
 }

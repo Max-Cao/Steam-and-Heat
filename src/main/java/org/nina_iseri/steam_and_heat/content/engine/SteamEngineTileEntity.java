@@ -2,7 +2,7 @@ package org.nina_iseri.steam_and_heat.content.engine;
 
 import org.nina_iseri.steam_and_heat.ModTags;
 import org.nina_iseri.steam_and_heat.client.ModParticles;
-import org.nina_iseri.steam_and_heat.content.boiler.BoilerTileEntity;
+import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelTileEntity;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.IGoggleInformation;
@@ -120,8 +120,8 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 				FluidTank tank=this.tank;
 				if(this.tank.isEmpty()) {
 					BlockEntity te=this.getLevel().getBlockEntity(boilerPos);
-					if(te instanceof BoilerTileEntity) {
-						tank=((BoilerTileEntity)te).output;
+					if(te instanceof BoilerBlockEntity) {
+						tank=((BoilerBlockEntity)te).output;
 					}
 				}
 

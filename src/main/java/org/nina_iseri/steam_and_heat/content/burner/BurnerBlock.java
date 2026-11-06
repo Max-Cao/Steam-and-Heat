@@ -43,13 +43,14 @@ public abstract class BurnerBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty REDSTONE_LOCKED = BooleanProperty.create("redstone_locked");
+
     public BurnerBlock(Properties props) {
-        super(props.lightLevel(s->s.getValue(LIT)?10:0));
+        super(props.lightLevel(s -> s.getValue(LIT) ? 10 : 0));
     }
 
     @Override
-	public void animateTick(BlockState bs, Level w, BlockPos bp, RandomSource r) {
-		super.animateTick(bs, w, bp, r);
+    public void animateTick(BlockState bs, Level w, BlockPos bp, RandomSource r) {
+        super.animateTick(bs, w, bp, r);
         if (bs.getValue(BurnerBlock.LIT)) {
             double d0 = bp.getX() + 0.5D;
             double d1 = bp.getY();
@@ -68,12 +69,15 @@ public abstract class BurnerBlock extends Block {
                 w.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
             }
         }
-	}
+    }
 
-	@Override
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getClickedFace();
-        return this.defaultBlockState().setValue(FACING, facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing).setValue(LIT, Boolean.valueOf(false)).setValue(REDSTONE_LOCKED,false);
+        return this.defaultBlockState()
+                .setValue(FACING,
+                        facing.getAxis().isVertical() ? context.getHorizontalDirection().getOpposite() : facing)
+                .setValue(LIT, Boolean.valueOf(false)).setValue(REDSTONE_LOCKED, false);
     }
 
     @Override
@@ -83,43 +87,50 @@ public abstract class BurnerBlock extends Block {
                 pEntity.hurt(pLevel.damageSources().hotFloor(), 2);
     }
 
-    public abstract int getHuProduce() ;
+    public abstract int getHuProduce();
+
     public abstract double getEfficiency();
+
     public String getEfficiencyString() {
-    	return ((int)(this.getEfficiency()*1000))/10F+"%";
+        return ((int) (this.getEfficiency() * 1000)) / 10F + "%";
     }
+
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT).add(FACING).add(REDSTONE_LOCKED));
     }
 
     @Override
-	public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> t,
-			TooltipFlag f) {
-    	
-    	if(Screen.hasShiftDown()) {
-    		t.add(Component.translatable("tooltip.steam_and_heat.burner.brief").withStyle(ChatFormatting.GOLD));
-    		if(ClientUtils.hasGoggles()) {
-    			t.add(Component.translatable("tooltip.steam_and_heat.burner.efficiency",getEfficiencyString()).withStyle(ChatFormatting.RED));
-    			t.add(Component.translatable("tooltip.steam_and_heat.burner.huproduce",this.getHuProduce()).withStyle(ChatFormatting.GOLD));
-    			t.add(Component.translatable("tooltip.steam_and_heat.burner.danger").withStyle(ChatFormatting.RED));
-    		}
-    	}else {
-    		t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY,false));
-    	}
-    	if(Screen.hasControlDown()) {
-    		t.add(Component.translatable("tooltip.steam_and_heat.burner.redstone").withStyle(ChatFormatting.RED));
-    	}else {
-    		t.add(CreateLang.translate("tooltip.holdForControls", CreateLang.translate("tooltip.keyCtrl")
-			.style(ChatFormatting.GRAY))
-			.style(ChatFormatting.DARK_GRAY).component());
-    	}
-		super.appendHoverText(i,w,t,f);
-	}
-    
+    public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> t,
+            TooltipFlag f) {
+
+        if (Screen.hasShiftDown()) {
+            t.add(Component.translatable("tooltip.steam_and_heat.burner.brief").withStyle(ChatFormatting.GOLD));
+            if (ClientUtils.hasGoggles()) {
+                t.add(Component.translatable("tooltip.steam_and_heat.burner.efficiency", getEfficiencyString())
+                        .withStyle(ChatFormatting.RED));
+                t.add(Component.translatable("tooltip.steam_and_heat.burner.huproduce", this.getHuProduce())
+                        .withStyle(ChatFormatting.GOLD));
+                t.add(Component.translatable("tooltip.steam_and_heat.burner.danger").withStyle(ChatFormatting.RED));
+            }
+        } else {
+            t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
+        }
+        if (Screen.hasControlDown()) {
+            t.add(Component.translatable("tooltip.steam_and_heat.burner.redstone").withStyle(ChatFormatting.RED));
+        } else {
+            t.add(CreateLang.translate("tooltip.holdForControls", CreateLang.translate("tooltip.keyCtrl")
+                    .style(ChatFormatting.GRAY))
+                    .style(ChatFormatting.DARK_GRAY).component());
+        }
+        super.appendHoverText(i, w, t, f);
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (player.getItemInHand(hand).getBurnTime(RecipeType.BLASTING) != 0 && player.getItemInHand(hand).getCraftingRemainingItem().isEmpty() && !player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
+        if (player.getItemInHand(hand).getBurnTime(RecipeType.BLASTING) != 0
+                && player.getItemInHand(hand).getCraftingRemainingItem().isEmpty()
+                && !player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
             IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
             player.setItemInHand(hand, cap.insertItem(0, player.getItemInHand(hand), false));
             return ItemInteractionResult.SUCCESS;
@@ -140,7 +151,8 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean flag) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos,
+            boolean flag) {
         if (!world.isClientSide) {
             boolean isLocked = state.getValue(REDSTONE_LOCKED);
             if (isLocked != world.hasNeighborSignal(pos)) {

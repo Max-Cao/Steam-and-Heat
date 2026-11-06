@@ -11,7 +11,7 @@ import org.nina_iseri.steam_and_heat.client.render.BronzeFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.client.render.CastIronFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.client.render.SteelFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.content.alternator.DynamoBlockEntity;
-import org.nina_iseri.steam_and_heat.content.boiler.BoilerTileEntity;
+import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.boiler.BronzeBoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.boiler.CastIronBoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.boiler.SteelBoilerBlockEntity;
@@ -143,11 +143,11 @@ public class ModBlockEntities {
                 event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.STEEL_BURNER.get(),
                                 BurnerBlockEntity.ITEM_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BRONZE_BOILER.get(),
-                                BoilerTileEntity.FLUID_CAP);
+                                BoilerBlockEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.CAST_IRON_BOILER.get(),
-                                BoilerTileEntity.FLUID_CAP);
+                                BoilerBlockEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.STEEL_BOILER.get(),
-                                BoilerTileEntity.FLUID_CAP);
+                                BoilerBlockEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BRONZE_STEAM_ENGINE.get(),
                                 SteamEngineTileEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,

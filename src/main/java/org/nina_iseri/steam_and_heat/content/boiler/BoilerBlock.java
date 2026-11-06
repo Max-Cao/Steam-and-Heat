@@ -28,7 +28,6 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import java.util.List;
 
 public abstract class BoilerBlock extends Block {
-
 	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
 			Player player, InteractionHand hand, BlockHitResult hitResult) {
@@ -57,13 +56,12 @@ public abstract class BoilerBlock extends Block {
 	@Override
 	public int getAnalogOutputSignal(BlockState b, Level w, BlockPos p) {
 		BlockEntity te = w.getBlockEntity(p);
-		if (te instanceof BoilerTileEntity) {
-			BoilerTileEntity boiler = (BoilerTileEntity) te;
+		if (te instanceof BoilerBlockEntity) {
+			BoilerBlockEntity boiler = (BoilerBlockEntity) te;
 			return boiler.output.getFluidAmount() * 15 / boiler.output.getCapacity();
 		}
 		return b.getAnalogOutputSignal(w, p);
 	}
-
 
 	public boolean hasTileEntity(BlockState state) {
 		return true;
@@ -98,13 +96,13 @@ public abstract class BoilerBlock extends Block {
 		super.appendHoverText(i, w, t, f);
 	}
 
-
-	public void stepOn(Level w, BlockPos bp, Entity e) {
-		BlockEntity te = w.getBlockEntity(bp);
-		if (te instanceof BoilerTileEntity && e instanceof LivingEntity) {
-			if (((BoilerTileEntity) te).lastheat > 0 || (!((BoilerTileEntity) te).output.isEmpty())) {
-				e.hurt(w.damageSources().hotFloor(), 2);
-			}
+	// 踩上去会受伤
+	public void stepOn(Level level, BlockPos pos, Entity entity) {
+		BlockEntity block_entity = level.getBlockEntity(pos);
+		if (block_entity instanceof BoilerBlockEntity boiler &&
+				(boiler.heat_last > 0 || !boiler.output.isEmpty()) &&
+				entity instanceof LivingEntity) {
+			entity.hurt(level.damageSources().hotFloor(), 2);
 		}
 	}
 }

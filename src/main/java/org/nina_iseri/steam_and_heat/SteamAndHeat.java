@@ -4,7 +4,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.client.SteamPoweredClient;
 import org.nina_iseri.steam_and_heat.content.alternator.DynamoBlockEntity;
-import org.nina_iseri.steam_and_heat.content.boiler.BoilerTileEntity;
+import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.burner.BurnerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.engine.SteamEngineTileEntity;
 import org.nina_iseri.steam_and_heat.registrate.*;

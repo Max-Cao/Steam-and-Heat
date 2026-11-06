@@ -22,11 +22,12 @@ public class MetalCogwheelBlock extends CogWheelBlock {
         return ModBlockEntities.METAL_COGWHEEL.get();
     }
 
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult ray) {
         return InteractionResult.PASS;
     }
 
-        public static MetalCogwheelBlock small(Properties properties) {
+    public static MetalCogwheelBlock small(Properties properties) {
         return new MetalCogwheelBlock(false, properties);
     }
 

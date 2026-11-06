@@ -40,63 +40,72 @@ import static org.nina_iseri.steam_and_heat.SteamAndHeat.REGISTRATE;
 
 public class ModBlocks {
 
-    public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE.block("bronze_burner", BronzeBurnerBlock::new)
+    public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE
+            .block("bronze_burner", BronzeBurnerBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<CastIronBurnerBlock> CAST_IRON_BURNER = REGISTRATE.block("cast_iron_burner", CastIronBurnerBlock::new)
+    public static final BlockEntry<CastIronBurnerBlock> CAST_IRON_BURNER = REGISTRATE
+            .block("cast_iron_burner", CastIronBurnerBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SteelBurnerBlock> STEEL_BURNER = REGISTRATE.block("steel_burner", SteelBurnerBlock::new)
+    public static final BlockEntry<SteelBurnerBlock> STEEL_BURNER = REGISTRATE
+            .block("steel_burner", SteelBurnerBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<BronzeBoilerBlock> BRONZE_BOILER = REGISTRATE.block("bronze_boiler", BronzeBoilerBlock::new)
+    public static final BlockEntry<BronzeBoilerBlock> BRONZE_BOILER = REGISTRATE
+            .block("bronze_boiler", BronzeBoilerBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<CastIronBoilerBlock> CAST_IRON_BOILER = REGISTRATE.block("cast_iron_boiler", CastIronBoilerBlock::new)
+    public static final BlockEntry<CastIronBoilerBlock> CAST_IRON_BOILER = REGISTRATE
+            .block("cast_iron_boiler", CastIronBoilerBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SteelBoilerBlock> STEEL_BOILER = REGISTRATE.block("steel_boiler", SteelBoilerBlock::new)
+    public static final BlockEntry<SteelBoilerBlock> STEEL_BOILER = REGISTRATE
+            .block("steel_boiler", SteelBoilerBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<BronzeSteamEngineBlock> BRONZE_STEAM_ENGINE = REGISTRATE.block("bronze_steam_engine", BronzeSteamEngineBlock::new)
+    public static final BlockEntry<BronzeSteamEngineBlock> BRONZE_STEAM_ENGINE = REGISTRATE
+            .block("bronze_steam_engine", BronzeSteamEngineBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<CastIronSteamEngineBlock> CAST_IRON_STEAM_ENGINE = REGISTRATE.block("cast_iron_steam_engine", CastIronSteamEngineBlock::new)
+    public static final BlockEntry<CastIronSteamEngineBlock> CAST_IRON_STEAM_ENGINE = REGISTRATE
+            .block("cast_iron_steam_engine", CastIronSteamEngineBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SteelSteamEngineBlock> STEEL_STEAM_ENGINE = REGISTRATE.block("steel_steam_engine", SteelSteamEngineBlock::new)
+    public static final BlockEntry<SteelSteamEngineBlock> STEEL_STEAM_ENGINE = REGISTRATE
+            .block("steel_steam_engine", SteelSteamEngineBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
             .tag(AllTags.AllBlockTags.BRITTLE.tag)
@@ -105,14 +114,16 @@ public class ModBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<FurnaceEngineBlock> FURNACE_ENGINE = REGISTRATE.block("furnace_engine", FurnaceEngineBlock::new)
+    public static final BlockEntry<FurnaceEngineBlock> FURNACE_ENGINE = REGISTRATE
+            .block("furnace_engine", FurnaceEngineBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<MetalCogwheelBlock> STEEL_COGWHEEL = REGISTRATE.block("steel_cogwheel", MetalCogwheelBlock::small)
+    public static final BlockEntry<MetalCogwheelBlock> STEEL_COGWHEEL = REGISTRATE
+            .block("steel_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
@@ -122,7 +133,8 @@ public class ModBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<MetalCogwheelBlock> STEEL_LARGE_COGWHEEL = REGISTRATE.block("steel_large_cogwheel", MetalCogwheelBlock::large)
+    public static final BlockEntry<MetalCogwheelBlock> STEEL_LARGE_COGWHEEL = REGISTRATE
+            .block("steel_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
@@ -132,7 +144,8 @@ public class ModBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_COGWHEEL = REGISTRATE.block("cast_iron_cogwheel", MetalCogwheelBlock::small)
+    public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_COGWHEEL = REGISTRATE
+            .block("cast_iron_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
@@ -142,7 +155,8 @@ public class ModBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_LARGE_COGWHEEL = REGISTRATE.block("cast_iron_large_cogwheel", MetalCogwheelBlock::large)
+    public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_LARGE_COGWHEEL = REGISTRATE
+            .block("cast_iron_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
@@ -152,7 +166,8 @@ public class ModBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<MetalCogwheelBlock> BRONZE_COGWHEEL = REGISTRATE.block("bronze_cogwheel", MetalCogwheelBlock::small)
+    public static final BlockEntry<MetalCogwheelBlock> BRONZE_COGWHEEL = REGISTRATE
+            .block("bronze_cogwheel", MetalCogwheelBlock::small)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
@@ -162,7 +177,8 @@ public class ModBlocks {
             .build()
             .register();
 
-    public static final BlockEntry<MetalCogwheelBlock> BRONZE_LARGE_COGWHEEL = REGISTRATE.block("bronze_large_cogwheel", MetalCogwheelBlock::large)
+    public static final BlockEntry<MetalCogwheelBlock> BRONZE_LARGE_COGWHEEL = REGISTRATE
+            .block("bronze_large_cogwheel", MetalCogwheelBlock::large)
             .initialProperties(SharedProperties::softMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
@@ -175,12 +191,13 @@ public class ModBlocks {
     public static final BlockEntry<DynamoBlock> DYNAMO = REGISTRATE.block("alternator", DynamoBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
-            .tag(AllTags.AllBlockTags.SAFE_NBT.tag) //Dono what this tag means (contraption safe?).
+            .tag(AllTags.AllBlockTags.SAFE_NBT.tag) // Dono what this tag means (contraption safe?).
             .item()
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<BronzeSteamFlywheelBlock> BRONZE_FLYWHEEL = REGISTRATE.block("bronze_flywheel", BronzeSteamFlywheelBlock::new)
+    public static final BlockEntry<BronzeSteamFlywheelBlock> BRONZE_FLYWHEEL = REGISTRATE
+            .block("bronze_flywheel", BronzeSteamFlywheelBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
@@ -189,7 +206,8 @@ public class ModBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<CastIronSteamFlywheelBlock> CAST_IRON_FLYWHEEL = REGISTRATE.block("cast_iron_flywheel", CastIronSteamFlywheelBlock::new)
+    public static final BlockEntry<CastIronSteamFlywheelBlock> CAST_IRON_FLYWHEEL = REGISTRATE
+            .block("cast_iron_flywheel", CastIronSteamFlywheelBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
@@ -198,7 +216,8 @@ public class ModBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SteelSteamFlywheelBlock> STEEL_FLYWHEEL = REGISTRATE.block("steel_flywheel", SteelSteamFlywheelBlock::new)
+    public static final BlockEntry<SteelSteamFlywheelBlock> STEEL_FLYWHEEL = REGISTRATE
+            .block("steel_flywheel", SteelSteamFlywheelBlock::new)
             .initialProperties(ModBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
@@ -207,7 +226,8 @@ public class ModBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<BrassSteamFlywheelBlock> BRASS_FLYWHEEL = REGISTRATE.block("brass_flywheel", BrassSteamFlywheelBlock::new)
+    public static final BlockEntry<BrassSteamFlywheelBlock> BRASS_FLYWHEEL = REGISTRATE
+            .block("brass_flywheel", BrassSteamFlywheelBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
