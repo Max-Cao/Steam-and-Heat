@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import com.simibubi.create.AllShapes;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldBlockPartials;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlock;
-import org.nina_iseri.steam_and_heat.registrate.SPFluids;
-import org.nina_iseri.steam_and_heat.registrate.SPItems;
+import org.nina_iseri.steam_and_heat.registrate.ModFluids;
+import org.nina_iseri.steam_and_heat.registrate.ModItems;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -85,14 +85,14 @@ public class SteamEngineBlock extends OldEngineBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (player.getItemInHand(hand).getItem() == SPItems.PRESSURIZED_STEAM_CONTAINER.get()) {
+        if (player.getItemInHand(hand).getItem() == ModItems.PRESSURIZED_STEAM_CONTAINER.get()) {
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof SteamEngineTileEntity) {
                 SteamEngineTileEntity steamEngine = (SteamEngineTileEntity) te;
                 IFluidHandler cap = world.getCapability(Capabilities.FluidHandler.BLOCK, steamEngine.getBlockPos(), null);
-                cap.fill(new FluidStack(SPFluids.STEAM.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
+                cap.fill(new FluidStack(ModFluids.STEAM.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
                 player.getItemInHand(hand).shrink(1);
-                ItemStack ret=new ItemStack(SPItems.PRESSURIZED_GAS_CONTAINER.get());
+                ItemStack ret=new ItemStack(ModItems.PRESSURIZED_GAS_CONTAINER.get());
                 if(!player.addItem(ret))
                 	world.addFreshEntity(new ItemEntity(world, pos.getX(),pos.getY(),pos.getZ(),ret));
                 return ItemInteractionResult.SUCCESS;

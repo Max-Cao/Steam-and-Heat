@@ -38,7 +38,7 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 import static org.nina_iseri.steam_and_heat.SteamAndHeat.REGISTRATE;
 
-public class SPBlocks {
+public class ModBlocks {
 
     public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE.block("bronze_burner", BronzeBurnerBlock::new)
             .initialProperties(SharedProperties::softMetal)
@@ -48,14 +48,14 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<CastIronBurnerBlock> CAST_IRON_BURNER = REGISTRATE.block("cast_iron_burner", CastIronBurnerBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<SteelBurnerBlock> STEEL_BURNER = REGISTRATE.block("steel_burner", SteelBurnerBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
@@ -69,14 +69,14 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<CastIronBoilerBlock> CAST_IRON_BOILER = REGISTRATE.block("cast_iron_boiler", CastIronBoilerBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<SteelBoilerBlock> STEEL_BOILER = REGISTRATE.block("steel_boiler", SteelBoilerBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
@@ -90,7 +90,7 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<CastIronSteamEngineBlock> CAST_IRON_STEAM_ENGINE = REGISTRATE.block("cast_iron_steam_engine", CastIronSteamEngineBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
@@ -106,14 +106,14 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<FurnaceEngineBlock> FURNACE_ENGINE = REGISTRATE.block("furnace_engine", FurnaceEngineBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .item()
             .transform(customItemModel())
             .register();
 
     public static final BlockEntry<MetalCogwheelBlock> STEEL_COGWHEEL = REGISTRATE.block("steel_cogwheel", MetalCogwheelBlock::small)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -123,7 +123,7 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<MetalCogwheelBlock> STEEL_LARGE_COGWHEEL = REGISTRATE.block("steel_large_cogwheel", MetalCogwheelBlock::large)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -133,7 +133,7 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_COGWHEEL = REGISTRATE.block("cast_iron_cogwheel", MetalCogwheelBlock::small)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -143,7 +143,7 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<MetalCogwheelBlock> CAST_IRON_LARGE_COGWHEEL = REGISTRATE.block("cast_iron_large_cogwheel", MetalCogwheelBlock::large)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .properties(p -> p.sound(SoundType.METAL))
             .blockstate(BlockStateGen.axisBlockProvider(false))
@@ -173,7 +173,7 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<DynamoBlock> DYNAMO = REGISTRATE.block("alternator", DynamoBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .transform(pickaxeOnly())
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag) //Dono what this tag means (contraption safe?).
             .item()
@@ -190,7 +190,7 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<CastIronSteamFlywheelBlock> CAST_IRON_FLYWHEEL = REGISTRATE.block("cast_iron_flywheel", CastIronSteamFlywheelBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
             .blockstate(new OldFlywheelGenerator()::generate)
@@ -199,7 +199,7 @@ public class SPBlocks {
             .register();
 
     public static final BlockEntry<SteelSteamFlywheelBlock> STEEL_FLYWHEEL = REGISTRATE.block("steel_flywheel", SteelSteamFlywheelBlock::new)
-            .initialProperties(SPBlocks::hardMetal)
+            .initialProperties(ModBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
             .blockstate(new OldFlywheelGenerator()::generate)
@@ -217,7 +217,7 @@ public class SPBlocks {
             .register();
 
     public static void register() {
-        BoilerHeater.REGISTRY.registerProvider(SPBlocks::getHeater);
+        BoilerHeater.REGISTRY.registerProvider(ModBlocks::getHeater);
     }
 
     public static BoilerHeater getHeater(Block block) {

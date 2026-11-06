@@ -1,6 +1,6 @@
 package org.nina_iseri.steam_and_heat.content.boiler;
 
-import org.nina_iseri.steam_and_heat.SPConfig;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,7 +12,7 @@ public class BronzeBoilerBlockEntity extends BoilerTileEntity {
     }
 
     protected int getHUPerTick() {
-        return SPConfig.COMMON.bronzeBoilerHU.get();
+        return ModCommonConfig.COMMON.bronzeBoilerHU.get();
     }
 
 }

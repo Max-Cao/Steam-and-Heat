@@ -4,11 +4,11 @@ import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import org.nina_iseri.steam_and_heat.SPConfig;
-import org.nina_iseri.steam_and_heat.client.Particles;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
+import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.content.burner.BurnerBlock;
 import org.nina_iseri.steam_and_heat.content.burner.IHeatReceiver;
-import org.nina_iseri.steam_and_heat.registrate.SPFluids;
+import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -154,10 +154,10 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
             if (heatreceived != 0) {
                 int consume = Math.min(getHUPerTick(), heatreceived);
                 heatreceived = 0;
-                double waterconsume = (SPConfig.COMMON.steamPerWater.get() * 10);
+                double waterconsume = (ModCommonConfig.COMMON.steamPerWater.get() * 10);
                 consume = Math.min((int) (this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE)
                         .getAmount() * waterconsume), consume);
-                this.output.fill(new FluidStack(SPFluids.STEAM.get(), consume / 10),
+                this.output.fill(new FluidStack(ModFluids.STEAM.get(), consume / 10),
                         FluidAction.EXECUTE);
                 if(consume>0) {
                     this.setChanged();
@@ -179,7 +179,7 @@ public abstract class BoilerTileEntity extends SmartBlockEntity implements IHeat
                             0.25F, false);
 
                     for(int i=0;i<this.level.random.nextInt(3)+1;i++)
-                        this.level.addParticle(Particles.STEAM.get(), d0 + this.level.random.nextFloat(), d1,
+                        this.level.addParticle(ModParticles.STEAM.get(), d0 + this.level.random.nextFloat(), d1,
                                 d2 + this.level.random.nextFloat(), 0.0D, 0.0D, 0.0D);
                     // }
                 }

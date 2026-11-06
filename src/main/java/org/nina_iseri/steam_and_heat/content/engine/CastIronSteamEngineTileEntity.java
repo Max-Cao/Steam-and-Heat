@@ -1,7 +1,7 @@
 package org.nina_iseri.steam_and_heat.content.engine;
 
-import org.nina_iseri.steam_and_heat.SPConfig;
-import org.nina_iseri.steam_and_heat.registrate.SPBlocks;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
+import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
@@ -15,31 +15,31 @@ public class CastIronSteamEngineTileEntity extends SteamEngineTileEntity {
 
     @Override
     public Block getFlywheel() {
-        return SPBlocks.CAST_IRON_FLYWHEEL.get();
+        return ModBlocks.CAST_IRON_FLYWHEEL.get();
     }
 
     @Override
     public float getGeneratingCapacity() {
-        return SPConfig.COMMON.castIronFlywheelCapacity.get();
+        return ModCommonConfig.COMMON.castIronFlywheelCapacity.get();
     }
 
     @Override
     public float getGeneratingSpeed() {
-        return SPConfig.COMMON.castIronFlywheelSpeed.get();
+        return ModCommonConfig.COMMON.castIronFlywheelSpeed.get();
     }
 
     @Override
     public int getSteamConsumptionPerTick() {
-        return SPConfig.COMMON.castIronFlywheelSteamConsumptionPerTick.get();
+        return ModCommonConfig.COMMON.castIronFlywheelSteamConsumptionPerTick.get();
     }
 
     @Override
     public int getSteamStorage() {
-        return SPConfig.COMMON.castIronFlywheelSteamStorage.get();
+        return ModCommonConfig.COMMON.castIronFlywheelSteamStorage.get();
     }
 
     @Override
     public double getSuckEfficiency() {
-        return SPConfig.COMMON.castIronFlywheelSuckEfficiency.get();
+        return ModCommonConfig.COMMON.castIronFlywheelSuckEfficiency.get();
     }
 }

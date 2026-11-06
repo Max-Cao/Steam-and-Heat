@@ -1,8 +1,8 @@
 package org.nina_iseri.steam_and_heat.content.boiler;
 
 import com.simibubi.create.foundation.block.IBE;
-import org.nina_iseri.steam_and_heat.SPConfig;
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class CastIronBoilerBlock extends BoilerBlock implements IBE<CastIronBoilerBlockEntity> {
@@ -12,7 +12,7 @@ public class CastIronBoilerBlock extends BoilerBlock implements IBE<CastIronBoil
 
 	@Override
 	public int getHuConsume() {
-		return SPConfig.COMMON.castIronBoilerHU.get();
+		return ModCommonConfig.COMMON.castIronBoilerHU.get();
 	}
 
     @Override
@@ -22,6 +22,6 @@ public class CastIronBoilerBlock extends BoilerBlock implements IBE<CastIronBoil
 
     @Override
     public BlockEntityType<? extends CastIronBoilerBlockEntity> getBlockEntityType() {
-        return SPBlockEntities.CAST_IRON_BOILER.get();
+        return ModBlockEntities.CAST_IRON_BOILER.get();
     }
 }

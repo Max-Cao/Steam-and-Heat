@@ -1,8 +1,8 @@
 package org.nina_iseri.steam_and_heat.content.burner;
 
 import com.simibubi.create.foundation.block.IBE;
-import org.nina_iseri.steam_and_heat.SPConfig;
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class CastIronBurnerBlock extends BurnerBlock implements IBE<CastIronBurnerBlockEntity> {
@@ -12,12 +12,12 @@ public class CastIronBurnerBlock extends BurnerBlock implements IBE<CastIronBurn
 
 	@Override
 	public int getHuProduce() {
-		return SPConfig.COMMON.castIronBurnerHU.get();
+		return ModCommonConfig.COMMON.castIronBurnerHU.get();
 	}
 
 	@Override
 	public double getEfficiency() {
-		return SPConfig.COMMON.castIronBurnerEfficiency.get();
+		return ModCommonConfig.COMMON.castIronBurnerEfficiency.get();
 	}
 
 	@Override
@@ -27,6 +27,6 @@ public class CastIronBurnerBlock extends BurnerBlock implements IBE<CastIronBurn
 
 	@Override
 	public BlockEntityType<? extends CastIronBurnerBlockEntity> getBlockEntityType() {
-		return SPBlockEntities.CAST_IRON_BURNER.get();
+		return ModBlockEntities.CAST_IRON_BURNER.get();
 	}
 }

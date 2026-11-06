@@ -1,6 +1,6 @@
 package org.nina_iseri.steam_and_heat.content.flywheel;
 
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class SteelSteamFlywheelBlock extends SteamFlywheelBlock {
@@ -10,6 +10,6 @@ public class SteelSteamFlywheelBlock extends SteamFlywheelBlock {
 
     //@Override
     public BlockEntityType<? extends SteamFlywheelTileEntity> getBlockEntityType() {
-        return SPBlockEntities.STEEL_STEAM_FLYWHEEL.get();
+        return ModBlockEntities.STEEL_STEAM_FLYWHEEL.get();
     }
 }

@@ -6,8 +6,8 @@ import com.simibubi.create.foundation.block.IBE;
 import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.FurnaceEngineInteractions;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlock;
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
-import org.nina_iseri.steam_and_heat.registrate.SPBlocks;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
+import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.levelWrappers.WrappedLevel;
 import net.minecraft.core.BlockPos;
@@ -73,7 +73,7 @@ public class FurnaceEngineBlock extends OldEngineBlock implements IBE<FurnaceEng
         ItemStack item = event.getItemStack();
         if (!(item.getItem() instanceof BlockItem blockItem))
             return;
-        if (blockItem.getBlock() != SPBlocks.FURNACE_ENGINE.get())
+        if (blockItem.getBlock() != ModBlocks.FURNACE_ENGINE.get())
             return;
         BlockState state = event.getLevel().getBlockState(event.getPos());
         if (event.getFace().getAxis().isVertical())
@@ -89,7 +89,7 @@ public class FurnaceEngineBlock extends OldEngineBlock implements IBE<FurnaceEng
 
     @Override
     public BlockEntityType<? extends FurnaceEngineTileEntity> getBlockEntityType() {
-        return SPBlockEntities.FURNACE_ENGINE.get();
+        return ModBlockEntities.FURNACE_ENGINE.get();
     }
 
     @Override

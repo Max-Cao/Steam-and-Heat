@@ -2,7 +2,7 @@ package org.nina_iseri.steam_and_heat.content.alternator;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
-import org.nina_iseri.steam_and_heat.SPConfig;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.IGoggleInformation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -32,10 +32,10 @@ public class DynamoBlockEntity extends KineticBlockEntity implements IGoggleInfo
     private boolean redstoneLocked = false;
     boolean working;
     
-    public static final int MAX_FE_OUT = SPConfig.COMMON.dynamoFeMaxOut.get(); // FE Output
-    public static final int FE_CAPACITY = SPConfig.COMMON.dynamoFeCapacity.get(); // FE Storage
-    public static final int IMPACT = SPConfig.COMMON.dynamoImpact.get(); // Impact on network
-    public static final double EFFICIENCY = SPConfig.COMMON.dynamoEfficiency.get(); // Efficiency
+    public static final int MAX_FE_OUT = ModCommonConfig.COMMON.dynamoFeMaxOut.get(); // FE Output
+    public static final int FE_CAPACITY = ModCommonConfig.COMMON.dynamoFeCapacity.get(); // FE Storage
+    public static final int IMPACT = ModCommonConfig.COMMON.dynamoImpact.get(); // Impact on network
+    public static final double EFFICIENCY = ModCommonConfig.COMMON.dynamoEfficiency.get(); // Efficiency
 
     public static final ICapabilityProvider<DynamoBlockEntity, Direction, IEnergyStorage> ENERGY_CAP = (DynamoBlockEntity te, Direction side) -> {
         if (side==te.getBlockState().getValue(DynamoBlock.FACING)) {

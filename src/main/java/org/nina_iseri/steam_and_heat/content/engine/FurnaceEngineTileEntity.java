@@ -1,8 +1,8 @@
 package org.nina_iseri.steam_and_heat.content.engine;
 
-import org.nina_iseri.steam_and_heat.SPConfig;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.*;
-import org.nina_iseri.steam_and_heat.registrate.SPBlocks;
+import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -30,9 +30,9 @@ public class FurnaceEngineTileEntity extends OldEngineBlockEntity {
 
         float modifier = handler.getSpeedModifier(state);
         boolean active = heatSource.isActive();
-        float speed = active ? SPConfig.COMMON.brassFlywheelSpeed.get() * modifier : 0;
+        float speed = active ? ModCommonConfig.COMMON.brassFlywheelSpeed.get() * modifier : 0;
         float capacity =
-                (float) (active ? SPConfig.COMMON.brassFlywheelCapacity.get()
+                (float) (active ? ModCommonConfig.COMMON.brassFlywheelCapacity.get()
                         : 0);
 
         appliedCapacity = capacity;
@@ -45,7 +45,7 @@ public class FurnaceEngineTileEntity extends OldEngineBlockEntity {
         Direction engineFacing = getBlockState().getValue(OldEngineBlock.FACING);
         BlockPos wheelPos = worldPosition.relative(engineFacing, 2);
         BlockState wheelState = level.getBlockState(wheelPos);
-        if (!SPBlocks.BRASS_FLYWHEEL.has(wheelState))
+        if (!ModBlocks.BRASS_FLYWHEEL.has(wheelState))
             return;
         Direction wheelFacing = wheelState.getValue(OldFlywheelBlock.HORIZONTAL_FACING);
         if (wheelFacing.getAxis() != engineFacing.getClockWise().getAxis())

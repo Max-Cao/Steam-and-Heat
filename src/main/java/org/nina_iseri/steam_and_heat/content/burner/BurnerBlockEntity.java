@@ -5,7 +5,7 @@ import java.util.List;
 import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import org.nina_iseri.steam_and_heat.SPConfig;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
 
 import org.nina_iseri.steam_and_heat.oldcreatestuff.IGoggleInformation;
 import net.minecraft.core.BlockPos;
@@ -110,7 +110,7 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IGog
         int time = inv.getStackInSlot(0).getBurnTime(RecipeType.SMELTING);
         if (time <= 0) return false;
         inv.getStackInSlot(0).shrink(1);
-        HURemain += time * SPConfig.COMMON.HUPerFuelTick.get()*getEfficiency();//2.4HU/t
+        HURemain += time * ModCommonConfig.COMMON.HUPerFuelTick.get()*getEfficiency();//2.4HU/t
 
         return true;
     }

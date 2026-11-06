@@ -1,6 +1,6 @@
 package org.nina_iseri.steam_and_heat.content.burner;
 
-import org.nina_iseri.steam_and_heat.SPConfig;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -14,10 +14,10 @@ public class CastIronBurnerBlockEntity extends BurnerBlockEntity {
 
     @Override
     protected int getHuPerTick() {
-        return SPConfig.COMMON.castIronBurnerHU.get();
+        return ModCommonConfig.COMMON.castIronBurnerHU.get();
     }
 	@Override
 	public double getEfficiency() {
-		return SPConfig.COMMON.castIronBurnerEfficiency.get();
+		return ModCommonConfig.COMMON.castIronBurnerEfficiency.get();
 	}
 }

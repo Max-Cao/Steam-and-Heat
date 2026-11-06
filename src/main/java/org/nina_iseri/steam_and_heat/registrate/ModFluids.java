@@ -2,7 +2,7 @@ package org.nina_iseri.steam_and_heat.registrate;
 
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.AllTags;
-import org.nina_iseri.steam_and_heat.SPTags;
+import org.nina_iseri.steam_and_heat.ModTags;
 import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import net.createmod.catnip.theme.Color;
@@ -21,15 +21,15 @@ import java.util.function.Supplier;
 
 import static org.nina_iseri.steam_and_heat.SteamAndHeat.REGISTRATE;
 
-public class SPFluids {
+public class ModFluids {
     
     public static final FluidEntry<BaseFlowingFluid.Flowing> STEAM = REGISTRATE
-            .standardFluid("steam", SPFluids.SolidRenderedPlaceableFluidType.create(0xDEDEDE, () -> 1f / 8f))
+            .standardFluid("steam", ModFluids.SolidRenderedPlaceableFluidType.create(0xDEDEDE, () -> 1f / 8f))
             .lang("Steam")
             .properties(b -> b.density(-10).viscosity(1).temperature(473).canPushEntity(false)
                     .canConvertToSource(false).canDrown(true))
             .fluidProperties(b -> b.slopeFindDistance(3).explosionResistance(100F))
-            .tag(SPTags.STEAM)
+            .tag(ModTags.STEAM)
             .source(BaseFlowingFluid.Source::new)
             .bucket()
             .tag(TagKey.create(BuiltInRegistries.ITEM.key(), AllTags.NameSpace.COMMON.id("buckets/steam")))
@@ -44,7 +44,7 @@ public class SPFluids {
 
         public static FluidBuilder.FluidTypeFactory create(int fogColor, Supplier<Float> fogDistance) {
             return (p, s, f) -> {
-                SPFluids.SolidRenderedPlaceableFluidType fluidType = new SPFluids.SolidRenderedPlaceableFluidType(p, s, f);
+                ModFluids.SolidRenderedPlaceableFluidType fluidType = new ModFluids.SolidRenderedPlaceableFluidType(p, s, f);
                 fluidType.fogColor = new Color(fogColor, false).asVectorF();
                 fluidType.fogDistance = fogDistance;
                 return fluidType;

@@ -5,7 +5,7 @@ import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.CreateLang;
 import org.nina_iseri.steam_and_heat.block.SPShapes;
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.ChatFormatting;
@@ -88,7 +88,7 @@ public class DynamoBlock extends DirectionalKineticBlock implements IBE<DynamoBl
 
     @Override
     public BlockEntityType<? extends DynamoBlockEntity> getBlockEntityType() {
-        return SPBlockEntities.DYNAMO.get();
+        return ModBlockEntities.DYNAMO.get();
     }
 
     @Override

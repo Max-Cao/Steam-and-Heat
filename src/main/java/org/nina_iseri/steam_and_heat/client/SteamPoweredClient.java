@@ -2,7 +2,7 @@ package org.nina_iseri.steam_and_heat.client;
 
 import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
 import org.nina_iseri.steam_and_heat.network.ponder.SPPonderPlugin;
-import org.nina_iseri.steam_and_heat.registrate.SPBlocks;
+import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.renderer.RenderType;
@@ -23,12 +23,11 @@ public class SteamPoweredClient {
         PonderIndex.addPlugin(new SPPonderPlugin());
     }
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(Particles.STEAM.get(), SteamParticle.Factory::new);
+        event.registerSpriteSet(ModParticles.STEAM.get(), SteamParticle.Factory::new);
     }
     public static void setupRenderType(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-//            ItemBlockRenderTypes.setRenderLayer(SPFluids.STEAM.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(SPBlocks.DYNAMO.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.DYNAMO.get(), RenderType.cutoutMipped());
         });
     }
 }

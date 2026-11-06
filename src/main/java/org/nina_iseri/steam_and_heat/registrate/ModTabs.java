@@ -12,19 +12,19 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class SPTabs {
-    private static final DeferredRegister<CreativeModeTab> REGISTER =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SteamAndHeat.MODID);
+public class ModTabs {
+    private static final DeferredRegister<CreativeModeTab> REGISTER = DeferredRegister
+            .create(Registries.CREATIVE_MODE_TAB, SteamAndHeat.MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SP_BASE_TAB = REGISTER.register("base",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = REGISTER.register("base",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.steam_and_heat.base"))
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-                    .icon(SPBlocks.STEEL_FLYWHEEL::asStack)
+                    .icon(ModBlocks.STEEL_FLYWHEEL::asStack)
                     .build());
 
     public static void register(IEventBus modEventBus) {
         REGISTER.register(modEventBus);
-        REGISTRATE.defaultCreativeTab(SP_BASE_TAB.getKey());
+        REGISTRATE.defaultCreativeTab(MOD_TAB.getKey());
     }
 }

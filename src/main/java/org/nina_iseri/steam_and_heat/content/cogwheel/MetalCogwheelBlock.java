@@ -2,7 +2,7 @@ package org.nina_iseri.steam_and_heat.content.cogwheel;
 
 import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,7 +19,7 @@ public class MetalCogwheelBlock extends CogWheelBlock {
 
     @Override
     public BlockEntityType<? extends SimpleKineticBlockEntity> getBlockEntityType() {
-        return SPBlockEntities.METAL_COGWHEEL.get();
+        return ModBlockEntities.METAL_COGWHEEL.get();
     }
 
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray) {

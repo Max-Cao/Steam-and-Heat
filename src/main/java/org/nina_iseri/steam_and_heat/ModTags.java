@@ -5,9 +5,9 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 
-public class SPTags {
+public class ModTags {
 
-    public static void init() {
+    public static void register() {
 
     }
 

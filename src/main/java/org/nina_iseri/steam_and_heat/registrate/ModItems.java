@@ -5,7 +5,7 @@ import net.minecraft.world.item.Item;
 
 import static org.nina_iseri.steam_and_heat.SteamAndHeat.REGISTRATE;
 
-public class SPItems {
+public class ModItems {
 
     public static final ItemEntry<Item> BRONZE_SHEET =
             REGISTRATE.item("bronze_sheet", Item::new)

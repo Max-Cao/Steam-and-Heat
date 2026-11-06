@@ -1,8 +1,10 @@
 package org.nina_iseri.steam_and_heat;
 
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public class SPConfig {
+public class ModCommonConfig {
     public static class Common {
 
         public final ModConfigSpec.IntValue bronzeFlywheelCapacity;
@@ -174,6 +176,11 @@ public class SPConfig {
         SERVER = new Server(SERVER_BUILDER);
         SERVER_CONFIG = SERVER_BUILDER.build();
         COMMON_CONFIG = COMMON_BUILDER.build();
+    }
+
+    public static void register(ModContainer modContainer) {
+        modContainer.registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
+        modContainer.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG);
     }
 
 }

@@ -1,14 +1,14 @@
 package org.nina_iseri.steam_and_heat.content.engine;
 
-import org.nina_iseri.steam_and_heat.SPTags;
-import org.nina_iseri.steam_and_heat.client.Particles;
+import org.nina_iseri.steam_and_heat.ModTags;
+import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.content.boiler.BoilerTileEntity;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelTileEntity;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.IGoggleInformation;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlock;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlockEntity;
-import org.nina_iseri.steam_and_heat.registrate.SPFluids;
+import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -87,10 +87,10 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 		this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
-			if (SPTags.STEAM != null)
-				return fluidStack.getFluid().is(SPTags.STEAM);
+			if (ModTags.STEAM != null)
+				return fluidStack.getFluid().is(ModTags.STEAM);
 			else
-				return fluidStack.getFluid() == SPFluids.STEAM.get();
+				return fluidStack.getFluid() == ModFluids.STEAM.get();
 		});
 	}
 
@@ -178,7 +178,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 					double d5 = direction$axis == Direction.Axis.X ? direction.getStepX() * 0.52D : d4;
 					double d6 = this.level.random.nextDouble() * 9.0D / 16.0D;
 					double d7 = direction$axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : d4;
-					this.level.addParticle(Particles.STEAM.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+					this.level.addParticle(ModParticles.STEAM.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
 				}
 			} else paticleInterval = 0;
 		}

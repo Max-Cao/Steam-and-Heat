@@ -2,9 +2,9 @@ package org.nina_iseri.steam_and_heat.content.engine;
 
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.item.TooltipHelper;
-import org.nina_iseri.steam_and_heat.SPConfig;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
 import org.nina_iseri.steam_and_heat.client.ClientUtils;
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,7 +23,7 @@ public class CastIronSteamEngineBlock extends SteamEngineBlock implements IBE<Ca
 
     @Override
     public BlockEntityType<? extends CastIronSteamEngineTileEntity> getBlockEntityType() {
-        return SPBlockEntities.CAST_IRON_STEAM_ENGINE.get();
+        return ModBlockEntities.CAST_IRON_STEAM_ENGINE.get();
     }
     @Override
 	public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> t,
@@ -31,7 +31,7 @@ public class CastIronSteamEngineBlock extends SteamEngineBlock implements IBE<Ca
     	if(Screen.hasShiftDown()) {
     		t.add(Component.translatable("tooltip.steam_and_heat.engine.brief").withStyle(ChatFormatting.GOLD));
     		if(ClientUtils.hasGoggles()) 
-    		t.add(Component.translatable("tooltip.steam_and_heat.engine.steamconsume",SPConfig.COMMON.castIronFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
+    		t.add(Component.translatable("tooltip.steam_and_heat.engine.steamconsume",ModCommonConfig.COMMON.castIronFlywheelSteamConsumptionPerTick.get()).withStyle(ChatFormatting.GOLD));
     	}else {
     		t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY,false));
     	}

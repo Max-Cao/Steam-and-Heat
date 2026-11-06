@@ -1,8 +1,8 @@
 package org.nina_iseri.steam_and_heat.content.burner;
 
 import com.simibubi.create.foundation.block.IBE;
-import org.nina_iseri.steam_and_heat.SPConfig;
-import org.nina_iseri.steam_and_heat.registrate.SPBlockEntities;
+import org.nina_iseri.steam_and_heat.ModCommonConfig;
+import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -13,12 +13,12 @@ public class SteelBurnerBlock extends BurnerBlock implements IBE<SteelBurnerBloc
 
 	@Override
 	public int getHuProduce() {
-		return SPConfig.COMMON.steelBurnerHU.get();
+		return ModCommonConfig.COMMON.steelBurnerHU.get();
 	}
 
 	@Override
 	public double getEfficiency() {
-		return SPConfig.COMMON.steelBurnerEfficiency.get();
+		return ModCommonConfig.COMMON.steelBurnerEfficiency.get();
 	}
 
 	@Override
@@ -28,6 +28,6 @@ public class SteelBurnerBlock extends BurnerBlock implements IBE<SteelBurnerBloc
 
 	@Override
 	public BlockEntityType<? extends SteelBurnerBlockEntity> getBlockEntityType() {
-		return SPBlockEntities.STEEL_BURNER.get();
+		return ModBlockEntities.STEEL_BURNER.get();
 	}
 }

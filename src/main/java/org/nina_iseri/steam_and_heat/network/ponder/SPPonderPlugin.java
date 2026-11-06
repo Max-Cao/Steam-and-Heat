@@ -3,7 +3,7 @@ package org.nina_iseri.steam_and_heat.network.ponder;
 import com.simibubi.create.foundation.ponder.PonderWorldBlockEntityFix;
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import org.nina_iseri.steam_and_heat.SteamAndHeat;
-import org.nina_iseri.steam_and_heat.registrate.SPBlocks;
+import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.createmod.ponder.api.level.PonderLevel;
@@ -23,19 +23,19 @@ public class SPPonderPlugin implements PonderPlugin {
     public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         PonderSceneRegistrationHelper<ItemProviderEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
 
-        HELPER.forComponents(SPBlocks.BRONZE_STEAM_ENGINE, SPBlocks.CAST_IRON_STEAM_ENGINE, SPBlocks.STEEL_STEAM_ENGINE)
+        HELPER.forComponents(ModBlocks.BRONZE_STEAM_ENGINE, ModBlocks.CAST_IRON_STEAM_ENGINE, ModBlocks.STEEL_STEAM_ENGINE)
                 .addStoryBoard("steam_engine", SPScenes::steamEngine, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
-        HELPER.forComponents(SPBlocks.BRONZE_STEAM_ENGINE, SPBlocks.CAST_IRON_STEAM_ENGINE, SPBlocks.STEEL_STEAM_ENGINE)
+        HELPER.forComponents(ModBlocks.BRONZE_STEAM_ENGINE, ModBlocks.CAST_IRON_STEAM_ENGINE, ModBlocks.STEEL_STEAM_ENGINE)
                 .addStoryBoard("boiler", SPScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
-        HELPER.forComponents(SPBlocks.BRONZE_BOILER, SPBlocks.BRONZE_BURNER, SPBlocks.CAST_IRON_BURNER, SPBlocks.CAST_IRON_BOILER, SPBlocks.STEEL_BURNER, SPBlocks.STEEL_BOILER)
+        HELPER.forComponents(ModBlocks.BRONZE_BOILER, ModBlocks.BRONZE_BURNER, ModBlocks.CAST_IRON_BURNER, ModBlocks.CAST_IRON_BOILER, ModBlocks.STEEL_BURNER, ModBlocks.STEEL_BOILER)
                 .addStoryBoard("boiler", SPScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
-        HELPER.forComponents(SPBlocks.BRONZE_FLYWHEEL, SPBlocks.CAST_IRON_FLYWHEEL, SPBlocks.STEEL_FLYWHEEL)
+        HELPER.forComponents(ModBlocks.BRONZE_FLYWHEEL, ModBlocks.CAST_IRON_FLYWHEEL, ModBlocks.STEEL_FLYWHEEL)
                 .addStoryBoard("steam_engine", SPScenes::steamFlywheel, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
-        HELPER.forComponents(SPBlocks.DYNAMO)
+        HELPER.forComponents(ModBlocks.DYNAMO)
                 .addStoryBoard("dynamo", SPScenes::dynamo, AllCreatePonderTags.KINETIC_APPLIANCES, STEAM);
     }
 
@@ -43,7 +43,7 @@ public class SPPonderPlugin implements PonderPlugin {
     public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
         helper.registerTag(STEAM)
                 .addToIndex()
-                .item(SPBlocks.BRONZE_STEAM_ENGINE.get(), true, false)
+                .item(ModBlocks.BRONZE_STEAM_ENGINE.get(), true, false)
                 .title("Steam")
                 .description("Components related to steam production and usage")
                 .register();
