@@ -25,18 +25,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 
 public abstract class BurnerBlockEntity extends SmartBlockEntity implements IGoggleInformation {
-    private ItemStackHandler inv = new ItemStackHandler() {
-
+    private ItemStackHandler fuel = new ItemStackHandler() {
         @Override
-        public boolean isItemValid(int slot,ItemStack stack) {
+        public boolean isItemValid(int slot, ItemStack stack) {
             return stack.getBurnTime(RecipeType.SMELTING) != 0 && stack.getCraftingRemainingItem().isEmpty();
         }
 
     };
-    int HURemain;
+    int hu_remain;
 
-    public static final ICapabilityProvider<BurnerBlockEntity, Direction, IItemHandler> ITEM_CAP = (BurnerBlockEntity te, Direction side) -> {
-        return te.inv;
+    public static final ICapabilityProvider<BurnerBlockEntity, Direction, IItemHandler> ITEM_CAP = (
+            BurnerBlockEntity te, Direction side) -> {
+        return te.fuel;
     };
 
     public BurnerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -44,102 +44,96 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IGog
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    }
 
     @Override
     public void read(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        inv.deserializeNBT(registries, nbt.getCompound("inv"));
-        HURemain = nbt.getInt("hu");
+        fuel.deserializeNBT(registries, nbt.getCompound("inv"));
+        hu_remain = nbt.getInt("hu");
         super.read(nbt, registries, clientPacket);
     }
 
     @Override
     public void write(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
-        nbt.put("inv", inv.serializeNBT(registries));
-        nbt.putInt("hu", HURemain);
+        nbt.put("inv", fuel.serializeNBT(registries));
+        nbt.putInt("hu", hu_remain);
         super.write(nbt, registries, clientPacket);
     }
 
-//    @Override
-//    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-//        CompoundTag nbt = new CompoundTag();
-//        this.writeCustomNBT(nbt);
-//        return ClientboundBlockEntityDataPacket.create(this);
-//    }
-//
-//    @Override
-//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-//        this.readCustomNBT(pkt.getTag());
-//    }
-//
-//    @Override
-//    public CompoundTag getUpdateTag() {
-//        CompoundTag nbt = super.getUpdateTag();
-//        writeCustomNBT(nbt);
-//        return nbt;
-//    }
-
     public void tick() {
-        if (level != null && !level.isClientSide) {
+        if (level == null) {
+            return;
+        }
+        if (!level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             int emit = getHuPerTick();
-            while (HURemain < emit && this.consumeFuel()) ;
-            if (HURemain < emit) {
-                if (HURemain > 0) {
-                    emitHeat(HURemain);
-                    HURemain = 0;
-                    this.setChanged();
-                    this.level.sendBlockUpdated(worldPosition, state, state, 3);
-                }
-                if(state.getValue(BurnerBlock.LIT))
+            while (hu_remain < emit && this.consumeFuel()) {
+            }
+            boolean is_lit_before = state.getValue(BurnerBlock.LIT);
+            if (hu_remain == 0) {
+                if (is_lit_before) {
                     this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, false));
+                }
+                return;
+            }
+            int send_out = Math.min(hu_remain, emit);
+            produceHeat(send_out);
+            hu_remain -= send_out;
+            this.setChanged();
+            if (!is_lit_before) {
+                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
             } else {
-                HURemain -= emit;
-                emitHeat(emit);
-                this.setChanged();
-                if(!state.getValue(BurnerBlock.LIT))
-                    this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
-                else this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                this.level.sendBlockUpdated(worldPosition, state, state, 3);
             }
         }
     }
 
     private boolean consumeFuel() {
-    	if(this.getBlockState().getValue(BurnerBlock.REDSTONE_LOCKED))return false;
-        if (inv.getStackInSlot(0) == null) return false; 
-        int time = inv.getStackInSlot(0).getBurnTime(RecipeType.SMELTING);
-        if (time <= 0) return false;
-        inv.getStackInSlot(0).shrink(1);
-        HURemain += time * ModCommonConfig.COMMON.HUPerFuelTick.get()*getEfficiency();//2.4HU/t
+        if (this.getBlockState().getValue(BurnerBlock.REDSTONE_LOCKED))
+            return false;
+        if (fuel.getStackInSlot(0) == null)
+            return false;
+        int time = fuel.getStackInSlot(0).getBurnTime(RecipeType.SMELTING);
+        if (time <= 0)
+            return false;
+        fuel.getStackInSlot(0).shrink(1);
+        hu_remain += time * ModCommonConfig.COMMON.HUPerFuelTick.get() * getEfficiency();// 2.4HU/t
 
         return true;
     }
 
-    protected void emitHeat(float value) {
-        BlockEntity receiver = level.getBlockEntity(this.getBlockPos().above());
-        if (receiver instanceof IHeatReceiver) {
-            ((IHeatReceiver) receiver).commitHeat(value);
+    protected void produceHeat(float value) {
+        BlockEntity above = level.getBlockEntity(this.getBlockPos().above());
+        if (above instanceof IHeatReceiver receiver) {
+            receiver.commitHeat(value);
         }
     }
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        tooltip.add(componentSpacing.plainCopy().append(Component.translatable("tooltip.steam_and_heat.burner.hu", HURemain).withStyle(ChatFormatting.GOLD)));
-        if(!inv.getStackInSlot(0).isEmpty())
-        tooltip.add(componentSpacing.plainCopy().append(Component.translatable("tooltip.steam_and_heat.burner.item", inv.getStackInSlot(0).getCount(), inv.getStackInSlot(0).getItem().getName(inv.getStackInSlot(0))).withStyle(ChatFormatting.GRAY)));
+        tooltip.add(componentSpacing.plainCopy().append(
+                Component.translatable("tooltip.steam_and_heat.burner.hu", hu_remain).withStyle(ChatFormatting.GOLD)));
+        if (!fuel.getStackInSlot(0).isEmpty())
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(Component
+                            .translatable("tooltip.steam_and_heat.burner.item", fuel.getStackInSlot(0).getCount(),
+                                    fuel.getStackInSlot(0).getItem().getName(fuel.getStackInSlot(0)))
+                            .withStyle(ChatFormatting.GRAY)));
         return true;
     }
 
     /*
      * HU per tick max, 10HU=1 steam
-     * */
+     */
     protected abstract int getHuPerTick();
+
     protected abstract double getEfficiency();
 
     public static float getBoilerHeat(Level level, BlockPos pos, BlockState state) {
         BlockEntity tile = level.getBlockEntity(pos);
         if (tile instanceof BurnerBlockEntity burner) {
-            if (burner.HURemain > 0 || state.getValue(BurnerBlock.LIT)) {
+            if (burner.hu_remain > 0 || state.getValue(BurnerBlock.LIT)) {
                 return 1;
             }
         }
