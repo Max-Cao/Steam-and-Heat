@@ -1,7 +1,7 @@
 package org.nina_iseri.steam_and_heat.client;
 
 import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
-import org.nina_iseri.steam_and_heat.network.ponder.SPPonderPlugin;
+import org.nina_iseri.steam_and_heat.ponder.SPPonderPlugin;
 
 import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.bus.api.IEventBus;

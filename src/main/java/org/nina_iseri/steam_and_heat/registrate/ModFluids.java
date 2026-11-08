@@ -2,7 +2,6 @@ package org.nina_iseri.steam_and_heat.registrate;
 
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.AllTags;
-import org.nina_iseri.steam_and_heat.ModTags;
 import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import net.createmod.catnip.theme.Color;

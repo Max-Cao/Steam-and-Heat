@@ -11,22 +11,22 @@ import org.nina_iseri.steam_and_heat.client.render.BronzeFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.client.render.CastIronFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.client.render.SteelFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.boiler.BronzeBoilerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.boiler.CastIronBoilerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.boiler.SteelBoilerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.burner.BronzeBurnerBlockEntity;
+import org.nina_iseri.steam_and_heat.content.boiler.bronze.BronzeBoilerBlockEntity;
+import org.nina_iseri.steam_and_heat.content.boiler.cast_iron.CastIronBoilerBlockEntity;
+import org.nina_iseri.steam_and_heat.content.boiler.steel.SteelBoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.burner.BurnerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.burner.CastIronBurnerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.burner.SteelBurnerBlockEntity;
+import org.nina_iseri.steam_and_heat.content.burner.bronze.BronzeBurnerBlockEntity;
+import org.nina_iseri.steam_and_heat.content.burner.cast_iron.CastIronBurnerBlockEntity;
+import org.nina_iseri.steam_and_heat.content.burner.steel.SteelBurnerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.cogwheel.MetalCogwheelBlockEntity;
-import org.nina_iseri.steam_and_heat.content.engine.BronzeSteamEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.CastIronSteamEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.FurnaceEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.SteamEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.SteelSteamEngineTileEntity;
+import org.nina_iseri.steam_and_heat.content.engine.CommonEngineInstance;
+import org.nina_iseri.steam_and_heat.content.engine.CommonEngineRenderer;
+import org.nina_iseri.steam_and_heat.content.engine.furnace_engine.FurnaceEngineTileEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineTileEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.bronze.BronzeSteamEngineTileEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.cast_iron.CastIronSteamEngineTileEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.steel.SteelSteamEngineTileEntity;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelTileEntity;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineInstance;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineRenderer;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
@@ -84,9 +84,9 @@ public class ModBlockEntities {
 
         public static final BlockEntityEntry<FurnaceEngineTileEntity> FURNACE_ENGINE = REGISTRATE
                         .blockEntity("furnace_engine", FurnaceEngineTileEntity::new)
-                        .visual(() -> OldEngineInstance::new, false)
+                        .visual(() -> CommonEngineInstance::new, false)
                         .validBlocks(ModBlocks.FURNACE_ENGINE)
-                        .renderer(() -> OldEngineRenderer::new)
+                        .renderer(() -> CommonEngineRenderer::new)
                         .register();
 
         public static final BlockEntityEntry<MetalCogwheelBlockEntity> METAL_COGWHEEL = REGISTRATE

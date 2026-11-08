@@ -1,13 +1,12 @@
 package org.nina_iseri.steam_and_heat.content.flywheel;
 
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineBlockEntity;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
+import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SteamFlywheelTileEntity extends OldFlywheelBlockEntity {
+public class SteamFlywheelTileEntity extends CommonFlywheelBlockEntity {
 
     public SteamFlywheelTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -26,7 +25,7 @@ public class SteamFlywheelTileEntity extends OldFlywheelBlockEntity {
 
         var enginePos = this.worldPosition.relative(facing, 2);
         var engine = this.level.getBlockEntity(enginePos);
-        if (engine instanceof OldEngineBlockEntity)
+        if (engine instanceof CommonEngineBlockEntity)
             return;
 
         clearState();

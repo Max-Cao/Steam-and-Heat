@@ -1,13 +1,13 @@
 package org.nina_iseri.steam_and_heat.client.instance;
 
 import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
+import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlockEntity;
 
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 
 public class BrassFlywheelInstance extends AbstractSPFlywheelInstance {
-    public BrassFlywheelInstance(VisualizationContext modelManager, OldFlywheelBlockEntity tile, float d) {
+    public BrassFlywheelInstance(VisualizationContext modelManager, CommonFlywheelBlockEntity tile, float d) {
         super(modelManager, tile, d);
     }
 

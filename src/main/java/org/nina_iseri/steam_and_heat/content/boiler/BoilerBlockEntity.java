@@ -4,10 +4,11 @@ import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import org.nina_iseri.steam_and_heat.ModCommonConfig;
+
 import org.nina_iseri.steam_and_heat.client.ModParticles;
+import org.nina_iseri.steam_and_heat.content.IHeatReceiver;
 import org.nina_iseri.steam_and_heat.content.burner.BurnerBlock;
-import org.nina_iseri.steam_and_heat.content.burner.IHeatReceiver;
+import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import org.nina_iseri.steam_and_heat.utils.FluidUtils;
 

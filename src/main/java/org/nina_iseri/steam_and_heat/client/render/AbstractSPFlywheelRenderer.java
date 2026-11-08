@@ -7,8 +7,8 @@ import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlock;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
+import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlock;
+import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlockEntity;
 
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.createmod.catnip.math.AngleHelper;
@@ -24,24 +24,24 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<OldFlywheelBlockEntity> {
+public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<CommonFlywheelBlockEntity> {
     public AbstractSPFlywheelRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
-    protected void renderSafe(OldFlywheelBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+    protected void renderSafe(CommonFlywheelBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
         if (!VisualizationManager.supportsVisualization(te.getLevel())) {
             BlockState blockState = te.getBlockState();
-            OldFlywheelBlockEntity wte = te;
+            CommonFlywheelBlockEntity wte = te;
             float speed = wte.visualSpeed.get(partialTicks) * 3.0F / 10.0F;
             float angle = wte.angle + speed * partialTicks;
             VertexConsumer vb = buffer.getBuffer(RenderType.solid());
-            if (OldFlywheelBlock.isConnected(blockState)) {
-                Direction connection = OldFlywheelBlock.getConnection(blockState);
+            if (CommonFlywheelBlock.isConnected(blockState)) {
+                Direction connection = CommonFlywheelBlock.getConnection(blockState);
                 light = LevelRenderer.getLightColor(te.getLevel(), blockState, te.getBlockPos().relative(connection));
                 float rotation = connection.getAxis() == Direction.Axis.X ^ connection.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? -angle : angle;
-                boolean flip = blockState.getValue(OldFlywheelBlock.CONNECTION) == OldFlywheelBlock.ConnectionState.LEFT;
+                boolean flip = blockState.getValue(CommonFlywheelBlock.CONNECTION) == CommonFlywheelBlock.ConnectionState.LEFT;
                 this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
                 this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState), connection), false, true, rotation, flip).light(light).renderInto(ms, vb);
                 this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState), connection), true, false, rotation, flip).light(light).renderInto(ms, vb);

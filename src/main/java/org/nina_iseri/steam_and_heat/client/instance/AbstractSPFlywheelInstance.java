@@ -22,8 +22,8 @@ import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlock;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
+import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlock;
+import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlockEntity;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 
 import static com.simibubi.create.content.kinetics.base.HorizontalKineticBlock.HORIZONTAL_FACING;
 
-public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityVisual<OldFlywheelBlockEntity> implements SimpleDynamicVisual {
+public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityVisual<CommonFlywheelBlockEntity> implements SimpleDynamicVisual {
     protected final Direction facing;
     protected final Direction connection;
 
@@ -50,7 +50,7 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityVisua
 
     protected float lastAngle = Float.NaN;
 
-    public AbstractSPFlywheelInstance(VisualizationContext modelManager, org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity tile, float d) {
+    public AbstractSPFlywheelInstance(VisualizationContext modelManager, org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlockEntity tile, float d) {
         super(modelManager, tile, d);
 
         facing = blockState.getValue(HORIZONTAL_FACING);
@@ -61,9 +61,9 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityVisua
 
         wheel = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(getWheelModel(), facing.getClockWise())).createInstance();//, referenceState, referenceState.getValue(HORIZONTAL_FACING)).createInstance();
 
-        connection = OldFlywheelBlock.getConnection(blockState);
+        connection = CommonFlywheelBlock.getConnection(blockState);
         if (connection != null) {
-            connectedLeft = blockState.getValue(OldFlywheelBlock.CONNECTION) == OldFlywheelBlock.ConnectionState.LEFT;
+            connectedLeft = blockState.getValue(CommonFlywheelBlock.CONNECTION) == CommonFlywheelBlock.ConnectionState.LEFT;
 
             boolean flipAngle = connection.getAxis() == Direction.Axis.X ^ connection.getAxisDirection() == Direction.AxisDirection.NEGATIVE;
 

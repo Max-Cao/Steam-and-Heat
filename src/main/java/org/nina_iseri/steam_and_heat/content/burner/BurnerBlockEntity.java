@@ -6,8 +6,11 @@ import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import org.nina_iseri.steam_and_heat.ModCommonConfig;
+
 import org.nina_iseri.steam_and_heat.SteamAndHeat;
+import org.nina_iseri.steam_and_heat.content.IHeatReceiver;
+import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;

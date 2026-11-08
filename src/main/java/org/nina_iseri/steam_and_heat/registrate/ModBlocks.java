@@ -7,23 +7,24 @@ import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import org.nina_iseri.steam_and_heat.content.boiler.BronzeBoilerBlock;
-import org.nina_iseri.steam_and_heat.content.boiler.CastIronBoilerBlock;
-import org.nina_iseri.steam_and_heat.content.boiler.SteelBoilerBlock;
-import org.nina_iseri.steam_and_heat.content.burner.BronzeBurnerBlock;
+
+import org.nina_iseri.steam_and_heat.content.boiler.bronze.BronzeBoilerBlock;
+import org.nina_iseri.steam_and_heat.content.boiler.cast_iron.CastIronBoilerBlock;
+import org.nina_iseri.steam_and_heat.content.boiler.steel.SteelBoilerBlock;
 import org.nina_iseri.steam_and_heat.content.burner.BurnerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.burner.CastIronBurnerBlock;
-import org.nina_iseri.steam_and_heat.content.burner.SteelBurnerBlock;
+import org.nina_iseri.steam_and_heat.content.burner.bronze.BronzeBurnerBlock;
+import org.nina_iseri.steam_and_heat.content.burner.cast_iron.CastIronBurnerBlock;
+import org.nina_iseri.steam_and_heat.content.burner.steel.SteelBurnerBlock;
 import org.nina_iseri.steam_and_heat.content.cogwheel.MetalCogwheelBlock;
-import org.nina_iseri.steam_and_heat.content.engine.BronzeSteamEngineBlock;
-import org.nina_iseri.steam_and_heat.content.engine.CastIronSteamEngineBlock;
-import org.nina_iseri.steam_and_heat.content.engine.FurnaceEngineBlock;
-import org.nina_iseri.steam_and_heat.content.engine.SteelSteamEngineBlock;
+import org.nina_iseri.steam_and_heat.content.engine.furnace_engine.FurnaceEngineBlock;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.bronze.BronzeSteamEngineBlock;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.cast_iron.CastIronSteamEngineBlock;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.steel.SteelSteamEngineBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.BrassSteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.BronzeSteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.CastIronSteamFlywheelBlock;
+import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelGenerator;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteelSteamFlywheelBlock;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelGenerator;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.Block;
@@ -193,7 +194,7 @@ public class ModBlocks {
             .initialProperties(SharedProperties::softMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
-            .blockstate(new OldFlywheelGenerator()::generate)
+            .blockstate(new CommonFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
@@ -203,7 +204,7 @@ public class ModBlocks {
             .initialProperties(ModBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
-            .blockstate(new OldFlywheelGenerator()::generate)
+            .blockstate(new CommonFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
@@ -213,7 +214,7 @@ public class ModBlocks {
             .initialProperties(ModBlocks::hardMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
-            .blockstate(new OldFlywheelGenerator()::generate)
+            .blockstate(new CommonFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
@@ -223,7 +224,7 @@ public class ModBlocks {
             .initialProperties(SharedProperties::softMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(axeOrPickaxe())
-            .blockstate(new OldFlywheelGenerator()::generate)
+            .blockstate(new CommonFlywheelGenerator()::generate)
             .item()
             .transform(customItemModel())
             .register();
