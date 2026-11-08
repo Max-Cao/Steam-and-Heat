@@ -4,7 +4,6 @@ import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlockEntity;
 import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlockEntity;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.*;
 import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 

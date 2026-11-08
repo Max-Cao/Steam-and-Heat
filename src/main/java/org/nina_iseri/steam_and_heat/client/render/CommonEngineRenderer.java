@@ -1,4 +1,7 @@
-package org.nina_iseri.steam_and_heat.content.engine;
+package org.nina_iseri.steam_and_heat.client.render;
+
+import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
+import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlockEntity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
@@ -19,9 +22,10 @@ public class CommonEngineRenderer<T extends CommonEngineBlockEntity> extends Saf
 
     @Override
     protected void renderSafe(T te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light,
-                              int overlay) {
+            int overlay) {
 
-        if (VisualizationManager.supportsVisualization(te.getLevel())) return;
+        if (VisualizationManager.supportsVisualization(te.getLevel()))
+            return;
 
         Block block = te.getBlockState()
                 .getBlock();

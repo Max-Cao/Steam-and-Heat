@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.content.engine;
+package org.nina_iseri.steam_and_heat.client.instance;
 
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
@@ -12,6 +12,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
+import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
+import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlockEntity;
 
 import java.util.function.Consumer;
 

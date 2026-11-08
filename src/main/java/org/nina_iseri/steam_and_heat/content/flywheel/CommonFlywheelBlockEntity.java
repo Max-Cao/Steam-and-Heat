@@ -1,6 +1,6 @@
 package org.nina_iseri.steam_and_heat.content.flywheel;
 
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.InterpolatedChasingValue;
+import org.nina_iseri.steam_and_heat.utils.InterpolatedChasingValue;
 
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;

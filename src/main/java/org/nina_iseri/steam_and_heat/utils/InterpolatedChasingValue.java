@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.content.oldcreatestuff;
+package org.nina_iseri.steam_and_heat.utils;
 
 public class InterpolatedChasingValue extends InterpolatedValue {
     float speed = 0.5F;

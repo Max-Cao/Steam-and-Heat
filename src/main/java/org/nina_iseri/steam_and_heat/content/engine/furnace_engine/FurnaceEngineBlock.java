@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.block.IBE;
 
 import org.nina_iseri.steam_and_heat.client.ModBlockPartials;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.FurnaceEngineInteractions;
 import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;

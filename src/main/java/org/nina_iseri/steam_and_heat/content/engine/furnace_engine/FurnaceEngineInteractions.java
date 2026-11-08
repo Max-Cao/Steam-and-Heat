@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.content.oldcreatestuff;
+package org.nina_iseri.steam_and_heat.content.engine.furnace_engine;
 
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.Block;
