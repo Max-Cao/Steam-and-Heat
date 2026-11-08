@@ -2,7 +2,7 @@ package org.nina_iseri.steam_and_heat;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import org.nina_iseri.steam_and_heat.client.ModParticles;
-import org.nina_iseri.steam_and_heat.client.SteamPoweredClient;
+import org.nina_iseri.steam_and_heat.client.SteamAndHeatClient;
 import org.nina_iseri.steam_and_heat.registrate.*;
 
 import net.minecraft.resources.ResourceLocation;
@@ -41,7 +41,7 @@ public class SteamAndHeat {
         eventBus.addListener(this::doClientStuff);
 
         if (FMLLoader.getDist() == Dist.CLIENT) {
-            SteamPoweredClient.addClientListeners(NeoForge.EVENT_BUS, eventBus);
+            SteamAndHeatClient.addClientListeners(NeoForge.EVENT_BUS, eventBus);
         }
 
         eventBus.addListener(this::registerCapabilities);
