@@ -90,6 +90,7 @@ public abstract class SteamEngineTileEntity extends CommonEngineBlockEntity impl
 		return te.handler;
 	};
 
+	@SuppressWarnings("deprecation")
 	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos,
 			BlockState state) {
 		super(type, pos, state);
@@ -175,12 +176,12 @@ public abstract class SteamEngineTileEntity extends CommonEngineBlockEntity impl
 			}
 		} else {
 			if (this.getBlockState().getValue(SteamEngineBlock.LIT)) {
-				paticleInterval++;
+				particleInterval++;
 				double d0 = this.worldPosition.getX() + 0.5D;
 				double d1 = this.worldPosition.getY();
 				double d2 = this.worldPosition.getZ() + 0.5D;
-				if (paticleInterval >= 40) {
-					paticleInterval = 0;
+				if (particleInterval >= 40) {
+					particleInterval = 0;
 					this.level.playLocalSound(d0, d1, d2, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.25f, 0.25F,
 							false);
 					Direction direction = this.getBlockState().getValue(SteamEngineBlock.FACING);
@@ -192,11 +193,11 @@ public abstract class SteamEngineTileEntity extends CommonEngineBlockEntity impl
 					this.level.addParticle(ModParticles.STEAM.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
 				}
 			} else
-				paticleInterval = 0;
+				particleInterval = 0;
 		}
 	}
 
-	private int paticleInterval;
+	private int particleInterval;
 
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		if (!this.getBlockState().getValue(SteamEngineBlock.LIT)) {

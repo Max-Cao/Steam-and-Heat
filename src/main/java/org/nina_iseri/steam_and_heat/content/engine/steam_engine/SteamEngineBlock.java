@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.simibubi.create.AllShapes;
 
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
-import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldBlockPartials;
+import static org.nina_iseri.steam_and_heat.client.ModBlockPartials.FURNACE_GENERATOR_FRAME;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import org.nina_iseri.steam_and_heat.registrate.ModItems;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -73,7 +73,7 @@ public class SteamEngineBlock extends CommonEngineBlock {
     @Nullable
     @Override
     public PartialModel getFrameModel() {
-        return OldBlockPartials.FURNACE_GENERATOR_FRAME;
+        return FURNACE_GENERATOR_FRAME;
     }
 
     @Override

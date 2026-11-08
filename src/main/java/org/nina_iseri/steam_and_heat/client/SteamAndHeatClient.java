@@ -1,7 +1,6 @@
 package org.nina_iseri.steam_and_heat.client;
 
-import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
-import org.nina_iseri.steam_and_heat.ponder.SPPonderPlugin;
+import org.nina_iseri.steam_and_heat.ponder.ModPonderPlugin;
 
 import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.bus.api.IEventBus;
@@ -10,13 +9,13 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 public class SteamAndHeatClient {
     public static void addClientListeners(IEventBus forgeEventBus, IEventBus modEventBus) {
-        SPBlockPartials.clientInit();
+        ModBlockPartials.clientInit();
         modEventBus.addListener(SteamAndHeatClient::clientInit);
         modEventBus.addListener(SteamAndHeatClient::registerParticleFactories);
     }
 
     public static void clientInit(FMLClientSetupEvent event) {
-        PonderIndex.addPlugin(new SPPonderPlugin());
+        PonderIndex.addPlugin(new ModPonderPlugin());
     }
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.STEAM.get(), SteamParticle.Factory::new);

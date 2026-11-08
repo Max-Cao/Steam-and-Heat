@@ -3,7 +3,8 @@ package org.nina_iseri.steam_and_heat.content.engine.furnace_engine;
 import com.mojang.serialization.MapCodec;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.block.IBE;
-import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
+
+import org.nina_iseri.steam_and_heat.client.ModBlockPartials;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
 import org.nina_iseri.steam_and_heat.content.oldcreatestuff.FurnaceEngineInteractions;
 import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
@@ -51,7 +52,7 @@ public class FurnaceEngineBlock extends CommonEngineBlock implements IBE<Furnace
     @Override
     @OnlyIn(Dist.CLIENT)
     public PartialModel getFrameModel() {
-        return SPBlockPartials.FURNACE_GENERATOR_FRAME;
+        return ModBlockPartials.FURNACE_GENERATOR_FRAME;
     }
 
     @Override

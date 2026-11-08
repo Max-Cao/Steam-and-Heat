@@ -21,7 +21,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-public class SPScenes {
+public class ModPonderScenes {
 
     public static void steamEngine(SceneBuilder scene, SceneBuildingUtil util) {
         steamEngine(scene, util, false);

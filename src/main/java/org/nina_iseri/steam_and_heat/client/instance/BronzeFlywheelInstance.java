@@ -1,6 +1,6 @@
 package org.nina_iseri.steam_and_heat.client.instance;
 
-import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
+import org.nina_iseri.steam_and_heat.client.ModBlockPartials;
 import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlockEntity;
 
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
@@ -13,26 +13,26 @@ public class BronzeFlywheelInstance extends AbstractSPFlywheelInstance {
 
     @Override
     protected PartialModel getWheelModel() {
-        return SPBlockPartials.BRONZE_FLYWHEEL;
+        return ModBlockPartials.BRONZE_FLYWHEEL;
     }
 
     @Override
     protected PartialModel getUpperSlidingModel() {
-        return SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING;
+        return ModBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING;
     }
 
     @Override
     protected PartialModel getLowerSlidingModel() {
-        return SPBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING;
+        return ModBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING;
     }
 
     @Override
     protected PartialModel getUpperRotatingModel() {
-        return SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING;
+        return ModBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING;
     }
 
     @Override
     protected PartialModel getLowerRotatingModel() {
-        return SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING;
+        return ModBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING;
     }
 }

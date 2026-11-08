@@ -10,9 +10,9 @@ import net.createmod.ponder.api.level.PonderLevel;
 import net.createmod.ponder.api.registration.*;
 import net.minecraft.resources.ResourceLocation;
 
-public class SPPonderPlugin implements PonderPlugin {
+public class ModPonderPlugin implements PonderPlugin {
 
-    public static final ResourceLocation STEAM = SteamAndHeat.rl("steam");
+    public static final ResourceLocation STEAM = SteamAndHeat.resource("steam");
 
     @Override
     public String getModId() {
@@ -24,16 +24,16 @@ public class SPPonderPlugin implements PonderPlugin {
         PonderSceneRegistrationHelper<ItemProviderEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
 
         HELPER.forComponents(ModBlocks.BRONZE_STEAM_ENGINE, ModBlocks.CAST_IRON_STEAM_ENGINE, ModBlocks.STEEL_STEAM_ENGINE)
-                .addStoryBoard("steam_engine", SPScenes::steamEngine, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
+                .addStoryBoard("steam_engine", ModPonderScenes::steamEngine, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
         HELPER.forComponents(ModBlocks.BRONZE_STEAM_ENGINE, ModBlocks.CAST_IRON_STEAM_ENGINE, ModBlocks.STEEL_STEAM_ENGINE)
-                .addStoryBoard("boiler", SPScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
+                .addStoryBoard("boiler", ModPonderScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
         HELPER.forComponents(ModBlocks.BRONZE_BOILER, ModBlocks.BRONZE_BURNER, ModBlocks.CAST_IRON_BURNER, ModBlocks.CAST_IRON_BOILER, ModBlocks.STEEL_BURNER, ModBlocks.STEEL_BOILER)
-                .addStoryBoard("boiler", SPScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
+                .addStoryBoard("boiler", ModPonderScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
         HELPER.forComponents(ModBlocks.BRONZE_FLYWHEEL, ModBlocks.CAST_IRON_FLYWHEEL, ModBlocks.STEEL_FLYWHEEL)
-                .addStoryBoard("steam_engine", SPScenes::steamFlywheel, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
+                .addStoryBoard("steam_engine", ModPonderScenes::steamFlywheel, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
     }
 

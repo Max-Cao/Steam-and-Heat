@@ -6,7 +6,8 @@ import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
+
+import org.nina_iseri.steam_and_heat.client.ModBlockPartials;
 import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlockEntity;
 
@@ -42,10 +43,10 @@ public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<Commo
                 light = LevelRenderer.getLightColor(te.getLevel(), blockState, te.getBlockPos().relative(connection));
                 float rotation = connection.getAxis() == Direction.Axis.X ^ connection.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? -angle : angle;
                 boolean flip = blockState.getValue(CommonFlywheelBlock.CONNECTION) == CommonFlywheelBlock.ConnectionState.LEFT;
-                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState), connection), false, true, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState), connection), true, false, rotation, flip).light(light).renderInto(ms, vb);
-                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(SPBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING, blockState), connection), false, false, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(ModBlockPartials.BRONZE_FLYWHEEL_UPPER_ROTATING, blockState), connection), true, true, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(ModBlockPartials.BRONZE_FLYWHEEL_LOWER_ROTATING, blockState), connection), false, true, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(ModBlockPartials.BRONZE_FLYWHEEL_UPPER_SLIDING, blockState), connection), true, false, rotation, flip).light(light).renderInto(ms, vb);
+                this.transformConnector(this.rotateToFacing(CachedBuffers.partial(ModBlockPartials.BRONZE_FLYWHEEL_LOWER_SLIDING, blockState), connection), false, false, rotation, flip).light(light).renderInto(ms, vb);
             }
             this.renderFlywheel(te, ms, light, blockState, angle, vb);
         }
@@ -55,7 +56,7 @@ public class AbstractSPFlywheelRenderer extends KineticBlockEntityRenderer<Commo
         @SuppressWarnings("deprecation")
         BlockState referenceState = blockState.rotate(Rotation.CLOCKWISE_90);
         Direction facing = (Direction) referenceState.getValue(BlockStateProperties.HORIZONTAL_FACING);
-        SuperByteBuffer wheel = CachedBuffers.partialFacing(SPBlockPartials.BRONZE_FLYWHEEL, referenceState, facing);
+        SuperByteBuffer wheel = CachedBuffers.partialFacing(ModBlockPartials.BRONZE_FLYWHEEL, referenceState, facing);
         kineticRotationTransform(wheel, te, ((Direction) blockState.getValue(HorizontalKineticBlock.HORIZONTAL_FACING)).getAxis(), AngleHelper.rad((double) angle), light);
         wheel.renderInto(ms, vb);
     }
