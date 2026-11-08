@@ -4,7 +4,7 @@ import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import org.nina_iseri.steam_and_heat.ModCommonConfig;
 import org.nina_iseri.steam_and_heat.content.burner.BurnerBlock;
 import org.nina_iseri.steam_and_heat.content.engine.SteamEngineBlock;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlock;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlock;
 import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 
 import net.createmod.catnip.math.Pointing;

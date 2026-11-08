@@ -6,8 +6,7 @@ import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlock;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlockEntity;
+
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.instance.Instancer;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
@@ -23,6 +22,8 @@ import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlock;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +50,7 @@ public abstract class AbstractSPFlywheelInstance extends KineticBlockEntityVisua
 
     protected float lastAngle = Float.NaN;
 
-    public AbstractSPFlywheelInstance(VisualizationContext modelManager, org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlockEntity tile, float d) {
+    public AbstractSPFlywheelInstance(VisualizationContext modelManager, org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity tile, float d) {
         super(modelManager, tile, d);
 
         facing = blockState.getValue(HORIZONTAL_FACING);

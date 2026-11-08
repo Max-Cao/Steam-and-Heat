@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.oldcreatestuff;
+package org.nina_iseri.steam_and_heat.content.oldcreatestuff;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;

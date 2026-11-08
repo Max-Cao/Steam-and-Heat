@@ -7,7 +7,10 @@
   "item.steam_and_heat.steel_sheet": "钢板",
   "item.steam_and_heat.cast_iron_ingot": "铸铁锭",
   "item.steam_and_heat.steel_ingot": "钢锭",
-
+  
+  
+  "block.steam_and_heat.furnace_engine": "熔炉引擎",
+  "block.steam_and_heat.brass_flywheel": "黄铜飞轮",
   "block.steam_and_heat.bronze_steam_engine": "青铜蒸汽引擎",
   "block.steam_and_heat.cast_iron_steam_engine": "铸铁蒸汽引擎",
   "block.steam_and_heat.steel_steam_engine": "钢蒸汽引擎",

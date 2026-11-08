@@ -23,7 +23,8 @@ import org.nina_iseri.steam_and_heat.content.flywheel.BrassSteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.BronzeSteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.CastIronSteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteelSteamFlywheelBlock;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelGenerator;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelGenerator;
+
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

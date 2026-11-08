@@ -6,8 +6,8 @@ import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelTileEntity;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlock;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineBlock;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineBlockEntity;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;

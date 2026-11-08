@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.oldcreatestuff;
+package org.nina_iseri.steam_and_heat.content.oldcreatestuff;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;

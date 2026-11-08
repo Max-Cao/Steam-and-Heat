@@ -25,8 +25,9 @@ import org.nina_iseri.steam_and_heat.content.engine.FurnaceEngineTileEntity;
 import org.nina_iseri.steam_and_heat.content.engine.SteamEngineTileEntity;
 import org.nina_iseri.steam_and_heat.content.engine.SteelSteamEngineTileEntity;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelTileEntity;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineInstance;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineRenderer;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineInstance;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineRenderer;
+
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import net.neoforged.neoforge.capabilities.Capabilities;

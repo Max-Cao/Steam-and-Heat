@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.oldcreatestuff;
+package org.nina_iseri.steam_and_heat.content.oldcreatestuff;
 
 import net.minecraft.util.Mth;
 

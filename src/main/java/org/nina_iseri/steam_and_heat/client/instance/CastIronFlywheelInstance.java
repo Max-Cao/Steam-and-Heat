@@ -1,7 +1,8 @@
 package org.nina_iseri.steam_and_heat.client.instance;
 
 import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlockEntity;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
+
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 

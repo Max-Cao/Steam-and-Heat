@@ -7,8 +7,9 @@ import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import org.nina_iseri.steam_and_heat.block.SPBlockPartials;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlock;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlockEntity;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlock;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
+
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.render.CachedBuffers;

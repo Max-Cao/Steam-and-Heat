@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.oldcreatestuff;
+package org.nina_iseri.steam_and_heat.content.oldcreatestuff;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;

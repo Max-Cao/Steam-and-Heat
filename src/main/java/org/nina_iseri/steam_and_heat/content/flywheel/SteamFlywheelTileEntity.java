@@ -1,7 +1,8 @@
 package org.nina_iseri.steam_and_heat.content.flywheel;
 
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlockEntity;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlockEntity;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldFlywheelBlockEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;

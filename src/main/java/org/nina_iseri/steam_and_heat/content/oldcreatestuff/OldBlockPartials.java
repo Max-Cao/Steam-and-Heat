@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.oldcreatestuff;
+package org.nina_iseri.steam_and_heat.content.oldcreatestuff;
 
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.resources.ResourceLocation;

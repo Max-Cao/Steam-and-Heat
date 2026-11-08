@@ -2,8 +2,9 @@ package org.nina_iseri.steam_and_heat.content.engine;
 
 import com.mojang.serialization.MapCodec;
 import com.simibubi.create.AllShapes;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldBlockPartials;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlock;
+
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldBlockPartials;
+import org.nina_iseri.steam_and_heat.content.oldcreatestuff.OldEngineBlock;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import org.nina_iseri.steam_and_heat.registrate.ModItems;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
