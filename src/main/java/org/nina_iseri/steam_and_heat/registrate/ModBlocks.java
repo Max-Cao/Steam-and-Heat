@@ -7,7 +7,6 @@ import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import org.nina_iseri.steam_and_heat.content.alternator.DynamoBlock;
 import org.nina_iseri.steam_and_heat.content.boiler.BronzeBoilerBlock;
 import org.nina_iseri.steam_and_heat.content.boiler.CastIronBoilerBlock;
 import org.nina_iseri.steam_and_heat.content.boiler.SteelBoilerBlock;
@@ -186,14 +185,6 @@ public class ModBlocks {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .item(CogwheelBlockItem::new)
             .build()
-            .register();
-
-    public static final BlockEntry<DynamoBlock> DYNAMO = REGISTRATE.block("alternator", DynamoBlock::new)
-            .initialProperties(ModBlocks::hardMetal)
-            .transform(pickaxeOnly())
-            .tag(AllTags.AllBlockTags.SAFE_NBT.tag) // Dono what this tag means (contraption safe?).
-            .item()
-            .transform(customItemModel())
             .register();
 
     public static final BlockEntry<BronzeSteamFlywheelBlock> BRONZE_FLYWHEEL = REGISTRATE

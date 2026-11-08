@@ -3,10 +3,6 @@ package org.nina_iseri.steam_and_heat;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.client.SteamPoweredClient;
-import org.nina_iseri.steam_and_heat.content.alternator.DynamoBlockEntity;
-import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.burner.BurnerBlockEntity;
-import org.nina_iseri.steam_and_heat.content.engine.SteamEngineTileEntity;
 import org.nina_iseri.steam_and_heat.registrate.*;
 
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +13,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLLoader;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 

@@ -2,8 +2,11 @@ package org.nina_iseri.steam_and_heat.content.boiler;
 
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.CreateLang;
+
+import org.nina_iseri.steam_and_heat.SteamAndHeat;
 import org.nina_iseri.steam_and_heat.client.ClientUtils;
 import net.createmod.catnip.lang.FontHelper;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -72,21 +75,23 @@ public abstract class BoilerBlock extends Block {
 	@Override
 	public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> t, TooltipFlag f) {
 		if (Screen.hasShiftDown()) {
-			t.add(Component.translatable("tooltip.steam_and_heat.boiler.brief").withStyle(ChatFormatting.GOLD));
+			new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.brief").style(ChatFormatting.GOLD).addTo(t);
 			if (ClientUtils.hasGoggles()) {
-				t.add(Component.translatable("tooltip.steam_and_heat.boiler.danger").withStyle(ChatFormatting.RED));
-				t.add(Component.translatable("tooltip.steam_and_heat.boiler.huconsume", this.getHuConsume())
-						.withStyle(ChatFormatting.GOLD));
-				t.add(Component.translatable("tooltip.steam_and_heat.boiler.waterconsume",
-						((int) Math.ceil(this.getHuConsume() / 120.0))).withStyle(ChatFormatting.AQUA));
-				t.add(Component.translatable("tooltip.steam_and_heat.boiler.steamproduce", this.getHuConsume() / 10)
-						.withStyle(ChatFormatting.GOLD));
+				new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.danger")
+						.style(ChatFormatting.RED).addTo(t);
+				new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.huconsume", this.getHuConsume())
+						.style(ChatFormatting.GOLD).addTo(t);
+				new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.waterconsume",
+						((int) Math.ceil(this.getHuConsume() / 120.0))).style(ChatFormatting.AQUA).addTo(t);
+				new LangBuilder(SteamAndHeat.MODID)
+						.translate("tooltip.boiler.steamproduce", this.getHuConsume() / 10)
+						.style(ChatFormatting.GOLD).addTo(t);
 			}
 		} else {
 			t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
 		}
 		if (Screen.hasControlDown()) {
-			t.add(Component.translatable("tooltip.steam_and_heat.boiler.redstone").withStyle(ChatFormatting.RED));
+			new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.redstone").style(ChatFormatting.RED).addTo(t);
 		} else {
 			t.add(CreateLang
 					.translate("tooltip.holdForControls",

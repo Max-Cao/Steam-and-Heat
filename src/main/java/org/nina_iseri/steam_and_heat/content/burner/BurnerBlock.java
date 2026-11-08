@@ -2,8 +2,11 @@ package org.nina_iseri.steam_and_heat.content.burner;
 
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.CreateLang;
+
+import org.nina_iseri.steam_and_heat.SteamAndHeat;
 import org.nina_iseri.steam_and_heat.client.ClientUtils;
 import net.createmod.catnip.lang.FontHelper;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -100,29 +103,32 @@ public abstract class BurnerBlock extends Block {
     }
 
     @Override
-    public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> t,
+    public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> tooltip,
             TooltipFlag f) {
 
         if (Screen.hasShiftDown()) {
-            t.add(Component.translatable("tooltip.steam_and_heat.burner.brief").withStyle(ChatFormatting.GOLD));
+            new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.brief").style(ChatFormatting.GOLD)
+                    .forGoggles(tooltip, 1);
             if (ClientUtils.hasGoggles()) {
-                t.add(Component.translatable("tooltip.steam_and_heat.burner.efficiency", getEfficiencyString())
-                        .withStyle(ChatFormatting.RED));
-                t.add(Component.translatable("tooltip.steam_and_heat.burner.huproduce", this.getHuProduce())
-                        .withStyle(ChatFormatting.GOLD));
-                t.add(Component.translatable("tooltip.steam_and_heat.burner.danger").withStyle(ChatFormatting.RED));
+                new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.efficiency", getEfficiencyString())
+                        .style(ChatFormatting.RED).addTo(tooltip);
+                new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.huproduce", this.getHuProduce())
+                        .style(ChatFormatting.GOLD).addTo(tooltip);
+                new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.danger")
+                        .style(ChatFormatting.RED).addTo(tooltip);
             }
         } else {
-            t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
+            tooltip.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
         }
         if (Screen.hasControlDown()) {
-            t.add(Component.translatable("tooltip.steam_and_heat.burner.redstone").withStyle(ChatFormatting.RED));
+            new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.redstone").style(ChatFormatting.RED)
+                    .addTo(tooltip);
         } else {
-            t.add(CreateLang.translate("tooltip.holdForControls", CreateLang.translate("tooltip.keyCtrl")
+            tooltip.add(CreateLang.translate("tooltip.holdForControls", CreateLang.translate("tooltip.keyCtrl")
                     .style(ChatFormatting.GRAY))
                     .style(ChatFormatting.DARK_GRAY).component());
         }
-        super.appendHoverText(i, w, t, f);
+        super.appendHoverText(i, w, tooltip, f);
     }
 
     @Override

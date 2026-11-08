@@ -35,8 +35,6 @@ public class SPPonderPlugin implements PonderPlugin {
         HELPER.forComponents(ModBlocks.BRONZE_FLYWHEEL, ModBlocks.CAST_IRON_FLYWHEEL, ModBlocks.STEEL_FLYWHEEL)
                 .addStoryBoard("steam_engine", SPScenes::steamFlywheel, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
-        HELPER.forComponents(ModBlocks.DYNAMO)
-                .addStoryBoard("dynamo", SPScenes::dynamo, AllCreatePonderTags.KINETIC_APPLIANCES, STEAM);
     }
 
     @Override

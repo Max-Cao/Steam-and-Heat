@@ -2,7 +2,6 @@ package org.nina_iseri.steam_and_heat.network.ponder;
 
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import org.nina_iseri.steam_and_heat.ModCommonConfig;
-import org.nina_iseri.steam_and_heat.content.alternator.DynamoBlock;
 import org.nina_iseri.steam_and_heat.content.burner.BurnerBlock;
 import org.nina_iseri.steam_and_heat.content.engine.SteamEngineBlock;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldFlywheelBlock;
@@ -16,8 +15,6 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
 import net.createmod.ponder.foundation.element.InputWindowElement;
-import net.minecraft.world.level.block.LeverBlock;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.core.Direction;
@@ -233,72 +230,5 @@ public class SPScenes {
         String text4 = "However, power up higher level of "+(flywheel?"flywheel":"engine")+" require higher amount of steam, boiler and burner should match the level.";
         scene.overlay().showText(80).placeNearTarget().colored(PonderPalette.RED).text(text4).pointAt(util.vector().topOf(5,2,3));
         scene.idle(80);
-    }
-
-    public static void dynamo(SceneBuilder builder, SceneBuildingUtil util) {
-        CreateSceneBuilder scene = new CreateSceneBuilder(builder);
-        scene.title("dynamo", "Generating Electric energy using a Dynamo");
-        scene.configureBasePlate(1, 0, 4);
-        scene.world().showSection(util.select().layer(0), Direction.DOWN);
-        scene.idle(10);
-        scene.world().showSection(util.select().layer(1), Direction.DOWN);
-        scene.idle(10);
-        scene.world().showSection(util.select().layer(2), Direction.DOWN);
-        scene.idle(10);
-
-        BlockPos generator = util.grid().at(3, 1, 2);
-        BlockPos shaft = util.grid().at(2, 1, 2);
-        BlockPos gauge = util.grid().at(1, 1, 2);
-        BlockPos cogwheel = util.grid().at(0, 1, 2);
-        BlockPos largecog = util.grid().at(0, 2, 3);
-        BlockPos redstone = util.grid().at(3, 1, 1);
-        BlockPos lever = util.grid().at(3, 1, 0);
-
-        scene.world().setKineticSpeed(util.select().position(largecog), -16.0F);
-        scene.world().setKineticSpeed(util.select().position(cogwheel), 32.0F);
-        scene.world().setKineticSpeed(util.select().position(shaft), 32.0F);
-        scene.world().setKineticSpeed(util.select().position(gauge), 32.0F);
-        scene.world().setKineticSpeed(util.select().position(generator), 32.0F);
-        scene.idle(5);
-
-        scene.overlay().showText(50)
-                .attachKeyFrame()
-                .text("The Dynamo generates electric energy (fe) from rotational force")
-                .placeNearTarget()
-                .pointAt(util.vector().topOf(generator));
-        scene.idle(60);
-
-        scene.effects().rotationSpeedIndicator(cogwheel);
-        scene.idle(60);
-
-        scene.overlay().showText(50)
-                .text("It requires at least 32 RPM to operate")
-                .placeNearTarget()
-                .pointAt(util.vector().topOf(cogwheel));
-        scene.idle(60);
-
-        scene.overlay().showText(50)
-                .text("The Dynamos energy production is determined by the input RPM")
-                .placeNearTarget()
-                .pointAt(util.vector().topOf(generator));
-        scene.idle(60);
-
-        scene.overlay().showText(50)
-                .text("It has conversion efficiency of 75 Percent")
-                .placeNearTarget()
-                .pointAt(util.vector().topOf(generator));
-        scene.idle(60);
-
-        scene.overlay().showText(50)
-                .attachKeyFrame()
-                .text("You can lock the Dynamo with redstone signal so it will not apply stress to the network")
-                .placeNearTarget()
-                .pointAt(util.vector().centerOf(lever));
-        scene.idle(60);
-
-        scene.world().modifyBlock(lever, s -> s.setValue(LeverBlock.POWERED, true), false);
-        scene.world().modifyBlock(redstone, s -> s.setValue(RedStoneWireBlock.POWER, 15), false);
-        scene.world().modifyBlock(generator, s -> s.setValue(DynamoBlock.REDSTONE_LOCKED, true), false);
-        scene.idle(60);
     }
 }

@@ -1,14 +1,18 @@
 package org.nina_iseri.steam_and_heat.content.engine;
 
 import org.nina_iseri.steam_and_heat.ModTags;
+import org.nina_iseri.steam_and_heat.SteamAndHeat;
 import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelTileEntity;
-import org.nina_iseri.steam_and_heat.oldcreatestuff.IGoggleInformation;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlock;
 import org.nina_iseri.steam_and_heat.oldcreatestuff.OldEngineBlockEntity;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
+
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,10 +33,11 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
-public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IGoggleInformation {
+public abstract class SteamEngineTileEntity extends OldEngineBlockEntity implements IHaveGoggleInformation
+ {
 
 	private FluidTank tank;
-	private IFluidHandler handler=new IFluidHandler() {
+	private IFluidHandler handler = new IFluidHandler() {
 
 		@Override
 		public int getTanks() {
@@ -56,10 +61,10 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 
 		@Override
 		public int fill(FluidStack resource, FluidAction action) {
-			int filled=tank.fill(resource, action);
-			if(filled>0&&action==FluidAction.EXECUTE) {
+			int filled = tank.fill(resource, action);
+			if (filled > 0 && action == FluidAction.EXECUTE) {
 				setChanged();
-				level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+				level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 			}
 			return filled;
 		}
@@ -80,11 +85,13 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 
 	protected SteamFlywheelTileEntity poweredWheel;
 
-	public static final ICapabilityProvider<SteamEngineTileEntity, Direction, IFluidHandler> FLUID_CAP = (SteamEngineTileEntity te, Direction side) -> {
+	public static final ICapabilityProvider<SteamEngineTileEntity, Direction, IFluidHandler> FLUID_CAP = (
+			SteamEngineTileEntity te, Direction side) -> {
 		return te.handler;
 	};
 
-	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos, BlockState state) {
+	public SteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos,
+			BlockState state) {
 		super(type, pos, state);
 		this.tank = new FluidTank(this.getSteamStorage(), fluidStack -> {
 			if (ModTags.STEAM != null)
@@ -97,46 +104,48 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	@Override
 	public void tick() {
 		super.tick();
-		if(level == null)return;
+		if (level == null)
+			return;
 		if (!level.isClientSide) {
 			BlockState state = this.level.getBlockState(this.worldPosition);
-			if(this.poweredWheel==null)attachWheel();
+			if (this.poweredWheel == null)
+				attachWheel();
 			if (this.poweredWheel == null || this.poweredWheel.isRemoved()) {
-				if(this.appliedSpeed!=0||this.appliedCapacity!=0) {
+				if (this.appliedSpeed != 0 || this.appliedCapacity != 0) {
 					this.appliedCapacity = 0;
 					this.appliedSpeed = 0;
 					this.refreshWheelSpeed();
 				}
 				heatup = 0;
-				if(!tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).isEmpty()) {
+				if (!tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).isEmpty()) {
 					this.setChanged();
-					level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+					level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 				}
-				if(state.getValue(SteamEngineBlock.LIT))
+				if (state.getValue(SteamEngineBlock.LIT))
 					this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 			} else {
 				Direction engineFacing = this.getBlockState().getValue(OldEngineBlock.FACING);
 				BlockPos boilerPos = this.worldPosition.relative(engineFacing, -1);
-				FluidTank tank=this.tank;
-				if(this.tank.isEmpty()) {
-					BlockEntity te=this.getLevel().getBlockEntity(boilerPos);
-					if(te instanceof BoilerBlockEntity) {
-						tank=((BoilerBlockEntity)te).output;
+				FluidTank tank = this.tank;
+				if (this.tank.isEmpty()) {
+					BlockEntity te = this.getLevel().getBlockEntity(boilerPos);
+					if (te instanceof BoilerBlockEntity) {
+						tank = ((BoilerBlockEntity) te).output;
 					}
 				}
 
-				if(heatup==0&&tank.getFluidAmount()/this.getSteamConsumptionPerTick()<40)
+				if (heatup == 0 && tank.getFluidAmount() / this.getSteamConsumptionPerTick() < 40)
 					return;
 
 				if (!tank.isEmpty() && tank.drain(this.getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE)
 						.getAmount() >= this.getSteamConsumptionPerTick()) {
 
 					if (heatup >= 60) {
-						float spd=this.getGeneratingSpeed();
-						float cap=this.getGeneratingCapacity();
-						if(this.tank!=tank)
-							cap = Mth.ceil(cap*this.getSuckEfficiency());
-						if(this.appliedSpeed!=spd||this.appliedCapacity!=cap) {
+						float spd = this.getGeneratingSpeed();
+						float cap = this.getGeneratingCapacity();
+						if (this.tank != tank)
+							cap = Mth.ceil(cap * this.getSuckEfficiency());
+						if (this.appliedSpeed != spd || this.appliedCapacity != cap) {
 							this.appliedSpeed = spd;
 							this.appliedCapacity = cap;
 							this.refreshWheelSpeed();
@@ -144,26 +153,27 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 					} else {
 						heatup++;
 						this.setChanged();
-						level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
-						if(!state.getValue(SteamEngineBlock.LIT))
-							this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, true));
+						level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+						if (!state.getValue(SteamEngineBlock.LIT))
+							this.level.setBlockAndUpdate(this.worldPosition,
+									state.setValue(SteamEngineBlock.LIT, true));
 					}
 				} else {
 					if (heatup > 0) {
 						heatup--;
 						this.setChanged();
-						level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+						level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 					}
-					if(this.appliedSpeed!=0||this.appliedCapacity!=0) {
+					if (this.appliedSpeed != 0 || this.appliedCapacity != 0) {
 						this.appliedCapacity = 0;
 						this.appliedSpeed = 0;
 						this.refreshWheelSpeed();
 					}
-					if(state.getValue(SteamEngineBlock.LIT))
+					if (state.getValue(SteamEngineBlock.LIT))
 						this.level.setBlockAndUpdate(this.worldPosition, state.setValue(SteamEngineBlock.LIT, false));
 				}
 			}
-		}else {
+		} else {
 			if (this.getBlockState().getValue(SteamEngineBlock.LIT)) {
 				paticleInterval++;
 				double d0 = this.worldPosition.getX() + 0.5D;
@@ -171,7 +181,8 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 				double d2 = this.worldPosition.getZ() + 0.5D;
 				if (paticleInterval >= 40) {
 					paticleInterval = 0;
-					this.level.playLocalSound(d0, d1, d2, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.25f, 0.25F, false);
+					this.level.playLocalSound(d0, d1, d2, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.25f, 0.25F,
+							false);
 					Direction direction = this.getBlockState().getValue(SteamEngineBlock.FACING);
 					Direction.Axis direction$axis = direction.getAxis();
 					double d4 = this.level.random.nextDouble() * 0.6D - 0.3D;
@@ -180,7 +191,8 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 					double d7 = direction$axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : d4;
 					this.level.addParticle(ModParticles.STEAM.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
 				}
-			} else paticleInterval = 0;
+			} else
+				paticleInterval = 0;
 		}
 	}
 
@@ -188,17 +200,14 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		if (!this.getBlockState().getValue(SteamEngineBlock.LIT)) {
-			tooltip.add(componentSpacing.plainCopy()
-					.append(Component.translatable("tooltip.steam_and_heat.steam_engine.not_enough_steam")
-							.withStyle(ChatFormatting.RED)));
+			new LangBuilder(SteamAndHeat.MODID).translate("tooltip.steam_engine.not_enough_steam")
+					.style(ChatFormatting.RED).forGoggles(tooltip, 1);
 		} else if (heatup < 60) {
-			tooltip.add(componentSpacing.plainCopy()
-					.append(Component.translatable("tooltip.steam_and_heat.steam_engine.heating")
-							.withStyle(ChatFormatting.YELLOW)));
+			new LangBuilder(SteamAndHeat.MODID).translate("tooltip.steam_engine.heating")
+					.style(ChatFormatting.YELLOW).forGoggles(tooltip, 1);
 		} else {
-			tooltip.add(componentSpacing.plainCopy()
-					.append(Component.translatable("tooltip.steam_and_heat.steam_engine.running")
-							.withStyle(ChatFormatting.GREEN)));
+			new LangBuilder(SteamAndHeat.MODID).translate("tooltip.steam_engine.running")
+					.style(ChatFormatting.GREEN).forGoggles(tooltip, 1);
 		}
 		return this.containedFluidTooltip(tooltip, isPlayerSneaking, handler);
 	}
@@ -215,7 +224,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 		super.write(compound, registries, clientPacket);
 		compound.put("TankContent", tank.writeToNBT(registries, new CompoundTag()));
 		compound.putInt("heatup", heatup);
-		
+
 	}
 
 	public void attachWheel() {
@@ -244,9 +253,9 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 				}
 			}
 		}
-		if(poweredWheel!=null&&!poweredWheel.isRemoved()) {
+		if (poweredWheel != null && !poweredWheel.isRemoved()) {
 			this.poweredWheel.setRotation(0, 0);
-			this.poweredWheel =null;
+			this.poweredWheel = null;
 		}
 	}
 
@@ -273,7 +282,7 @@ public abstract class SteamEngineTileEntity extends OldEngineBlockEntity impleme
 	}
 
 	@Override
-	public void remove(){
+	public void remove() {
 		super.remove();
 		detachWheel();
 	}

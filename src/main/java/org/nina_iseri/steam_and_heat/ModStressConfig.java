@@ -1,7 +1,6 @@
 package org.nina_iseri.steam_and_heat;
 
 import com.simibubi.create.api.stress.BlockStressValues;
-import org.nina_iseri.steam_and_heat.content.alternator.DynamoBlock;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -27,9 +26,6 @@ public class ModStressConfig {
 
 	public static DoubleSupplier getImpact(Block arg0) {
 		ResourceLocation registryName = BuiltInRegistries.BLOCK.getKey(arg0);
-		if (arg0 instanceof DynamoBlock) {
-			return ModCommonConfig.COMMON.dynamoImpact::get;
-		}
 		String[] mat = registryName.getPath().split("_");
 		if (mat[mat.length - 1].equals("cogwheel")) {
 			switch (mat[0]) {

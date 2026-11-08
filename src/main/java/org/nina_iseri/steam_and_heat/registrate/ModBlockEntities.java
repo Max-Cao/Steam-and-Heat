@@ -10,7 +10,6 @@ import org.nina_iseri.steam_and_heat.client.render.BrassFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.client.render.BronzeFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.client.render.CastIronFlywheelRenderer;
 import org.nina_iseri.steam_and_heat.client.render.SteelFlywheelRenderer;
-import org.nina_iseri.steam_and_heat.content.alternator.DynamoBlockEntity;
 import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.boiler.BronzeBoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.boiler.CastIronBoilerBlockEntity;
@@ -98,12 +97,6 @@ public class ModBlockEntities {
                         .renderer(() -> KineticBlockEntityRenderer::new)
                         .register();
 
-        public static final BlockEntityEntry<DynamoBlockEntity> DYNAMO = REGISTRATE
-                        .blockEntity("alternator", DynamoBlockEntity::new)
-                        .visual(() -> org.nina_iseri.steam_and_heat.content.alternator.DynamoShaftInstance::new)
-                        .validBlocks(ModBlocks.DYNAMO)
-                        .register();
-
         public static final BlockEntityEntry<SteamFlywheelTileEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE
                         .blockEntity("bronze_steam_flywheel", SteamFlywheelTileEntity::new)
                         .visual(() -> BronzeFlywheelInstance::new)
@@ -154,7 +147,5 @@ public class ModBlockEntities {
                                 ModBlockEntities.CAST_IRON_STEAM_ENGINE.get(), SteamEngineTileEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.STEEL_STEAM_ENGINE.get(),
                                 SteamEngineTileEntity.FLUID_CAP);
-                event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModBlockEntities.DYNAMO.get(),
-                                DynamoBlockEntity.ENERGY_CAP);
         }
 }

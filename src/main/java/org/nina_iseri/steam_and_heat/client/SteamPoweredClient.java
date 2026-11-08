@@ -27,7 +27,6 @@ public class SteamPoweredClient {
     }
     public static void setupRenderType(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.DYNAMO.get(), RenderType.cutoutMipped());
         });
     }
 }
