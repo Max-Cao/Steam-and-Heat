@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.content.engine.furnace_engine;
+package org.nina_iseri.steam_and_heat.content.engine.stirling_engine;
 
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlockEntity;
@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class FurnaceEngineTileEntity extends CommonEngineBlockEntity {
+public class StirlingEngineTileEntity extends CommonEngineBlockEntity {
 
-    public FurnaceEngineTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public StirlingEngineTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
@@ -27,8 +27,8 @@ public class FurnaceEngineTileEntity extends CommonEngineBlockEntity {
 
     public void updateFurnace() {
         BlockState state = level.getBlockState(CommonEngineBlock.getBaseBlockPos(getBlockState(), worldPosition));
-        FurnaceEngineInteractions.InteractionHandler handler = FurnaceEngineInteractions.getHandler(state);
-        FurnaceEngineInteractions.HeatSource heatSource = handler.getHeatSource(state);
+        StirlingEngineInteractions.InteractionHandler handler = StirlingEngineInteractions.getHandler(state);
+        StirlingEngineInteractions.HeatSource heatSource = handler.getHeatSource(state);
         if (heatSource.isEmpty())
             return;
 

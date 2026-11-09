@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.content.engine.furnace_engine;
+package org.nina_iseri.steam_and_heat.content.engine.stirling_engine;
 
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.Block;
@@ -8,6 +8,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 
 /**
  * Example:
@@ -20,7 +23,7 @@ import java.util.function.Function;
  * }
  * </pre>
  */
-public class FurnaceEngineInteractions {
+public class StirlingEngineInteractions {
 
     private static final Map<Block, InteractionHandler> HANDLERS = new HashMap<>();
     private static final InteractionHandler DEFAULT_HANDLER = new InteractionHandler() {};
@@ -43,12 +46,22 @@ public class FurnaceEngineInteractions {
 
     public interface InteractionHandler {
         default HeatSource getHeatSource(BlockState state) {
-            if (state.getBlock() instanceof AbstractFurnaceBlock && state.hasProperty(AbstractFurnaceBlock.LIT)) {
+            if (state.getBlock() instanceof AbstractFurnaceBlock) {
+                if (!state.hasProperty(AbstractFurnaceBlock.LIT)) {
+                    return HeatSource.EMPTY;
+                }
                 if (state.getValue(AbstractFurnaceBlock.LIT)) {
                     return HeatSource.ACTIVE;
                 } else {
                     return HeatSource.VALID;
                 }
+            }
+            else if (state.getBlock() instanceof BlazeBurnerBlock) {
+                return switch (BlazeBurnerBlock.getHeatLevelOf(state)) {
+                    case HeatLevel.SEETHING -> HeatSource.ACTIVE;
+                    case HeatLevel.KINDLED -> HeatSource.ACTIVE;
+                    default -> HeatSource.VALID;
+                };
             }
             return HeatSource.EMPTY;
         }

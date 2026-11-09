@@ -1,4 +1,4 @@
-package org.nina_iseri.steam_and_heat.content.engine.furnace_engine;
+package org.nina_iseri.steam_and_heat.content.engine.stirling_engine;
 
 import com.mojang.serialization.MapCodec;
 import com.simibubi.create.AllShapes;
@@ -30,17 +30,17 @@ import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @EventBusSubscriber
-public class FurnaceEngineBlock extends CommonEngineBlock implements IBE<FurnaceEngineTileEntity> {
+public class StirlingEngineBlock extends CommonEngineBlock implements IBE<StirlingEngineTileEntity> {
 
-    public static final MapCodec<FurnaceEngineBlock> CODEC = simpleCodec(FurnaceEngineBlock::new);
+    public static final MapCodec<StirlingEngineBlock> CODEC = simpleCodec(StirlingEngineBlock::new);
 
-    public FurnaceEngineBlock(Properties properties) {
+    public StirlingEngineBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     protected boolean isValidBaseBlock(BlockState baseBlock, BlockGetter world, BlockPos pos) {
-        return FurnaceEngineInteractions.getHandler(baseBlock).getHeatSource(baseBlock).isValid();
+        return StirlingEngineInteractions.getHandler(baseBlock).getHeatSource(baseBlock).isValid();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class FurnaceEngineBlock extends CommonEngineBlock implements IBE<Furnace
 
         if (fromPos.equals(getBaseBlockPos(state, pos)))
             if (canSurvive(state, worldIn, pos))
-                withBlockEntityDo(worldIn, pos, FurnaceEngineTileEntity::updateFurnace);
+                withBlockEntityDo(worldIn, pos, StirlingEngineTileEntity::updateFurnace);
     }
 
     @SubscribeEvent
@@ -83,12 +83,12 @@ public class FurnaceEngineBlock extends CommonEngineBlock implements IBE<Furnace
     }
 
     @Override
-    public Class<FurnaceEngineTileEntity> getBlockEntityClass() {
-        return FurnaceEngineTileEntity.class;
+    public Class<StirlingEngineTileEntity> getBlockEntityClass() {
+        return StirlingEngineTileEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends FurnaceEngineTileEntity> getBlockEntityType() {
+    public BlockEntityType<? extends StirlingEngineTileEntity> getBlockEntityType() {
         return ModBlockEntities.FURNACE_ENGINE.get();
     }
 

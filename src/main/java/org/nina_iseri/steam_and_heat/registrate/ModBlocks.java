@@ -16,10 +16,10 @@ import org.nina_iseri.steam_and_heat.content.burner.bronze.BronzeBurnerBlock;
 import org.nina_iseri.steam_and_heat.content.burner.cast_iron.CastIronBurnerBlock;
 import org.nina_iseri.steam_and_heat.content.burner.steel.SteelBurnerBlock;
 import org.nina_iseri.steam_and_heat.content.cogwheel.MetalCogwheelBlock;
-import org.nina_iseri.steam_and_heat.content.engine.furnace_engine.FurnaceEngineBlock;
 import org.nina_iseri.steam_and_heat.content.engine.steam_engine.bronze.BronzeSteamEngineBlock;
 import org.nina_iseri.steam_and_heat.content.engine.steam_engine.cast_iron.CastIronSteamEngineBlock;
 import org.nina_iseri.steam_and_heat.content.engine.steam_engine.steel.SteelSteamEngineBlock;
+import org.nina_iseri.steam_and_heat.content.engine.stirling_engine.StirlingEngineBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.BrassSteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.BronzeSteamFlywheelBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.CastIronSteamFlywheelBlock;
@@ -115,8 +115,8 @@ public class ModBlocks {
                         .transform(customItemModel())
                         .register();
 
-        public static final BlockEntry<FurnaceEngineBlock> FURNACE_ENGINE = REGISTRATE
-                        .block("furnace_engine", FurnaceEngineBlock::new)
+        public static final BlockEntry<StirlingEngineBlock> FURNACE_ENGINE = REGISTRATE
+                        .block("furnace_engine", StirlingEngineBlock::new)
                         .initialProperties(ModBlocks::hardMetal)
                         .transform(pickaxeOnly())
                         .item()
