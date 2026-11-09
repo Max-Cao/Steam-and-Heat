@@ -13,8 +13,8 @@ public class CastIronBoilerBlockEntity extends BoilerBlockEntity {
         super(type, pos, state);
     }
 
-    protected int getHUPerTick() {
-    	return ModCommonConfig.COMMON.castIronBoilerHU.get();
+    protected double getHUPerTick() {
+        return ModCommonConfig.COMMON.castIronBoilerHU.get();
     }
 
 }

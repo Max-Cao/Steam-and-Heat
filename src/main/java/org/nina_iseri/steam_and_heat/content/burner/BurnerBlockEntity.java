@@ -8,7 +8,9 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 
 import org.nina_iseri.steam_and_heat.SteamAndHeat;
-import org.nina_iseri.steam_and_heat.content.IHeatReceiver;
+import org.nina_iseri.steam_and_heat.content.heat.HeatHandler;
+import org.nina_iseri.steam_and_heat.content.heat.IHeatHandler;
+import org.nina_iseri.steam_and_heat.registrate.ModCapabilities;
 import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 
 import net.minecraft.core.BlockPos;
@@ -36,11 +38,18 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
         }
 
     };
-    int remain_hu;
+    // int remain_hu;
+    private HeatHandler heat = new HeatHandler(320000, 0, 16000);
 
     public static final ICapabilityProvider<BurnerBlockEntity, Direction, IItemHandler> ITEM_CAP = (
             BurnerBlockEntity te, Direction side) -> {
         return te.fuel_handler;
+    };
+
+    
+    public static final ICapabilityProvider<BurnerBlockEntity, Void, IHeatHandler> HEAT_CAP = (
+            BurnerBlockEntity te, Void side) -> {
+        return te.heat;
     };
 
     public BurnerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -54,14 +63,16 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
     @Override
     public void read(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         fuel_handler.deserializeNBT(registries, nbt.getCompound("inv"));
-        remain_hu = nbt.getInt("hu");
+        // remain_hu = nbt.getInt("hu");
+        heat.deserializeNBT(registries, nbt.get("heat"));
         super.read(nbt, registries, clientPacket);
     }
 
     @Override
     public void write(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         nbt.put("inv", fuel_handler.serializeNBT(registries));
-        nbt.putInt("hu", remain_hu);
+        // nbt.putInt("hu", remain_hu);
+        nbt.put("heat", heat.serializeNBT(registries));
         super.write(nbt, registries, clientPacket);
     }
 
@@ -72,18 +83,22 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
         if (!level.isClientSide) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             int emit = getHuPerTick();
-            while (remain_hu < emit && this.consumeFuel()) {
-            }
+            // while (remain_hu < emit && this.consumeFuel()) {
+            // }
+            while (heat.getHeatAmount() < emit && consumeFuel()) {}
             boolean is_lit_before = state.getValue(BurnerBlock.LIT);
-            if (remain_hu == 0) {
+            // if (remain_hu == 0) {
+            if (heat.noHeat()) {
                 if (is_lit_before) {
                     this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, false));
                 }
                 return;
             }
-            int send_out = Math.min(remain_hu, emit);
+            // int send_out = Math.min(remain_hu, emit);
+            double send_out = Math.min(heat.getHeatAmount(), emit);
             produceHeat(send_out);
-            remain_hu -= send_out;
+            // remain_hu -= send_out;
+            heat.exact(send_out, false);
             this.setChanged();
             if (!is_lit_before) {
                 this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
@@ -102,16 +117,23 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
         if (time <= 0)
             return false;
         fuel_handler.getStackInSlot(0).shrink(1);
-        remain_hu += time * ModCommonConfig.COMMON.HUPerFuelTick.get() * getEfficiency();// 2.4HU/t
-
+        // remain_hu += time * ModCommonConfig.COMMON.HUPerFuelTick.get() * getEfficiency();// 2.4HU/t
+        double heat_get = time * ModCommonConfig.COMMON.HUPerFuelTick.get() * getEfficiency();
+        heat.receiveInner(heat_get, false);// 2.4HU/t
         return true;
     }
 
-    protected void produceHeat(float value) {
-        BlockEntity above = level.getBlockEntity(this.getBlockPos().above());
-        if (above instanceof IHeatReceiver receiver) {
-            receiver.commitHeat(value);
+    protected void produceHeat(double value) {
+        BlockPos above = this.getBlockPos().above();
+        // if (above instanceof IAttachHeat receiver) {
+        //     receiver.receiveHeat(value);
+        // }
+        BlockState aboveState = level.getBlockState(above);
+        IHeatHandler aboveHeatHandler = level.getCapability(ModCapabilities.Heat.BLOCK, above, aboveState, level.getBlockEntity(above));
+        if (aboveHeatHandler != null) {
+            aboveHeatHandler.receive(value, false);
         }
+        // if ()
     }
 
     // @Override
@@ -129,7 +151,8 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		tooltip.clear();
-        new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", remain_hu)
+        // new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", remain_hu)
+        new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", heat.getHeatAmount())
                 .style(ChatFormatting.GOLD)
                 .forGoggles(tooltip, 1);
         ItemStack fuel = fuel_handler.getStackInSlot(0);
@@ -150,10 +173,11 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
 
     protected abstract double getEfficiency();
 
-    public static float getBoilerHeat(Level level, BlockPos pos, BlockState state) {
+    public static double getBoilerHeat(Level level, BlockPos pos, BlockState state) {
         BlockEntity tile = level.getBlockEntity(pos);
         if (tile instanceof BurnerBlockEntity burner) {
-            if (burner.remain_hu > 0 || state.getValue(BurnerBlock.LIT)) {
+            // if (burner.remain_hu > 0 || state.getValue(BurnerBlock.LIT)) {
+            if (burner.heat.getHeatAmount() > 0 || state.getValue(BurnerBlock.LIT)) {
                 return 1;
             }
         }

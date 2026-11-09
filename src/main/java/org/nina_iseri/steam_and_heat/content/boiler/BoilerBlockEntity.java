@@ -1,13 +1,12 @@
 package org.nina_iseri.steam_and_heat.content.boiler;
 
-import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 
 import org.nina_iseri.steam_and_heat.client.ModParticles;
-import org.nina_iseri.steam_and_heat.content.IHeatReceiver;
-import org.nina_iseri.steam_and_heat.content.burner.BurnerBlock;
+import org.nina_iseri.steam_and_heat.content.heat.HeatHandler;
+import org.nina_iseri.steam_and_heat.content.heat.IHeatHandler;
 import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import org.nina_iseri.steam_and_heat.utils.FluidUtils;
@@ -30,7 +29,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
-public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHeatReceiver, IHaveGoggleInformation {
+public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     public FluidTank input = FluidUtils.single_fluid_tank(16000, Fluids.WATER);
     public FluidTank output = FluidUtils.single_fluid_tank(16000, ModFluids.STEAM.get());
 
@@ -97,12 +96,18 @@ public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHea
         }
     };
 
-    int heat_total;
-    int heat_last;
+    // int heat_total;
+    // int heat_last;
+    private HeatHandler heat = new HeatHandler(320000, 16000, 0);
 
     public static final ICapabilityProvider<BoilerBlockEntity, Direction, IFluidHandler> FLUID_CAP = (
             BoilerBlockEntity te, Direction side) -> {
         return te.fluid_handler;
+    };
+
+    public static final ICapabilityProvider<BoilerBlockEntity, Void, IHeatHandler> HEAT_CAP = (
+            BoilerBlockEntity te, Void side) -> {
+        return te.heat;
     };
 
     public BoilerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -113,8 +118,9 @@ public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHea
     public void write(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         nbt.put("in", input.writeToNBT(registries, new CompoundTag()));
         nbt.put("out", output.writeToNBT(registries, new CompoundTag()));
-        nbt.putInt("hu", heat_total);
-        nbt.putInt("lasthu", heat_last);
+        // nbt.putInt("hu", heat_total);
+        // nbt.putInt("lasthu", heat_last);
+        nbt.put("heat", heat.serializeNBT(registries));
         super.write(nbt, registries, clientPacket);
     }
 
@@ -122,8 +128,9 @@ public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHea
     public void read(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         input.readFromNBT(registries, nbt.getCompound("in"));
         output.readFromNBT(registries, nbt.getCompound("out"));
-        heat_total = nbt.getInt("hu");
-        heat_last = nbt.getInt("lasthu");
+        // heat_total = nbt.getInt("hu");
+        // heat_last = nbt.getInt("lasthu");
+        heat.deserializeNBT(registries, nbt.get("heat"));
         super.read(nbt, registries, clientPacket);
     }
 
@@ -137,15 +144,18 @@ public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHea
         if (this.level == null)
             return;
         if (!this.level.isClientSide) {
-            getHeatFromHeater();
-            heat_last = heat_total;
-            if (heat_total != 0) {
-                int consume = Math.min(getHUPerTick(), heat_total);
-                heat_total = 0;
-                double waterconsume = (ModCommonConfig.COMMON.steamPerWater.get() * 10);
-                consume = Math.min((int) (this.input.drain((int) Math.ceil(consume / waterconsume), FluidAction.EXECUTE)
-                        .getAmount() * waterconsume), consume);
-                this.output.fill(new FluidStack(ModFluids.STEAM.get(), consume / 10),
+            // getHeatFromHeater();
+            // heat_last = heat_total;
+            // if (heat_total != 0) {
+            if (!heat.noHeat()) {
+                // int consume = Math.min(getHUPerTick(), heat_total);
+                double consume = Math.min(getHUPerTick(), heat.getHeatAmount());
+                // heat_total = 0;
+                heat.exactInner(consume, false);
+                double water_consume = (ModCommonConfig.COMMON.steamPerWater.get() * 10);
+                consume = Math.min((int) (this.input.drain((int) Math.ceil(consume / water_consume), FluidAction.EXECUTE)
+                        .getAmount() * water_consume), consume);
+                this.output.fill(new FluidStack(ModFluids.STEAM.get(), ((int)consume) / 10),
                         FluidAction.EXECUTE);
                 if (consume > 0) {
                     this.setChanged();
@@ -154,7 +164,8 @@ public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHea
             }
 
         } else {
-            if (output.getFluidAmount() >= output.getCapacity() && heat_last != 0) {// steam leaking
+            // if (output.getFluidAmount() >= output.getCapacity() && heat_last != 0) {// steam leaking
+            if (output.getFluidAmount() >= output.getCapacity() && !heat.noHeat()) {// steam leaking
                 particleInterval++;
                 if (particleInterval >= 20) {
                     particleInterval = 0;
@@ -178,21 +189,21 @@ public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHea
 
     private int particleInterval = 0;
 
-    @Override
-    public void commitHeat(float value) {
-        heat_total = (int) value;
-    }
+    // @Override
+    // public void receiveHeat(double value) {
+    //     heat_total = (int) value;
+    // }
 
-    protected void getHeatFromHeater() {
-        BlockPos below = this.getBlockPos().below();
-        BlockState belowState = this.level.getBlockState(below);
-        if (belowState.getBlock() instanceof BurnerBlock)
-            return;
-        float heat = BoilerHeater.findHeat(this.level, below, belowState);
-        if (heat > 0) {
-            commitHeat(Math.max(heat, 3f) * getHUPerTick() * 0.75f);
-        }
-    }
+    // protected void getHeatFromHeater() {
+    //     BlockPos below = this.getBlockPos().below();
+    //     BlockState belowState = this.level.getBlockState(below);
+    //     if (belowState.getBlock() instanceof BurnerBlock)
+    //         return;
+    //     double heat = BoilerHeater.findHeat(this.level, below, belowState);
+    //     if (heat > 0) {
+    //         receiveHeat(Math.max(heat, 3f) * getHUPerTick() * 0.75f);
+    //     }
+    // }
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
@@ -201,5 +212,5 @@ public abstract class BoilerBlockEntity extends SmartBlockEntity implements IHea
         return true;
     }
 
-    protected abstract int getHUPerTick();
+    protected abstract double getHUPerTick();
 }

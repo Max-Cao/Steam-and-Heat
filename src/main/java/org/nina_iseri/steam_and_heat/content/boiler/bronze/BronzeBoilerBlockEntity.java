@@ -13,7 +13,7 @@ public class BronzeBoilerBlockEntity extends BoilerBlockEntity {
         super(type, pos, state);
     }
 
-    protected int getHUPerTick() {
+    protected double getHUPerTick() {
         return ModCommonConfig.COMMON.bronzeBoilerHU.get();
     }
 

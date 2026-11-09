@@ -1,7 +1,6 @@
 package org.nina_iseri.steam_and_heat.registrate;
 
 import com.simibubi.create.AllTags;
-import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockModel;
 import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.foundation.data.BlockStateGen;
@@ -11,7 +10,6 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import org.nina_iseri.steam_and_heat.content.boiler.bronze.BronzeBoilerBlock;
 import org.nina_iseri.steam_and_heat.content.boiler.cast_iron.CastIronBoilerBlock;
 import org.nina_iseri.steam_and_heat.content.boiler.steel.SteelBoilerBlock;
-import org.nina_iseri.steam_and_heat.content.burner.BurnerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.burner.bronze.BronzeBurnerBlock;
 import org.nina_iseri.steam_and_heat.content.burner.cast_iron.CastIronBurnerBlock;
 import org.nina_iseri.steam_and_heat.content.burner.steel.SteelBurnerBlock;
@@ -230,15 +228,15 @@ public class ModBlocks {
                         .register();
 
         public static void register() {
-                BoilerHeater.REGISTRY.registerProvider(ModBlocks::getHeater);
+                // BoilerHeater.REGISTRY.registerProvider(ModBlocks::getHeater);
         }
 
-        public static BoilerHeater getHeater(Block block) {
-                if (BRONZE_BURNER.is(block) || CAST_IRON_BURNER.is(block) || STEEL_BURNER.is(block)) {
-                        return BurnerBlockEntity::getBoilerHeat;
-                }
-                return null;
-        }
+        // public static BoilerHeater getHeater(Block block) {
+        //         if (BRONZE_BURNER.is(block) || CAST_IRON_BURNER.is(block) || STEEL_BURNER.is(block)) {
+        //         return BurnerBlockEntity::getBoilerHeat;
+        //         }
+        //         return null;
+        // }
 
         @Nonnull
         public static Block hardMetal() {

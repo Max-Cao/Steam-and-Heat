@@ -5,6 +5,8 @@ import com.simibubi.create.foundation.utility.CreateLang;
 
 import org.nina_iseri.steam_and_heat.SteamAndHeat;
 import org.nina_iseri.steam_and_heat.client.ClientUtils;
+import org.nina_iseri.steam_and_heat.registrate.ModCapabilities;
+
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
@@ -105,7 +107,10 @@ public abstract class BoilerBlock extends Block {
 	public void stepOn(Level level, BlockPos pos, Entity entity) {
 		BlockEntity block_entity = level.getBlockEntity(pos);
 		if (block_entity instanceof BoilerBlockEntity boiler &&
-				(boiler.heat_last > 0 || !boiler.output.isEmpty()) &&
+		// (boiler.heat_last > 0 || !boiler.output.isEmpty()) &&
+				(level.getCapability(ModCapabilities.Heat.BLOCK, pos).noHeat()
+						|| !boiler.output.isEmpty())
+				&&
 				entity instanceof LivingEntity) {
 			entity.hurt(level.damageSources().hotFloor(), 2);
 		}

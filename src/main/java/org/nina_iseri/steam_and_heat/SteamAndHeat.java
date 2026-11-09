@@ -33,8 +33,7 @@ public class SteamAndHeat {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
 
     // Directly reference a log4j logger.
-    @SuppressWarnings("unused")
-	private static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger();
 
     public SteamAndHeat(IEventBus eventBus, ModContainer modContainer) {
         REGISTRATE.registerEventListeners(eventBus);

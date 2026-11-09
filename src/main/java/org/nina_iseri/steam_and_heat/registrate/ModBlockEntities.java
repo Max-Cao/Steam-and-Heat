@@ -132,16 +132,28 @@ public class ModBlockEntities {
         public static void register_capabilities(RegisterCapabilitiesEvent event) {
                 event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BRONZE_BURNER.get(),
                                 BurnerBlockEntity.ITEM_CAP);
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.BRONZE_BURNER.get(),
+                                BurnerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.CAST_IRON_BURNER.get(),
                                 BurnerBlockEntity.ITEM_CAP);
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.CAST_IRON_BURNER.get(),
+                                BurnerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.STEEL_BURNER.get(),
                                 BurnerBlockEntity.ITEM_CAP);
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.STEEL_BURNER.get(),
+                                BurnerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BRONZE_BOILER.get(),
                                 BoilerBlockEntity.FLUID_CAP);
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.BRONZE_BOILER.get(),
+                                BoilerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.CAST_IRON_BOILER.get(),
                                 BoilerBlockEntity.FLUID_CAP);
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.CAST_IRON_BOILER.get(),
+                                BoilerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.STEEL_BOILER.get(),
                                 BoilerBlockEntity.FLUID_CAP);
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.STEEL_BOILER.get(),
+                                BoilerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BRONZE_STEAM_ENGINE.get(),
                                 SteamEngineTileEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
