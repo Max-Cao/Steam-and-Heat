@@ -13,36 +13,30 @@ public class ModStressConfig {
 	public static DoubleSupplier getCapacity(Block arg0) {
 		ResourceLocation registryName = BuiltInRegistries.BLOCK.getKey(arg0);
 		String mat = registryName.getPath().split("_")[0];
-		switch (mat) {
-			case "bronze":
-				return ModCommonConfig.COMMON.bronzeFlywheelCapacity::get;
-			case "cast":
-				return ModCommonConfig.COMMON.castIronFlywheelCapacity::get;
-			case "steel":
-				return ModCommonConfig.COMMON.steelFlywheelCapacity::get;
-		}
-		return null;
+		return switch (mat) {
+			case "bronze" -> ModCommonConfig.COMMON.bronzeFlywheelCapacity::get;
+			case "cast" -> ModCommonConfig.COMMON.castIronFlywheelCapacity::get;
+			case "steel" -> ModCommonConfig.COMMON.steelFlywheelCapacity::get;
+			default -> null;
+		};
 	}
 
 	public static DoubleSupplier getImpact(Block arg0) {
 		ResourceLocation registryName = BuiltInRegistries.BLOCK.getKey(arg0);
 		String[] mat = registryName.getPath().split("_");
-		if (mat[mat.length - 1].equals("cogwheel")) {
-			switch (mat[0]) {
-				case "bronze":
-					return ModCommonConfig.COMMON.bronzeCogwheelImpact::get;
-				case "cast":
-					return ModCommonConfig.COMMON.castIronCogwheelImpact::get;
-				case "steel":
-					return ModCommonConfig.COMMON.steelCogwheelImpact::get;
-			}
+		if (!mat[mat.length - 1].equals("cogwheel")) {
+			return null;
 		}
-		return null;
+		return switch (mat[0]) {
+			case "bronze" -> ModCommonConfig.COMMON.bronzeCogwheelImpact::get;
+			case "cast" -> ModCommonConfig.COMMON.castIronCogwheelImpact::get;
+			case "steel" -> ModCommonConfig.COMMON.steelCogwheelImpact::get;
+			default -> null;
+		};
 	}
 
 	public static void register() {
 		BlockStressValues.IMPACTS.registerProvider(ModStressConfig::getImpact);
 		BlockStressValues.CAPACITIES.registerProvider(ModStressConfig::getCapacity);
 	}
-
 }
