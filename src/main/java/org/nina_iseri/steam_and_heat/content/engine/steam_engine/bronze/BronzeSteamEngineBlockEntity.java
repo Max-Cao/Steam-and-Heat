@@ -1,6 +1,6 @@
 package org.nina_iseri.steam_and_heat.content.engine.steam_engine.bronze;
 
-import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineTileEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineBlockEntity;
 import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
 import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 
@@ -9,13 +9,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BronzeSteamEngineTileEntity extends SteamEngineTileEntity {
-    public BronzeSteamEngineTileEntity(BlockEntityType<? extends SteamEngineTileEntity> type, BlockPos pos, BlockState state) {
+public class BronzeSteamEngineBlockEntity extends SteamEngineBlockEntity {
+    public BronzeSteamEngineBlockEntity(BlockEntityType<? extends SteamEngineBlockEntity> type, BlockPos pos,
+            BlockState state) {
         super(type, pos, state);
     }
 
     @Override
-    public Block getFlywheel() {
+    protected Block getFlywheelBlock() {
         return ModBlocks.BRONZE_FLYWHEEL.get();
     }
 

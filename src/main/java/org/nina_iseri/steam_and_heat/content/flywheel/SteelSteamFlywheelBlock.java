@@ -8,8 +8,8 @@ public class SteelSteamFlywheelBlock extends SteamFlywheelBlock {
         super(properties);
     }
 
-    //@Override
-    public BlockEntityType<? extends SteamFlywheelTileEntity> getBlockEntityType() {
+    @Override
+    public BlockEntityType<? extends SteamFlywheelBlockEntity> getBlockEntityType() {
         return ModBlockEntities.STEEL_STEAM_FLYWHEEL.get();
     }
 }

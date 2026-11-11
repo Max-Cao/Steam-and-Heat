@@ -9,7 +9,7 @@ public class BronzeSteamFlywheelBlock extends SteamFlywheelBlock {
     }
 
     @Override
-    public BlockEntityType<? extends SteamFlywheelTileEntity> getBlockEntityType() {
+    public BlockEntityType<? extends SteamFlywheelBlockEntity> getBlockEntityType() {
         return ModBlockEntities.BRONZE_STEAM_FLYWHEEL.get();
     }
 }

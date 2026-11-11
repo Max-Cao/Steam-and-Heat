@@ -71,22 +71,18 @@ public abstract class CommonFlywheelBlock extends HorizontalKineticBlock impleme
         return ((Direction)state.getValue(HORIZONTAL_FACING)).getAxis();
     }
 
+    @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         Direction connection = getConnection(state);
         if (connection == null) {
             return super.onWrenched(state, context);
-        } else if (context.getClickedFace().getAxis() == ((Direction)state.getValue(HORIZONTAL_FACING)).getAxis()) {
-            return InteractionResult.PASS;
-        } else {
-            //Level world = context.getLevel();
-            //BlockPos enginePos = context.getClickedPos().relative(connection, 2);
-            //BlockState engine = world.getBlockState(enginePos);
-            //if (engine.getBlock() instanceof FurnaceEngineBlock) {
-            //    ((FurnaceEngineBlock)engine.getBlock()).withTileEntityDo(world, enginePos, EngineTileEntity::detachWheel);
-            //}
-
-            return super.onWrenched((BlockState)state.setValue(CONNECTION, CommonFlywheelBlock.ConnectionState.NONE), context);
         }
+
+        // 点击飞轮的轴向面时不处理；点击侧面则断开与引擎的连接。
+        if (context.getClickedFace().getAxis() == state.getValue(HORIZONTAL_FACING).getAxis()) {
+            return InteractionResult.PASS;
+        }
+        return super.onWrenched(state.setValue(CONNECTION, ConnectionState.NONE), context);
     }
 
     @Override

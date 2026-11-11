@@ -46,7 +46,6 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
         return te.fuel_handler;
     };
 
-    
     public static final ICapabilityProvider<BurnerBlockEntity, Void, IHeatHandler> HEAT_CAP = (
             BurnerBlockEntity te, Void side) -> {
         return te.heat;
@@ -85,7 +84,8 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
             int emit = getHuPerTick();
             // while (remain_hu < emit && this.consumeFuel()) {
             // }
-            while (heat.getHeatAmount() < emit && consumeFuel()) {}
+            while (heat.getHeatAmount() < emit && consumeFuel()) {
+            }
             boolean is_lit_before = state.getValue(BurnerBlock.LIT);
             // if (remain_hu == 0) {
             if (heat.noHeat()) {
@@ -98,7 +98,6 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
             double send_out = Math.min(heat.getHeatAmount(), emit);
             produceHeat(send_out);
             // remain_hu -= send_out;
-            heat.exact(send_out, false);
             this.setChanged();
             if (!is_lit_before) {
                 this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
@@ -113,11 +112,13 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
             return false;
         if (fuel_handler.getStackInSlot(0) == null)
             return false;
+        // FIXME: 修改为long
         int time = fuel_handler.getStackInSlot(0).getBurnTime(RecipeType.SMELTING);
         if (time <= 0)
             return false;
         fuel_handler.getStackInSlot(0).shrink(1);
-        // remain_hu += time * ModCommonConfig.COMMON.HUPerFuelTick.get() * getEfficiency();// 2.4HU/t
+        // remain_hu += time * ModCommonConfig.COMMON.HUPerFuelTick.get() *
+        // getEfficiency();// 2.4HU/t
         double heat_get = time * ModCommonConfig.COMMON.HUPerFuelTick.get() * getEfficiency();
         heat.receiveInner(heat_get, false);// 2.4HU/t
         return true;
@@ -126,31 +127,39 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
     protected void produceHeat(double value) {
         BlockPos above = this.getBlockPos().above();
         // if (above instanceof IAttachHeat receiver) {
-        //     receiver.receiveHeat(value);
+        // receiver.receiveHeat(value);
         // }
         BlockState aboveState = level.getBlockState(above);
-        IHeatHandler aboveHeatHandler = level.getCapability(ModCapabilities.Heat.BLOCK, above, aboveState, level.getBlockEntity(above));
+        IHeatHandler aboveHeatHandler = level.getCapability(ModCapabilities.Heat.BLOCK, above, aboveState,
+                level.getBlockEntity(above));
         if (aboveHeatHandler != null) {
-            aboveHeatHandler.receive(value, false);
+            if (aboveHeatHandler.receive(value, false) > 0) {
+                heat.exact(value, false);
+            }
         }
+
+        // 热能散失了
+        heat.exact(320, false);
         // if ()
     }
 
     // @Override
-    // public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-    //     tooltip.add(componentSpacing.plainCopy().append(
-    //             new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", hu_remain).style(ChatFormatting.GOLD)));
-    //     if (!fuel.getStackInSlot(0).isEmpty())
-    //         tooltip.add(componentSpacing.plainCopy()
-    //                 .append(Component
-    //                         .translatable("tooltip.burner.item", fuel.getStackInSlot(0).getCount(),
-    //                                 fuel.getStackInSlot(0).getItem().getName(fuel.getStackInSlot(0)))
-    //                         .style(ChatFormatting.GRAY)));
-    //     return true;
+    // public boolean addToGoggleTooltip(List<Component> tooltip, boolean
+    // isPlayerSneaking) {
+    // tooltip.add(componentSpacing.plainCopy().append(
+    // new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu",
+    // hu_remain).style(ChatFormatting.GOLD)));
+    // if (!fuel.getStackInSlot(0).isEmpty())
+    // tooltip.add(componentSpacing.plainCopy()
+    // .append(Component
+    // .translatable("tooltip.burner.item", fuel.getStackInSlot(0).getCount(),
+    // fuel.getStackInSlot(0).getItem().getName(fuel.getStackInSlot(0)))
+    // .style(ChatFormatting.GRAY)));
+    // return true;
     // }
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-		tooltip.clear();
+        tooltip.clear();
         // new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", remain_hu)
         new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", heat.getHeatAmount())
                 .style(ChatFormatting.GOLD)

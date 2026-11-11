@@ -1,54 +1,40 @@
 package org.nina_iseri.steam_and_heat.content.engine.steam_engine.bronze;
 
-import java.util.List;
-
+import com.mojang.serialization.MapCodec;
 import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.item.TooltipHelper;
 
-import org.nina_iseri.steam_and_heat.SteamAndHeat;
-import org.nina_iseri.steam_and_heat.client.ClientUtils;
 import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineBlock;
 import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 
-import net.createmod.catnip.lang.FontHelper;
-import net.createmod.catnip.lang.LangBuilder;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 
-public class BronzeSteamEngineBlock extends SteamEngineBlock implements IBE<BronzeSteamEngineTileEntity> {
-    public BronzeSteamEngineBlock(Properties builder) {
-        super(builder);
+public class BronzeSteamEngineBlock extends SteamEngineBlock implements IBE<BronzeSteamEngineBlockEntity> {
+
+    public static final MapCodec<BronzeSteamEngineBlock> CODEC = simpleCodec(BronzeSteamEngineBlock::new);
+
+    public BronzeSteamEngineBlock(Properties properties) {
+        super(properties);
     }
 
     @Override
-    public BlockEntityType<? extends BronzeSteamEngineTileEntity> getBlockEntityType() {
+    protected int getSteamConsumptionPerTick() {
+        return ModCommonConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get();
+    }
+
+    @Override
+    public BlockEntityType<? extends BronzeSteamEngineBlockEntity> getBlockEntityType() {
         return ModBlockEntities.BRONZE_STEAM_ENGINE.get();
     }
 
     @Override
-    public Class<BronzeSteamEngineTileEntity> getBlockEntityClass() {
-        return BronzeSteamEngineTileEntity.class;
+    public Class<BronzeSteamEngineBlockEntity> getBlockEntityClass() {
+        return BronzeSteamEngineBlockEntity.class;
     }
 
     @Override
-    public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> t,
-            TooltipFlag f) {
-        if (Screen.hasShiftDown()) {
-            new LangBuilder(SteamAndHeat.MODID).translate("tooltip.engine.brief").style(ChatFormatting.GOLD).addTo(t);
-            if (ClientUtils.hasGoggles())
-                new LangBuilder(SteamAndHeat.MODID)
-                        .translate("tooltip.engine.steamconsume",
-                                ModCommonConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get())
-                        .style(ChatFormatting.GOLD).addTo(t);
-        } else {
-            t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
-        }
-        super.appendHoverText(i, w, t, f);
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return CODEC;
     }
 }

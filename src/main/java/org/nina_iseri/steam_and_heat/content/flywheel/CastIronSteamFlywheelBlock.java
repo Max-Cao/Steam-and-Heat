@@ -9,7 +9,7 @@ public class CastIronSteamFlywheelBlock extends SteamFlywheelBlock {
     }
 
     @Override
-    public BlockEntityType<? extends SteamFlywheelTileEntity> getBlockEntityType() {
+    public BlockEntityType<? extends SteamFlywheelBlockEntity> getBlockEntityType() {
         return ModBlockEntities.CAST_IRON_STEAM_FLYWHEEL.get();
     }
 }

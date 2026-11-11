@@ -1,9 +1,20 @@
 package org.nina_iseri.steam_and_heat.content.heat;
 
 
+import org.nina_iseri.steam_and_heat.registrate.ModCapabilities;
+
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 public class HeatHandler implements IHeatHandler, INBTSerializable<Tag> {
@@ -77,6 +88,38 @@ public class HeatHandler implements IHeatHandler, INBTSerializable<Tag> {
         if (!(nbt instanceof DoubleTag intNbt))
             throw new IllegalArgumentException("Can not deserialize to an instance that isn't the default implementation");
         this.energy = intNbt.getAsInt();
+    }
+
+    public static IHeatHandler of(BlazeBurnerBlockEntity block, Level level) {
+        BlockState state = level.getBlockState(block.getBlockPos());
+        return switch (BlazeBurnerBlock.getHeatLevelOf(state)) {
+            case HeatLevel.SEETHING, HeatLevel.KINDLED -> IHeatHandler.infinite();
+            default -> IHeatHandler.never();
+        };
+    }
+
+    public static IHeatHandler of(AbstractFurnaceBlockEntity block, Level level) {
+        BlockState state = level.getBlockState(block.getBlockPos());
+        // 这个接口的方块怎么会不lit呢？
+        // if (!state.hasProperty(AbstractFurnaceBlock.LIT)) {
+        //     return HeatSource.EMPTY;
+        // }
+        if (state.getValue(AbstractFurnaceBlock.LIT)) {
+            return IHeatHandler.infinite();
+        } else {
+            return IHeatHandler.never();
+        }
+    }
+
+    public static <T extends BlockEntity> IHeatHandler of(T block, Level level) {
+        if (block == null || level == null) return null;
+        if (block instanceof AbstractFurnaceBlockEntity f) {
+            return of(f, level);
+        }
+        if (block instanceof BlazeBurnerBlockEntity b) {
+            return of(b, level);
+        }
+        return level.getCapability(ModCapabilities.Heat.BLOCK, block.getBlockPos());
     }
 
 }

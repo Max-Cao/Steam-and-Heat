@@ -1,27 +1,23 @@
 package org.nina_iseri.steam_and_heat.content.engine.stirling_engine;
 
 import com.mojang.serialization.MapCodec;
-import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.block.IBE;
 
 import org.nina_iseri.steam_and_heat.client.ModBlockPartials;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
 import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
 import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
+
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.createmod.catnip.levelWrappers.WrappedLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -29,8 +25,14 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
+/**
+ * 斯特林引擎（旧 Create 的熔炉引擎）。
+ *
+ * <p>它贴在具有热能能力（{@link org.nina_iseri.steam_and_heat.content.heat.IHeatHandler}）
+ * 的方块上，根据热源是否处于“可提取热量”状态来产生旋转动力。</p>
+ */
 @EventBusSubscriber
-public class StirlingEngineBlock extends CommonEngineBlock implements IBE<StirlingEngineTileEntity> {
+public class StirlingEngineBlock extends CommonEngineBlock implements IBE<StirlingEngineBlockEntity> {
 
     public static final MapCodec<StirlingEngineBlock> CODEC = simpleCodec(StirlingEngineBlock::new);
 
@@ -39,56 +41,50 @@ public class StirlingEngineBlock extends CommonEngineBlock implements IBE<Stirli
     }
 
     @Override
-    protected boolean isValidBaseBlock(BlockState baseBlock, BlockGetter world, BlockPos pos) {
-        return StirlingEngineInteractions.getHandler(baseBlock).getHeatSource(baseBlock).isValid();
+    protected boolean isValidBase(BlockState baseState, Level level, BlockPos basePos) {
+        // 注意：这里必须用底座的状态来查找 InteractionHandler，而不是引擎自己的状态。
+        return StirlingEngineInteractions.getHandler(baseState)
+                .getHeatSource(baseState, level.getBlockEntity(basePos), level)
+                .isValid();
     }
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return AllShapes.FURNACE_ENGINE.get(state.getValue(FACING));
-    }
-
-    @Override
     @OnlyIn(Dist.CLIENT)
+    @Override
     public PartialModel getFrameModel() {
         return ModBlockPartials.FURNACE_GENERATOR_FRAME;
     }
 
-    @Override
-    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos,
-                                boolean isMoving) {
-        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        if (worldIn instanceof WrappedLevel)
-            return;
-        if (worldIn.isClientSide)
-            return;
-
-        if (fromPos.equals(getBaseBlockPos(state, pos)))
-            if (canSurvive(state, worldIn, pos))
-                withBlockEntityDo(worldIn, pos, StirlingEngineTileEntity::updateFurnace);
-    }
-
+    /**
+     * 手持引擎物品右键熔炉时，阻止原版熔炉打开 GUI，让物品能够正常放置。
+     */
     @SubscribeEvent
-    public static void usingFurnaceEngineOnFurnacePreventsGUI(PlayerInteractEvent.RightClickBlock event) {
-        ItemStack item = event.getItemStack();
-        if (!(item.getItem() instanceof BlockItem blockItem))
+    public static void preventFurnaceGuiOpening(PlayerInteractEvent.RightClickBlock event) {
+        Direction face = event.getFace();
+        if (face != null && face.getAxis().isVertical()) {
             return;
-        if (blockItem.getBlock() != ModBlocks.FURNACE_ENGINE.get())
+        }
+
+        ItemStack stack = event.getItemStack();
+        if (!(stack.getItem() instanceof BlockItem blockItem)) {
             return;
-        BlockState state = event.getLevel().getBlockState(event.getPos());
-        if (event.getFace().getAxis().isVertical())
+        }
+        if (blockItem.getBlock() != ModBlocks.FURNACE_ENGINE.get()) {
             return;
-        if (state.getBlock() instanceof AbstractFurnaceBlock)
-            event.setUseBlock(TriState.FALSE); //TODO: Verify
+        }
+
+        BlockState clickedState = event.getLevel().getBlockState(event.getPos());
+        if (clickedState.getBlock() instanceof AbstractFurnaceBlock) {
+            event.setUseBlock(TriState.FALSE);
+        }
     }
 
     @Override
-    public Class<StirlingEngineTileEntity> getBlockEntityClass() {
-        return StirlingEngineTileEntity.class;
+    public Class<StirlingEngineBlockEntity> getBlockEntityClass() {
+        return StirlingEngineBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends StirlingEngineTileEntity> getBlockEntityType() {
+    public BlockEntityType<? extends StirlingEngineBlockEntity> getBlockEntityType() {
         return ModBlockEntities.FURNACE_ENGINE.get();
     }
 
@@ -96,6 +92,4 @@ public class StirlingEngineBlock extends CommonEngineBlock implements IBE<Stirli
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return CODEC;
     }
-
-
 }

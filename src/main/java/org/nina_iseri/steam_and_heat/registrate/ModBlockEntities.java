@@ -21,12 +21,12 @@ import org.nina_iseri.steam_and_heat.content.burner.bronze.BronzeBurnerBlockEnti
 import org.nina_iseri.steam_and_heat.content.burner.cast_iron.CastIronBurnerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.burner.steel.SteelBurnerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.cogwheel.MetalCogwheelBlockEntity;
-import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.steam_engine.bronze.BronzeSteamEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.steam_engine.cast_iron.CastIronSteamEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.steam_engine.steel.SteelSteamEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.engine.stirling_engine.StirlingEngineTileEntity;
-import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelTileEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.bronze.BronzeSteamEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.cast_iron.CastIronSteamEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.engine.steam_engine.steel.SteelSteamEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.engine.stirling_engine.StirlingEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.flywheel.SteamFlywheelBlockEntity;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
@@ -67,23 +67,23 @@ public class ModBlockEntities {
                         .validBlocks(ModBlocks.STEEL_BOILER)
                         .register();
 
-        public static final BlockEntityEntry<BronzeSteamEngineTileEntity> BRONZE_STEAM_ENGINE = REGISTRATE
-                        .blockEntity("bronze_steam_engine", BronzeSteamEngineTileEntity::new)
+        public static final BlockEntityEntry<BronzeSteamEngineBlockEntity> BRONZE_STEAM_ENGINE = REGISTRATE
+                        .blockEntity("bronze_steam_engine", BronzeSteamEngineBlockEntity::new)
                         .validBlocks(ModBlocks.BRONZE_STEAM_ENGINE)
                         .register();
 
-        public static final BlockEntityEntry<CastIronSteamEngineTileEntity> CAST_IRON_STEAM_ENGINE = REGISTRATE
-                        .blockEntity("cast_iron_steam_engine", CastIronSteamEngineTileEntity::new)
+        public static final BlockEntityEntry<CastIronSteamEngineBlockEntity> CAST_IRON_STEAM_ENGINE = REGISTRATE
+                        .blockEntity("cast_iron_steam_engine", CastIronSteamEngineBlockEntity::new)
                         .validBlocks(ModBlocks.CAST_IRON_STEAM_ENGINE)
                         .register();
 
-        public static final BlockEntityEntry<SteelSteamEngineTileEntity> STEEL_STEAM_ENGINE = REGISTRATE
-                        .blockEntity("steel_steam_engine", SteelSteamEngineTileEntity::new)
+        public static final BlockEntityEntry<SteelSteamEngineBlockEntity> STEEL_STEAM_ENGINE = REGISTRATE
+                        .blockEntity("steel_steam_engine", SteelSteamEngineBlockEntity::new)
                         .validBlocks(ModBlocks.STEEL_STEAM_ENGINE)
                         .register();
 
-        public static final BlockEntityEntry<StirlingEngineTileEntity> FURNACE_ENGINE = REGISTRATE
-                        .blockEntity("furnace_engine", StirlingEngineTileEntity::new)
+        public static final BlockEntityEntry<StirlingEngineBlockEntity> FURNACE_ENGINE = REGISTRATE
+                        .blockEntity("furnace_engine", StirlingEngineBlockEntity::new)
                         .visual(() -> CommonEngineInstance::new, false)
                         .validBlocks(ModBlocks.FURNACE_ENGINE)
                         .renderer(() -> CommonEngineRenderer::new)
@@ -98,29 +98,29 @@ public class ModBlockEntities {
                         .renderer(() -> KineticBlockEntityRenderer::new)
                         .register();
 
-        public static final BlockEntityEntry<SteamFlywheelTileEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE
-                        .blockEntity("bronze_steam_flywheel", SteamFlywheelTileEntity::new)
+        public static final BlockEntityEntry<SteamFlywheelBlockEntity> BRONZE_STEAM_FLYWHEEL = REGISTRATE
+                        .blockEntity("bronze_steam_flywheel", SteamFlywheelBlockEntity::new)
                         .visual(() -> BronzeFlywheelInstance::new)
                         .validBlocks(ModBlocks.BRONZE_FLYWHEEL)
                         .renderer(() -> BronzeFlywheelRenderer::new)
                         .register();
 
-        public static final BlockEntityEntry<SteamFlywheelTileEntity> CAST_IRON_STEAM_FLYWHEEL = REGISTRATE
-                        .blockEntity("cast_iron_steam_flywheel", SteamFlywheelTileEntity::new)
+        public static final BlockEntityEntry<SteamFlywheelBlockEntity> CAST_IRON_STEAM_FLYWHEEL = REGISTRATE
+                        .blockEntity("cast_iron_steam_flywheel", SteamFlywheelBlockEntity::new)
                         .visual(() -> CastIronFlywheelInstance::new)
                         .validBlocks(ModBlocks.CAST_IRON_FLYWHEEL)
                         .renderer(() -> CastIronFlywheelRenderer::new)
                         .register();
 
-        public static final BlockEntityEntry<SteamFlywheelTileEntity> STEEL_STEAM_FLYWHEEL = REGISTRATE
-                        .blockEntity("steel_steam_flywheel", SteamFlywheelTileEntity::new)
+        public static final BlockEntityEntry<SteamFlywheelBlockEntity> STEEL_STEAM_FLYWHEEL = REGISTRATE
+                        .blockEntity("steel_steam_flywheel", SteamFlywheelBlockEntity::new)
                         .visual(() -> SteelFlywheelInstance::new)
                         .validBlocks(ModBlocks.STEEL_FLYWHEEL)
                         .renderer(() -> SteelFlywheelRenderer::new)
                         .register();
 
-        public static final BlockEntityEntry<SteamFlywheelTileEntity> BRASS_STEAM_FLYWHEEL = REGISTRATE
-                        .blockEntity("brass_steam_flywheel", SteamFlywheelTileEntity::new)
+        public static final BlockEntityEntry<SteamFlywheelBlockEntity> BRASS_STEAM_FLYWHEEL = REGISTRATE
+                        .blockEntity("brass_steam_flywheel", SteamFlywheelBlockEntity::new)
                         .visual(() -> BrassFlywheelInstance::new)
                         .validBlocks(ModBlocks.BRASS_FLYWHEEL)
                         .renderer(() -> BrassFlywheelRenderer::new)
@@ -155,10 +155,10 @@ public class ModBlockEntities {
                 event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.STEEL_BOILER.get(),
                                 BoilerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BRONZE_STEAM_ENGINE.get(),
-                                SteamEngineTileEntity.FLUID_CAP);
+                                SteamEngineBlockEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
-                                ModBlockEntities.CAST_IRON_STEAM_ENGINE.get(), SteamEngineTileEntity.FLUID_CAP);
+                                ModBlockEntities.CAST_IRON_STEAM_ENGINE.get(), SteamEngineBlockEntity.FLUID_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.STEEL_STEAM_ENGINE.get(),
-                                SteamEngineTileEntity.FLUID_CAP);
+                                SteamEngineBlockEntity.FLUID_CAP);
         }
 }
