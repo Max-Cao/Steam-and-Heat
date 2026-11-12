@@ -1,0 +1,9 @@
+{
+  "type": "steam_and_heat:boiler",
+  "hu_per_tick": 240,
+  "machine": {
+    "item": "steam_and_heat:cast_iron_boiler"
+  },
+  "steam_per_tick": 24,
+  "water_per_tick": 2
+}

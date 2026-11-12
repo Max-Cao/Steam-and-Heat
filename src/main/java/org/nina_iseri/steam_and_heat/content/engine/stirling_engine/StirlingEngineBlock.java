@@ -68,7 +68,7 @@ public class StirlingEngineBlock extends CommonEngineBlock implements IBE<Stirli
         if (!(stack.getItem() instanceof BlockItem blockItem)) {
             return;
         }
-        if (blockItem.getBlock() != ModBlocks.FURNACE_ENGINE.get()) {
+        if (blockItem.getBlock() != ModBlocks.STIRLING_ENGINE.get()) {
             return;
         }
 
@@ -85,7 +85,7 @@ public class StirlingEngineBlock extends CommonEngineBlock implements IBE<Stirli
 
     @Override
     public BlockEntityType<? extends StirlingEngineBlockEntity> getBlockEntityType() {
-        return ModBlockEntities.FURNACE_ENGINE.get();
+        return ModBlockEntities.STIRLING_ENGINE.get();
     }
 
     @Override

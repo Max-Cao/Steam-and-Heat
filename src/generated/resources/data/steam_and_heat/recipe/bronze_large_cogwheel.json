@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "create:andesite_alloy"
+    },
+    "D": {
+      "tag": "steam_and_heat:bronzeplate"
+    },
+    "S": {
+      "tag": "steam_and_heat:bronze"
+    }
+  },
+  "pattern": [
+    "SDS",
+    "DCD",
+    "SDS"
+  ],
+  "result": {
+    "count": 8,
+    "id": "steam_and_heat:bronze_large_cogwheel"
+  }
+}

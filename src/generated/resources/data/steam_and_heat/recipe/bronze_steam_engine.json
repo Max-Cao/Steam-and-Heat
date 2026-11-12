@@ -1,0 +1,33 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": true,
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "steam_and_heat:bronze"
+    },
+    "C": {
+      "item": "create:fluid_pipe"
+    },
+    "I": [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      }
+    ],
+    "P": {
+      "tag": "steam_and_heat:bronzeplate"
+    }
+  },
+  "pattern": [
+    "PCB",
+    "PCI",
+    "PCB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "steam_and_heat:bronze_steam_engine"
+  }
+}

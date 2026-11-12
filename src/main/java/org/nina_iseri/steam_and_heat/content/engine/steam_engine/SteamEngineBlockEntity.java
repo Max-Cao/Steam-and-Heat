@@ -7,6 +7,8 @@ import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlockEntity;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlockEntity;
+import org.nina_iseri.steam_and_heat.content.recipe.EngineRecipe;
+import org.nina_iseri.steam_and_heat.content.recipe.ModRecipes;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import org.nina_iseri.steam_and_heat.registrate.ModTags;
 
@@ -20,6 +22,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -96,6 +99,7 @@ public abstract class SteamEngineBlockEntity extends CommonEngineBlockEntity imp
 
     private int heatup;
     private int particleInterval;
+    private EngineRecipe recipe;
 
     public static final ICapabilityProvider<SteamEngineBlockEntity, Direction, IFluidHandler> FLUID_CAP =
             (blockEntity, side) -> blockEntity.fluidHandler;
@@ -124,10 +128,23 @@ public abstract class SteamEngineBlockEntity extends CommonEngineBlockEntity imp
         }
     }
 
+    private EngineRecipe getRecipe() {
+        if (recipe == null && level != null) {
+            recipe = ModRecipes.findEngine(level, new ItemStack(getBlockState().getBlock())).orElse(null);
+        }
+        return recipe;
+    }
+
     /**
      * 服务端逻辑：连接飞轮、抽取蒸汽、预热并更新输出。
      */
     private void tickServer() {
+        EngineRecipe recipe = getRecipe();
+        if (recipe == null || recipe.input() != EngineRecipe.InputType.STEAM) {
+            setAppliedRotation(0, 0);
+            return;
+        }
+
         BlockState state = getBlockState();
 
         if (poweredWheel == null) {
@@ -138,7 +155,7 @@ public abstract class SteamEngineBlockEntity extends CommonEngineBlockEntity imp
         if (poweredWheel == null || poweredWheel.isRemoved()) {
             setAppliedRotation(0, 0);
             heatup = 0;
-            if (!tank.drain(getSteamConsumptionPerTick(), IFluidHandler.FluidAction.EXECUTE).isEmpty()) {
+            if (!tank.drain(recipe.inputPerTick(), IFluidHandler.FluidAction.EXECUTE).isEmpty()) {
                 markUpdated();
             }
             setLit(state, false);
@@ -155,7 +172,7 @@ public abstract class SteamEngineBlockEntity extends CommonEngineBlockEntity imp
             }
         }
 
-        int consumption = getSteamConsumptionPerTick();
+        int consumption = recipe.inputPerTick();
 
         // 刚开始工作时先攒够蒸汽，避免抽一口就停。
         if (heatup == 0 && consumption > 0
@@ -171,11 +188,11 @@ public abstract class SteamEngineBlockEntity extends CommonEngineBlockEntity imp
 
         if (hasSteam) {
             if (heatup >= HEATUP_TICKS) {
-                float speed = getGeneratingSpeed();
-                float capacity = getGeneratingCapacity();
+                float speed = recipe.rpm();
+                float capacity = recipe.su();
                 // 从锅炉直接抽汽会损失一部分效率。
                 if (steamSource != tank) {
-                    capacity = Mth.ceil(capacity * getSuckEfficiency());
+                    capacity = Mth.ceil(capacity * recipe.boilerEfficiency());
                 }
                 setAppliedRotation(speed, capacity);
             } else {
@@ -272,27 +289,7 @@ public abstract class SteamEngineBlockEntity extends CommonEngineBlockEntity imp
     }
 
     /**
-     * 该等级引擎产生的应力容量。
-     */
-    public abstract float getGeneratingCapacity();
-
-    /**
-     * 该等级引擎产生的转速。
-     */
-    public abstract float getGeneratingSpeed();
-
-    /**
-     * 每 tick 消耗的蒸汽量（mB）。
-     */
-    public abstract int getSteamConsumptionPerTick();
-
-    /**
-     * 自身储罐容量（mB）。
+     * 自身储罐容量（mB）。这是机器的物理容量，不属于配方数值。
      */
     public abstract int getSteamStorage();
-
-    /**
-     * 从锅炉直接抽汽时的效率系数。
-     */
-    public abstract double getSuckEfficiency();
 }

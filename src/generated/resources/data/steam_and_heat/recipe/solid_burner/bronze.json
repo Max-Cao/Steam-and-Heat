@@ -1,0 +1,33 @@
+{
+  "type": "steam_and_heat:solid_burner",
+  "fuels": [
+    {
+      "fuel": {
+        "item": "minecraft:coal"
+      },
+      "hu": 30720
+    },
+    {
+      "fuel": {
+        "item": "minecraft:charcoal"
+      },
+      "hu": 30720
+    },
+    {
+      "fuel": {
+        "tag": "c:storage_blocks/coal"
+      },
+      "hu": 307200
+    },
+    {
+      "fuel": {
+        "tag": "c:storage_blocks/charcoal"
+      },
+      "hu": 307200
+    }
+  ],
+  "hu_per_tick": 120,
+  "machine": {
+    "item": "steam_and_heat:bronze_solid_burner"
+  }
+}

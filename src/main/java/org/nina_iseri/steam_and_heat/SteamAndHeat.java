@@ -4,6 +4,8 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import org.nina_iseri.steam_and_heat.client.ModParticles;
 import org.nina_iseri.steam_and_heat.client.SteamAndHeatClient;
 // import org.nina_iseri.steam_and_heat.client.recipe.ModRecipes;
+import org.nina_iseri.steam_and_heat.content.recipe.ModRecipes;
+import org.nina_iseri.steam_and_heat.data.ModRecipeProvider;
 import org.nina_iseri.steam_and_heat.registrate.*;
 
 import net.minecraft.resources.ResourceLocation;
@@ -53,6 +55,8 @@ public class SteamAndHeat {
         ModBlockEntities.register();
         ModItems.register();
         ModTags.register();
+        ModRecipes.register(eventBus);
+        ModRecipeProvider.register();
         // ModRecipes.register(eventBus);
         ModCommonConfig.register(modContainer);
         ModStressConfig.register();

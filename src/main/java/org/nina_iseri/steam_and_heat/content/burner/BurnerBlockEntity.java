@@ -1,6 +1,7 @@
 package org.nina_iseri.steam_and_heat.content.burner;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
@@ -8,48 +9,56 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 
 import org.nina_iseri.steam_and_heat.SteamAndHeat;
+import org.nina_iseri.steam_and_heat.content.heat.HeatGoggles;
 import org.nina_iseri.steam_and_heat.content.heat.HeatHandler;
 import org.nina_iseri.steam_and_heat.content.heat.IHeatHandler;
+import org.nina_iseri.steam_and_heat.content.recipe.ModRecipes;
+import org.nina_iseri.steam_and_heat.content.recipe.SolidBurnerRecipe;
 import org.nina_iseri.steam_and_heat.registrate.ModCapabilities;
-import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.network.chat.Component;
 import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 
+/**
+ * 固体燃烧室方块实体。
+ *
+ * <p>燃料是否可用、每个燃料提供多少 HU、每 tick 输出多少 HU，全部来自
+ * {@link SolidBurnerRecipe}。因此新增/修改燃料只需要改数据包配方，不需要改代码或配置。</p>
+ */
 public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
-    private ItemStackHandler fuel_handler = new ItemStackHandler() {
+
+    private static final double HEAT_LOSS_PER_TICK = 320.0D;
+
+    private final ItemStackHandler fuel_handler = new ItemStackHandler() {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return stack.getBurnTime(RecipeType.SMELTING) != 0 && stack.getCraftingRemainingItem().isEmpty();
+            SolidBurnerRecipe recipe = getRecipe();
+            return recipe != null && recipe.findFuel(stack).isPresent();
         }
-
-    };
-    // int remain_hu;
-    private HeatHandler heat = new HeatHandler(320000, 0, 16000);
-
-    public static final ICapabilityProvider<BurnerBlockEntity, Direction, IItemHandler> ITEM_CAP = (
-            BurnerBlockEntity te, Direction side) -> {
-        return te.fuel_handler;
     };
 
-    public static final ICapabilityProvider<BurnerBlockEntity, Void, IHeatHandler> HEAT_CAP = (
-            BurnerBlockEntity te, Void side) -> {
-        return te.heat;
-    };
+    private final HeatHandler heat = new HeatHandler(320000, 0, 16000);
+
+    private SolidBurnerRecipe recipe;
+
+    public static final ICapabilityProvider<BurnerBlockEntity, Direction, IItemHandler> ITEM_CAP =
+            (blockEntity, side) -> blockEntity.fuel_handler;
+
+    public static final ICapabilityProvider<BurnerBlockEntity, Void, IHeatHandler> HEAT_CAP =
+            (blockEntity, side) -> blockEntity.heat;
 
     public BurnerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -59,10 +68,19 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     }
 
+    /**
+     * 查询并缓存当前燃烧室对应的配方。
+     */
+    protected SolidBurnerRecipe getRecipe() {
+        if (recipe == null && level != null) {
+            recipe = ModRecipes.findBurner(level, new ItemStack(getBlockState().getBlock())).orElse(null);
+        }
+        return recipe;
+    }
+
     @Override
     public void read(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         fuel_handler.deserializeNBT(registries, nbt.getCompound("inv"));
-        // remain_hu = nbt.getInt("hu");
         heat.deserializeNBT(registries, nbt.get("heat"));
         super.read(nbt, registries, clientPacket);
     }
@@ -70,122 +88,106 @@ public abstract class BurnerBlockEntity extends SmartBlockEntity implements IHav
     @Override
     public void write(CompoundTag nbt, HolderLookup.Provider registries, boolean clientPacket) {
         nbt.put("inv", fuel_handler.serializeNBT(registries));
-        // nbt.putInt("hu", remain_hu);
         nbt.put("heat", heat.serializeNBT(registries));
         super.write(nbt, registries, clientPacket);
     }
 
+    @Override
     public void tick() {
-        if (level == null) {
+        if (level == null || level.isClientSide) {
             return;
         }
-        if (!level.isClientSide) {
-            BlockState state = this.level.getBlockState(this.worldPosition);
-            int emit = getHuPerTick();
-            // while (remain_hu < emit && this.consumeFuel()) {
-            // }
-            while (heat.getHeatAmount() < emit && consumeFuel()) {
+
+        SolidBurnerRecipe recipe = getRecipe();
+        if (recipe == null) {
+            return;
+        }
+
+        BlockState state = getBlockState();
+        int emit = recipe.huPerTick();
+
+        // 热量不足时消耗燃料，直到可以输出一个 tick 的热量。
+        while (heat.getHeatAmount() < emit && consumeFuel(recipe)) {
+        }
+
+        boolean wasLit = state.getValue(BurnerBlock.LIT);
+        if (heat.noHeat()) {
+            if (wasLit) {
+                level.setBlockAndUpdate(worldPosition, state.setValue(BurnerBlock.LIT, false));
             }
-            boolean is_lit_before = state.getValue(BurnerBlock.LIT);
-            // if (remain_hu == 0) {
-            if (heat.noHeat()) {
-                if (is_lit_before) {
-                    this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, false));
-                }
-                return;
-            }
-            // int send_out = Math.min(remain_hu, emit);
-            double send_out = Math.min(heat.getHeatAmount(), emit);
-            produceHeat(send_out);
-            // remain_hu -= send_out;
-            this.setChanged();
-            if (!is_lit_before) {
-                this.level.setBlockAndUpdate(this.worldPosition, state.setValue(BurnerBlock.LIT, true));
-            } else {
-                this.level.sendBlockUpdated(worldPosition, state, state, 3);
-            }
+            return;
+        }
+
+        double output = Math.min(heat.getHeatAmount(), emit);
+        produceHeat(output);
+
+        setChanged();
+        if (!wasLit) {
+            level.setBlockAndUpdate(worldPosition, state.setValue(BurnerBlock.LIT, true));
+        } else {
+            level.sendBlockUpdated(worldPosition, state, state, 3);
         }
     }
 
-    private boolean consumeFuel() {
-        if (this.getBlockState().getValue(BurnerBlock.REDSTONE_LOCKED))
+    private boolean consumeFuel(SolidBurnerRecipe recipe) {
+        if (getBlockState().getValue(BurnerBlock.REDSTONE_LOCKED)) {
             return false;
-        if (fuel_handler.getStackInSlot(0) == null)
+        }
+
+        ItemStack fuelStack = fuel_handler.getStackInSlot(0);
+        if (fuelStack.isEmpty()) {
             return false;
-        // FIXME: 修改为long
-        int time = fuel_handler.getStackInSlot(0).getBurnTime(RecipeType.SMELTING);
-        if (time <= 0)
+        }
+
+        Optional<SolidBurnerRecipe.Fuel> fuel = recipe.findFuel(fuelStack);
+        if (fuel.isEmpty()) {
             return false;
-        fuel_handler.getStackInSlot(0).shrink(1);
-        // remain_hu += time * ModCommonConfig.COMMON.HUPerFuelTick.get() *
-        // getEfficiency();// 2.4HU/t
-        double heat_get = time * ModCommonConfig.COMMON.HUPerFuelTick.get() * getEfficiency();
-        heat.receiveInner(heat_get, false);// 2.4HU/t
+        }
+
+        fuelStack.shrink(1);
+        heat.receiveInner(fuel.get().hu(), false);
         return true;
     }
 
     protected void produceHeat(double value) {
-        BlockPos above = this.getBlockPos().above();
-        // if (above instanceof IAttachHeat receiver) {
-        // receiver.receiveHeat(value);
-        // }
+        BlockPos above = getBlockPos().above();
         BlockState aboveState = level.getBlockState(above);
         IHeatHandler aboveHeatHandler = level.getCapability(ModCapabilities.Heat.BLOCK, above, aboveState,
                 level.getBlockEntity(above));
-        if (aboveHeatHandler != null) {
-            if (aboveHeatHandler.receive(value, false) > 0) {
-                heat.exact(value, false);
-            }
+
+        if (aboveHeatHandler != null && aboveHeatHandler.receive(value, false) > 0) {
+            heat.exact(value, false);
         }
 
-        // 热能散失了
-        heat.exact(320, false);
-        // if ()
+        // 没有接收方时热量会散失。
+        heat.exact(HEAT_LOSS_PER_TICK, false);
     }
 
-    // @Override
-    // public boolean addToGoggleTooltip(List<Component> tooltip, boolean
-    // isPlayerSneaking) {
-    // tooltip.add(componentSpacing.plainCopy().append(
-    // new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu",
-    // hu_remain).style(ChatFormatting.GOLD)));
-    // if (!fuel.getStackInSlot(0).isEmpty())
-    // tooltip.add(componentSpacing.plainCopy()
-    // .append(Component
-    // .translatable("tooltip.burner.item", fuel.getStackInSlot(0).getCount(),
-    // fuel.getStackInSlot(0).getItem().getName(fuel.getStackInSlot(0)))
-    // .style(ChatFormatting.GRAY)));
-    // return true;
-    // }
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         tooltip.clear();
-        // new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", remain_hu)
-        new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.hu", heat.getHeatAmount())
-                .style(ChatFormatting.GOLD)
-                .forGoggles(tooltip, 1);
+        HeatGoggles.addToTooltip(tooltip, heat);
+
+        SolidBurnerRecipe recipe = getRecipe();
+        if (recipe != null) {
+            new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.huproduce", recipe.huPerTick())
+                    .style(ChatFormatting.GOLD)
+                    .forGoggles(tooltip, 1);
+        }
+
         ItemStack fuel = fuel_handler.getStackInSlot(0);
         if (!fuel.isEmpty()) {
-            new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.item",
-                    fuel.getCount(),
-                    fuel.getItem().getName(fuel))
+            new LangBuilder(SteamAndHeat.MODID)
+                    .translate("tooltip.burner.item", fuel.getCount(), fuel.getItem().getName(fuel))
                     .style(ChatFormatting.GRAY)
                     .forGoggles(tooltip, 1);
         }
         return true;
     }
 
-    /*
-     * HU per tick max, 10HU=1 steam
-     */
-    protected abstract int getHuPerTick();
-
-    protected abstract double getEfficiency();
-
     public static double getBoilerHeat(Level level, BlockPos pos, BlockState state) {
-        BlockEntity tile = level.getBlockEntity(pos);
-        if (tile instanceof BurnerBlockEntity burner) {
-            // if (burner.remain_hu > 0 || state.getValue(BurnerBlock.LIT)) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof BurnerBlockEntity burner) {
             if (burner.heat.getHeatAmount() > 0 || state.getValue(BurnerBlock.LIT)) {
                 return 1;
             }

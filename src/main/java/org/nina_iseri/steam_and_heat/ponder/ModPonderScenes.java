@@ -6,7 +6,6 @@ import org.nina_iseri.steam_and_heat.content.burner.BurnerBlock;
 import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineBlock;
 import org.nina_iseri.steam_and_heat.content.flywheel.CommonFlywheelBlock;
 import org.nina_iseri.steam_and_heat.registrate.ModBlocks;
-import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
@@ -199,27 +198,27 @@ public class ModPonderScenes {
         scene.world().hideSection(f2Select, Direction.DOWN);
         scene.world().hideSection(b2Select, Direction.DOWN);
         scene.idle(15);*/
-        scene.world().setBlock(util.grid().at(5, 1, 3),ModBlocks.CAST_IRON_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
+        scene.world().setBlock(util.grid().at(5, 1, 3),ModBlocks.CAST_IRON_SOLID_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
         scene.world().setBlock(util.grid().at(5, 2, 3),ModBlocks.CAST_IRON_BOILER.getDefaultState(),false);
         scene.world().setBlock(enginePos, ModBlocks.CAST_IRON_STEAM_ENGINE.getDefaultState().setValue(SteamEngineBlock.FACING, Direction.WEST).setValue(SteamEngineBlock.LIT, true), false);
         scene.world().setBlock(wheelPos, ModBlocks.CAST_IRON_FLYWHEEL.getDefaultState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(CommonFlywheelBlock.CONNECTION,CommonFlywheelBlock.ConnectionState.LEFT), false);
         scene.world().showSection(f2Select, Direction.DOWN);
         scene.world().showSection(b2Select, Direction.DOWN);
         scene.idle(30);
-        scene.world().setKineticSpeed(util.select().fromTo(1, 2, 3, 1, 2, 1),-ModCommonConfig.COMMON.castIronFlywheelSpeed.get());
+        scene.world().setKineticSpeed(util.select().fromTo(1, 2, 3, 1, 2, 1), -32f);
         scene.idle(50);
 
         scene.world().hideSection(f2Select, Direction.DOWN);
         scene.world().hideSection(b2Select, Direction.DOWN);
         scene.idle(15);
-        scene.world().setBlock(util.grid().at(5, 1, 3),ModBlocks.STEEL_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
+        scene.world().setBlock(util.grid().at(5, 1, 3),ModBlocks.STEEL_SOLID_BURNER.getDefaultState().setValue(BurnerBlock.LIT,true),false);
         scene.world().setBlock(util.grid().at(5, 2, 3),ModBlocks.STEEL_BOILER.getDefaultState(),false);
         scene.world().setBlock(enginePos, ModBlocks.STEEL_STEAM_ENGINE.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.WEST).setValue(SteamEngineBlock.LIT, true), false);
         scene.world().setBlock(wheelPos, ModBlocks.STEEL_FLYWHEEL.get().defaultBlockState().setValue(SteamEngineBlock.FACING, Direction.SOUTH).setValue(CommonFlywheelBlock.CONNECTION,CommonFlywheelBlock.ConnectionState.LEFT), false);
         scene.world().showSection(f2Select, Direction.DOWN);
         scene.world().showSection(b2Select, Direction.DOWN);
         scene.idle(30);
-        scene.world().setKineticSpeed(util.select().fromTo(1, 2, 3, 1, 2, 1),-ModCommonConfig.COMMON.steelFlywheelSpeed.get());
+        scene.world().setKineticSpeed(util.select().fromTo(1, 2, 3, 1, 2, 1), -32f);
 
         scene.idle(5);
         scene.effects().rotationSpeedIndicator(cogPos);

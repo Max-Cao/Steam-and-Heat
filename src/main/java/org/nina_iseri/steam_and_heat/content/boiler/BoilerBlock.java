@@ -5,6 +5,8 @@ import com.simibubi.create.foundation.utility.CreateLang;
 
 import org.nina_iseri.steam_and_heat.SteamAndHeat;
 import org.nina_iseri.steam_and_heat.client.ClientUtils;
+import org.nina_iseri.steam_and_heat.content.recipe.BoilerRecipe;
+import org.nina_iseri.steam_and_heat.content.recipe.ModRecipes;
 import org.nina_iseri.steam_and_heat.registrate.ModCapabilities;
 
 import net.createmod.catnip.lang.FontHelper;
@@ -13,7 +15,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -33,86 +34,89 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import java.util.List;
 
 public abstract class BoilerBlock extends Block {
-	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-			Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.getDirection()))
-			return ItemInteractionResult.SUCCESS;
-		return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
-	}
 
-	@Override
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-			BlockHitResult hitResult) {
-		if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, level, pos, hitResult.getDirection()))
-			return InteractionResult.SUCCESS;
-		return super.useWithoutItem(state, level, pos, player, hitResult);
-	}
+    public BoilerBlock(Properties properties) {
+        super(properties);
+    }
 
-	@Override
-	public boolean hasAnalogOutputSignal(BlockState p_149740_1_) {
-		return true;
-	}
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.getDirection())) {
+            return ItemInteractionResult.SUCCESS;
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
 
-	public BoilerBlock(Properties properties) {
-		super(properties);
-	}
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hitResult) {
+        if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, level, pos,
+                hitResult.getDirection())) {
+            return InteractionResult.SUCCESS;
+        }
+        return super.useWithoutItem(state, level, pos, player, hitResult);
+    }
 
-	@Override
-	public int getAnalogOutputSignal(BlockState b, Level w, BlockPos p) {
-		BlockEntity te = w.getBlockEntity(p);
-		if (te instanceof BoilerBlockEntity) {
-			BoilerBlockEntity boiler = (BoilerBlockEntity) te;
-			return boiler.output.getFluidAmount() * 15 / boiler.output.getCapacity();
-		}
-		return b.getAnalogOutputSignal(w, p);
-	}
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
 
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof BoilerBlockEntity boiler) {
+            return boiler.output.getFluidAmount() * 15 / boiler.output.getCapacity();
+        }
+        return state.getAnalogOutputSignal(level, pos);
+    }
 
-	public abstract int getHuConsume();
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip,
+            TooltipFlag flag) {
+        if (Screen.hasShiftDown()) {
+            new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.brief").style(ChatFormatting.GOLD)
+                    .addTo(tooltip);
+            if (ClientUtils.hasGoggles()) {
+                BoilerRecipe recipe = context.level() == null ? null
+                        : ModRecipes.findBoiler(context.level(), new ItemStack(this)).orElse(null);
+                if (recipe != null) {
+                    new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.huconsume", recipe.huPerTick())
+                            .style(ChatFormatting.GOLD).addTo(tooltip);
+                    new LangBuilder(SteamAndHeat.MODID)
+                            .translate("tooltip.boiler.waterconsume", recipe.waterPerTick())
+                            .style(ChatFormatting.AQUA).addTo(tooltip);
+                    new LangBuilder(SteamAndHeat.MODID)
+                            .translate("tooltip.boiler.steamproduce", recipe.steamPerTick())
+                            .style(ChatFormatting.GOLD).addTo(tooltip);
+                }
+                new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.danger")
+                        .style(ChatFormatting.RED).addTo(tooltip);
+            }
+        } else {
+            tooltip.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
+        }
+        if (Screen.hasControlDown()) {
+            new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.redstone").style(ChatFormatting.RED)
+                    .addTo(tooltip);
+        } else {
+            tooltip.add(CreateLang
+                    .translate("tooltip.holdForControls",
+                            CreateLang.translate("tooltip.keyCtrl").style(ChatFormatting.GRAY))
+                    .style(ChatFormatting.DARK_GRAY).component());
+        }
+        super.appendHoverText(stack, context, tooltip, flag);
+    }
 
-	@Override
-	public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> t, TooltipFlag f) {
-		if (Screen.hasShiftDown()) {
-			new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.brief").style(ChatFormatting.GOLD).addTo(t);
-			if (ClientUtils.hasGoggles()) {
-				new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.danger")
-						.style(ChatFormatting.RED).addTo(t);
-				new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.huconsume", this.getHuConsume())
-						.style(ChatFormatting.GOLD).addTo(t);
-				new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.waterconsume",
-						((int) Math.ceil(this.getHuConsume() / 120.0))).style(ChatFormatting.AQUA).addTo(t);
-				new LangBuilder(SteamAndHeat.MODID)
-						.translate("tooltip.boiler.steamproduce", this.getHuConsume() / 10)
-						.style(ChatFormatting.GOLD).addTo(t);
-			}
-		} else {
-			t.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
-		}
-		if (Screen.hasControlDown()) {
-			new LangBuilder(SteamAndHeat.MODID).translate("tooltip.boiler.redstone").style(ChatFormatting.RED).addTo(t);
-		} else {
-			t.add(CreateLang
-					.translate("tooltip.holdForControls",
-							CreateLang.translate("tooltip.keyCtrl").style(ChatFormatting.GRAY))
-					.style(ChatFormatting.DARK_GRAY).component());
-		}
-		super.appendHoverText(i, w, t, f);
-	}
-
-	// 踩上去会受伤
-	public void stepOn(Level level, BlockPos pos, Entity entity) {
-		BlockEntity block_entity = level.getBlockEntity(pos);
-		if (block_entity instanceof BoilerBlockEntity boiler &&
-		// (boiler.heat_last > 0 || !boiler.output.isEmpty()) &&
-				(level.getCapability(ModCapabilities.Heat.BLOCK, pos).noHeat()
-						|| !boiler.output.isEmpty())
-				&&
-				entity instanceof LivingEntity) {
-			entity.hurt(level.damageSources().hotFloor(), 2);
-		}
-	}
+    // 踩上去会受伤。
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof BoilerBlockEntity boiler
+                && (level.getCapability(ModCapabilities.Heat.BLOCK, pos).noHeat() || !boiler.output.isEmpty())
+                && entity instanceof LivingEntity) {
+            entity.hurt(level.damageSources().hotFloor(), 2);
+        }
+    }
 }

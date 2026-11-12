@@ -5,6 +5,8 @@ import com.simibubi.create.foundation.utility.CreateLang;
 
 import org.nina_iseri.steam_and_heat.SteamAndHeat;
 import org.nina_iseri.steam_and_heat.client.ClientUtils;
+import org.nina_iseri.steam_and_heat.content.recipe.ModRecipes;
+import org.nina_iseri.steam_and_heat.content.recipe.SolidBurnerRecipe;
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
@@ -25,10 +27,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -90,30 +90,22 @@ public abstract class BurnerBlock extends Block {
                 pEntity.hurt(pLevel.damageSources().hotFloor(), 2);
     }
 
-    public abstract int getHuProduce();
-
-    public abstract double getEfficiency();
-
-    public String getEfficiencyString() {
-        return ((int) (this.getEfficiency() * 1000)) / 10F + "%";
-    }
-
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(LIT).add(FACING).add(REDSTONE_LOCKED));
     }
 
     @Override
-    public void appendHoverText(ItemStack i, Item.TooltipContext w, List<Component> tooltip,
-            TooltipFlag f) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip,
+            TooltipFlag flag) {
 
         if (Screen.hasShiftDown()) {
             new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.brief").style(ChatFormatting.GOLD)
                     .forGoggles(tooltip, 1);
-            if (ClientUtils.hasGoggles()) {
-                new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.efficiency", getEfficiencyString())
-                        .style(ChatFormatting.RED).addTo(tooltip);
-                new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.huproduce", this.getHuProduce())
-                        .style(ChatFormatting.GOLD).addTo(tooltip);
+            if (ClientUtils.hasGoggles() && context.level() != null) {
+                ModRecipes.findBurner(context.level(), new ItemStack(this)).ifPresent(recipe ->
+                        new LangBuilder(SteamAndHeat.MODID)
+                                .translate("tooltip.burner.huproduce", recipe.huPerTick())
+                                .style(ChatFormatting.GOLD).addTo(tooltip));
                 new LangBuilder(SteamAndHeat.MODID).translate("tooltip.burner.danger")
                         .style(ChatFormatting.RED).addTo(tooltip);
             }
@@ -128,18 +120,19 @@ public abstract class BurnerBlock extends Block {
                     .style(ChatFormatting.GRAY))
                     .style(ChatFormatting.DARK_GRAY).component());
         }
-        super.appendHoverText(i, w, tooltip, f);
+        super.appendHoverText(stack, context, tooltip, flag);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (player.getItemInHand(hand).getBurnTime(RecipeType.BLASTING) != 0
-                && player.getItemInHand(hand).getCraftingRemainingItem().isEmpty()
-                && !player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
-            IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-            player.setItemInHand(hand, cap.insertItem(0, player.getItemInHand(hand), false));
-            return ItemInteractionResult.SUCCESS;
+        SolidBurnerRecipe recipe = ModRecipes.findBurner(level, new ItemStack(this)).orElse(null);
+        if (recipe != null && recipe.findFuel(stack).isPresent()) {
+            IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+            if (itemHandler != null) {
+                player.setItemInHand(hand, itemHandler.insertItem(0, player.getItemInHand(hand), false));
+                return ItemInteractionResult.SUCCESS;
+            }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
@@ -147,11 +140,13 @@ public abstract class BurnerBlock extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
             BlockHitResult hitResult) {
-        IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-        ItemStack is = cap.getStackInSlot(0);
-        if (!is.isEmpty()) {
-            player.setItemInHand(InteractionHand.MAIN_HAND, cap.extractItem(0, is.getCount(), false));
-            return InteractionResult.SUCCESS;
+        IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+        if (itemHandler != null) {
+            ItemStack fuel = itemHandler.getStackInSlot(0);
+            if (!fuel.isEmpty()) {
+                player.setItemInHand(InteractionHand.MAIN_HAND, itemHandler.extractItem(0, fuel.getCount(), false));
+                return InteractionResult.SUCCESS;
+            }
         }
         return super.useWithoutItem(state, level, pos, player, hitResult);
     }

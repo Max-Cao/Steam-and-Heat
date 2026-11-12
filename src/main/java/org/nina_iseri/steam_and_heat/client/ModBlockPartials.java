@@ -29,7 +29,7 @@ public class ModBlockPartials {
     public static final PartialModel BRASS_FLYWHEEL_UPPER_SLIDING = source("brass_flywheel/upper_sliding_connector");
     public static final PartialModel BRASS_FLYWHEEL_LOWER_SLIDING = source("brass_flywheel/lower_sliding_connector");
 
-    public static final PartialModel FURNACE_GENERATOR_FRAME = source("furnace_engine/frame");
+    public static final PartialModel FURNACE_GENERATOR_FRAME = source("stirling_engine/frame");
 
     private static PartialModel source(String path) {
         return PartialModel.of(SteamAndHeat.resource("block/"+path));

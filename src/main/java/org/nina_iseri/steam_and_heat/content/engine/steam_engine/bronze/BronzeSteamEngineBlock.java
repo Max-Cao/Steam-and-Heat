@@ -5,7 +5,6 @@ import com.simibubi.create.foundation.block.IBE;
 
 import org.nina_iseri.steam_and_heat.content.engine.steam_engine.SteamEngineBlock;
 import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
-import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,11 +15,6 @@ public class BronzeSteamEngineBlock extends SteamEngineBlock implements IBE<Bron
 
     public BronzeSteamEngineBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected int getSteamConsumptionPerTick() {
-        return ModCommonConfig.COMMON.bronzeFlywheelSteamConsumptionPerTick.get();
     }
 
     @Override

@@ -37,19 +37,19 @@ import static org.nina_iseri.steam_and_heat.SteamAndHeat.REGISTRATE;
 
 public class ModBlockEntities {
 
-        public static final BlockEntityEntry<BronzeBurnerBlockEntity> BRONZE_BURNER = REGISTRATE
-                        .blockEntity("bronze_burner", BronzeBurnerBlockEntity::new)
-                        .validBlocks(ModBlocks.BRONZE_BURNER)
+        public static final BlockEntityEntry<BronzeBurnerBlockEntity> BRONZE_SOLID_BURNER = REGISTRATE
+                        .blockEntity("bronze_solid_burner", BronzeBurnerBlockEntity::new)
+                        .validBlocks(ModBlocks.BRONZE_SOLID_BURNER)
                         .register();
 
-        public static final BlockEntityEntry<CastIronBurnerBlockEntity> CAST_IRON_BURNER = REGISTRATE
-                        .blockEntity("cast_iron_burner", CastIronBurnerBlockEntity::new)
-                        .validBlocks(ModBlocks.CAST_IRON_BURNER)
+        public static final BlockEntityEntry<CastIronBurnerBlockEntity> CAST_IRON_SOLID_BURNER = REGISTRATE
+                        .blockEntity("cast_iron_solid_burner", CastIronBurnerBlockEntity::new)
+                        .validBlocks(ModBlocks.CAST_IRON_SOLID_BURNER)
                         .register();
 
-        public static final BlockEntityEntry<SteelBurnerBlockEntity> STEEL_BURNER = REGISTRATE
-                        .blockEntity("steel_burner", SteelBurnerBlockEntity::new)
-                        .validBlocks(ModBlocks.STEEL_BURNER)
+        public static final BlockEntityEntry<SteelBurnerBlockEntity> STEEL_SOLID_BURNER = REGISTRATE
+                        .blockEntity("steel_solid_burner", SteelBurnerBlockEntity::new)
+                        .validBlocks(ModBlocks.STEEL_SOLID_BURNER)
                         .register();
 
         public static final BlockEntityEntry<BronzeBoilerBlockEntity> BRONZE_BOILER = REGISTRATE
@@ -82,10 +82,10 @@ public class ModBlockEntities {
                         .validBlocks(ModBlocks.STEEL_STEAM_ENGINE)
                         .register();
 
-        public static final BlockEntityEntry<StirlingEngineBlockEntity> FURNACE_ENGINE = REGISTRATE
-                        .blockEntity("furnace_engine", StirlingEngineBlockEntity::new)
+        public static final BlockEntityEntry<StirlingEngineBlockEntity> STIRLING_ENGINE = REGISTRATE
+                        .blockEntity("stirling_engine", StirlingEngineBlockEntity::new)
                         .visual(() -> CommonEngineInstance::new, false)
-                        .validBlocks(ModBlocks.FURNACE_ENGINE)
+                        .validBlocks(ModBlocks.STIRLING_ENGINE)
                         .renderer(() -> CommonEngineRenderer::new)
                         .register();
 
@@ -130,17 +130,17 @@ public class ModBlockEntities {
         }
 
         public static void register_capabilities(RegisterCapabilitiesEvent event) {
-                event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BRONZE_BURNER.get(),
+                event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BRONZE_SOLID_BURNER.get(),
                                 BurnerBlockEntity.ITEM_CAP);
-                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.BRONZE_BURNER.get(),
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.BRONZE_SOLID_BURNER.get(),
                                 BurnerBlockEntity.HEAT_CAP);
-                event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.CAST_IRON_BURNER.get(),
+                event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.CAST_IRON_SOLID_BURNER.get(),
                                 BurnerBlockEntity.ITEM_CAP);
-                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.CAST_IRON_BURNER.get(),
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.CAST_IRON_SOLID_BURNER.get(),
                                 BurnerBlockEntity.HEAT_CAP);
-                event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.STEEL_BURNER.get(),
+                event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.STEEL_SOLID_BURNER.get(),
                                 BurnerBlockEntity.ITEM_CAP);
-                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.STEEL_BURNER.get(),
+                event.registerBlockEntity(ModCapabilities.Heat.BLOCK, ModBlockEntities.STEEL_SOLID_BURNER.get(),
                                 BurnerBlockEntity.HEAT_CAP);
                 event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BRONZE_BOILER.get(),
                                 BoilerBlockEntity.FLUID_CAP);

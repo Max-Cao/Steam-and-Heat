@@ -1,0 +1,22 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": true,
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:ingots/brass"
+    },
+    "C": {
+      "item": "create:brass_casing"
+    }
+  },
+  "pattern": [
+    " BBB",
+    "CB B",
+    " BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "steam_and_heat:brass_flywheel"
+  }
+}

@@ -29,7 +29,7 @@ public class ModPonderPlugin implements PonderPlugin {
         HELPER.forComponents(ModBlocks.BRONZE_STEAM_ENGINE, ModBlocks.CAST_IRON_STEAM_ENGINE, ModBlocks.STEEL_STEAM_ENGINE)
                 .addStoryBoard("boiler", ModPonderScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
-        HELPER.forComponents(ModBlocks.BRONZE_BOILER, ModBlocks.BRONZE_BURNER, ModBlocks.CAST_IRON_BURNER, ModBlocks.CAST_IRON_BOILER, ModBlocks.STEEL_BURNER, ModBlocks.STEEL_BOILER)
+        HELPER.forComponents(ModBlocks.BRONZE_BOILER, ModBlocks.BRONZE_SOLID_BURNER, ModBlocks.CAST_IRON_SOLID_BURNER, ModBlocks.CAST_IRON_BOILER, ModBlocks.STEEL_SOLID_BURNER, ModBlocks.STEEL_BOILER)
                 .addStoryBoard("boiler", ModPonderScenes::steamBoiler, AllCreatePonderTags.KINETIC_SOURCES, STEAM);
 
         HELPER.forComponents(ModBlocks.BRONZE_FLYWHEEL, ModBlocks.CAST_IRON_FLYWHEEL, ModBlocks.STEEL_FLYWHEEL)

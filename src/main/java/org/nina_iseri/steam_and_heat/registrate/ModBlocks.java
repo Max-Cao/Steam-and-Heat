@@ -39,24 +39,24 @@ import static org.nina_iseri.steam_and_heat.SteamAndHeat.REGISTRATE;
 
 public class ModBlocks {
 
-        public static final BlockEntry<BronzeBurnerBlock> BRONZE_BURNER = REGISTRATE
-                        .block("bronze_burner", BronzeBurnerBlock::new)
+        public static final BlockEntry<BronzeBurnerBlock> BRONZE_SOLID_BURNER = REGISTRATE
+                        .block("bronze_solid_burner", BronzeBurnerBlock::new)
                         .initialProperties(SharedProperties::softMetal)
                         .transform(pickaxeOnly())
                         .item()
                         .transform(customItemModel())
                         .register();
 
-        public static final BlockEntry<CastIronBurnerBlock> CAST_IRON_BURNER = REGISTRATE
-                        .block("cast_iron_burner", CastIronBurnerBlock::new)
+        public static final BlockEntry<CastIronBurnerBlock> CAST_IRON_SOLID_BURNER = REGISTRATE
+                        .block("cast_iron_solid_burner", CastIronBurnerBlock::new)
                         .initialProperties(ModBlocks::hardMetal)
                         .transform(pickaxeOnly())
                         .item()
                         .transform(customItemModel())
                         .register();
 
-        public static final BlockEntry<SteelBurnerBlock> STEEL_BURNER = REGISTRATE
-                        .block("steel_burner", SteelBurnerBlock::new)
+        public static final BlockEntry<SteelBurnerBlock> STEEL_SOLID_BURNER = REGISTRATE
+                        .block("steel_solid_burner", SteelBurnerBlock::new)
                         .initialProperties(ModBlocks::hardMetal)
                         .transform(pickaxeOnly())
                         .item()
@@ -113,8 +113,8 @@ public class ModBlocks {
                         .transform(customItemModel())
                         .register();
 
-        public static final BlockEntry<StirlingEngineBlock> FURNACE_ENGINE = REGISTRATE
-                        .block("furnace_engine", StirlingEngineBlock::new)
+        public static final BlockEntry<StirlingEngineBlock> STIRLING_ENGINE = REGISTRATE
+                        .block("stirling_engine", StirlingEngineBlock::new)
                         .initialProperties(ModBlocks::hardMetal)
                         .transform(pickaxeOnly())
                         .item()
@@ -232,7 +232,7 @@ public class ModBlocks {
         }
 
         // public static BoilerHeater getHeater(Block block) {
-        //         if (BRONZE_BURNER.is(block) || CAST_IRON_BURNER.is(block) || STEEL_BURNER.is(block)) {
+        //         if (BRONZE_SOLID_BURNER.is(block) || CAST_IRON_SOLID_BURNER.is(block) || STEEL_SOLID_BURNER.is(block)) {
         //         return BurnerBlockEntity::getBoilerHeat;
         //         }
         //         return null;

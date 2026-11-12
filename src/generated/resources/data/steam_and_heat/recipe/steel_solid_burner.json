@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:bricks"
+    },
+    "S": {
+      "tag": "c:plates/steel"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "S S",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "steam_and_heat:steel_solid_burner"
+  }
+}

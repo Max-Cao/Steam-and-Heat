@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "create:fluid_pipe"
+    },
+    "S": {
+      "tag": "c:plates/steel"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SCS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "steam_and_heat:steel_boiler"
+  }
+}

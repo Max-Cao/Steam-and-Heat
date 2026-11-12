@@ -6,6 +6,8 @@ import org.nina_iseri.steam_and_heat.SteamAndHeat;
 import org.nina_iseri.steam_and_heat.client.ClientUtils;
 import org.nina_iseri.steam_and_heat.client.ModBlockPartials;
 import org.nina_iseri.steam_and_heat.content.engine.CommonEngineBlock;
+import org.nina_iseri.steam_and_heat.content.recipe.EngineRecipe;
+import org.nina_iseri.steam_and_heat.content.recipe.ModRecipes;
 import org.nina_iseri.steam_and_heat.registrate.ModFluids;
 import org.nina_iseri.steam_and_heat.registrate.ModItems;
 
@@ -78,21 +80,19 @@ public abstract class SteamEngineBlock extends CommonEngineBlock {
         if (Screen.hasShiftDown()) {
             new LangBuilder(SteamAndHeat.MODID).translate("tooltip.engine.brief")
                     .style(ChatFormatting.GOLD).addTo(tooltip);
-            if (ClientUtils.hasGoggles()) {
-                new LangBuilder(SteamAndHeat.MODID)
-                        .translate("tooltip.engine.steamconsume", getSteamConsumptionPerTick())
-                        .style(ChatFormatting.GOLD).addTo(tooltip);
+            if (ClientUtils.hasGoggles() && context.level() != null) {
+                EngineRecipe recipe = ModRecipes.findEngine(context.level(), new ItemStack(this)).orElse(null);
+                if (recipe != null && recipe.input() == EngineRecipe.InputType.STEAM) {
+                    new LangBuilder(SteamAndHeat.MODID)
+                            .translate("tooltip.engine.steamconsume", recipe.inputPerTick())
+                            .style(ChatFormatting.GOLD).addTo(tooltip);
+                }
             }
         } else {
             tooltip.add(TooltipHelper.holdShift(FontHelper.Palette.GRAY, false));
         }
         super.appendHoverText(stack, context, tooltip, flag);
     }
-
-    /**
-     * 该等级引擎每 tick 消耗的蒸汽量，用于物品提示。
-     */
-    protected abstract int getSteamConsumptionPerTick();
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,

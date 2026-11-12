@@ -1,0 +1,11 @@
+{
+  "type": "steam_and_heat:engine",
+  "boiler_efficiency": 0.7,
+  "input": "steam",
+  "input_per_tick": 24,
+  "machine": {
+    "item": "steam_and_heat:cast_iron_steam_engine"
+  },
+  "rpm": 32.0,
+  "su": 1024.0
+}

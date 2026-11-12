@@ -10,17 +10,6 @@ import java.util.function.DoubleSupplier;
 
 public class ModStressConfig {
 
-	public static DoubleSupplier getCapacity(Block arg0) {
-		ResourceLocation registryName = BuiltInRegistries.BLOCK.getKey(arg0);
-		String mat = registryName.getPath().split("_")[0];
-		return switch (mat) {
-			case "bronze" -> ModCommonConfig.COMMON.bronzeFlywheelCapacity::get;
-			case "cast" -> ModCommonConfig.COMMON.castIronFlywheelCapacity::get;
-			case "steel" -> ModCommonConfig.COMMON.steelFlywheelCapacity::get;
-			default -> null;
-		};
-	}
-
 	public static DoubleSupplier getImpact(Block arg0) {
 		ResourceLocation registryName = BuiltInRegistries.BLOCK.getKey(arg0);
 		String[] mat = registryName.getPath().split("_");
@@ -37,6 +26,5 @@ public class ModStressConfig {
 
 	public static void register() {
 		BlockStressValues.IMPACTS.registerProvider(ModStressConfig::getImpact);
-		BlockStressValues.CAPACITIES.registerProvider(ModStressConfig::getCapacity);
 	}
 }

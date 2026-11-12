@@ -4,19 +4,14 @@ import com.simibubi.create.foundation.block.IBE;
 
 import org.nina_iseri.steam_and_heat.content.boiler.BoilerBlock;
 import org.nina_iseri.steam_and_heat.registrate.ModBlockEntities;
-import org.nina_iseri.steam_and_heat.registrate.ModCommonConfig;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class BronzeBoilerBlock extends BoilerBlock implements IBE<BronzeBoilerBlockEntity> {
+
     public BronzeBoilerBlock(Properties properties) {
         super(properties);
     }
-
-	@Override
-	public int getHuConsume() {
-		return ModCommonConfig.COMMON.bronzeBoilerHU.get();
-	}
 
     @Override
     public Class<BronzeBoilerBlockEntity> getBlockEntityClass() {
