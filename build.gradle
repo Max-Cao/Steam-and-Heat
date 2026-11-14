@@ -26,6 +26,24 @@ sourceSets.main.resources {
 }
 
 repositories {
+    // ModDevGradle 会自动把官方 NeoForged Maven 放到仓库列表最前面。当前网络访问
+    // https://maven.neoforged.net 会出现 SSL/连接重置，因此移除官方仓库，改用内容相同的
+    // ForgeCDN 镜像；否则 loader、ASM、MixInExtras 等 NFRT 依赖无法下载。
+    ["NeoForged Releases", "Mojang Meta"].each { repoName ->
+        def repo = repositories.findByName(repoName)
+        if (repo != null) {
+            repositories.remove(repo)
+        }
+    }
+    maven {
+        name = "NeoForged Releases (ForgeCDN mirror)"
+        url = uri("https://neoforged.forgecdn.net/releases")
+    }
+    maven {
+        name = "Mojang Meta (ForgeCDN mirror)"
+        url = uri("https://neoforged.forgecdn.net/mojang-meta")
+    }
+    mavenCentral()
     mavenLocal()
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
